@@ -31,7 +31,7 @@ const iconMap = {
 
 const countryExamples = {
   "farmer-support":
-    "Sierra Leone's Feed Salone and Ethiopia's agriculture services show how farmer records, payments, insurance, and advisory services can connect.",
+    "Sierra Leone's Feed Salone, Ethiopia's agriculture services, and Zambia's land-and-forest work show how farmer records, payments, permits, and advisory services can connect.",
   "cash-transfers":
     "Ethiopia's MESOB wallet roadmap shows how social protection can move from fragmented payout channels toward a verifiable G2P flow.",
   "health-access":
@@ -39,7 +39,7 @@ const countryExamples = {
   "education-credentials":
     "Ethiopia's youth jobs pathway shows how skills records, labor-market data, identity, and finance can become one service flow.",
   "msme-trade":
-    "AfCFTA-related trade services need business identity, payment rails, credentials, and customs or tax data to work across borders.",
+    "AfCFTA-related trade and Zambia's timber traceability work both need business identity, payment rails, credentials, and provenance data to travel across markets.",
   "procurement-payments":
     "Sierra Leone's CRVS, eGP, IFMIS, and T24 flow shows how procurement, treasury, and settlement can become visible end to end.",
 };

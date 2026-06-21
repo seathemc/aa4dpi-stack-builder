@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, MapPinned, PlugZap } from "lucide-react";
+import { ArrowRight, Clock3, MapPinned, PlugZap } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { countries } from "@/lib/data";
+import { cohortCountries, upcomingCountries } from "@/lib/data";
 
-const regions = ["All", "East Africa", "West Africa", "Southern Africa", "North Africa"];
+const regions = ["Cohort 1", "East Africa", "West Africa", "Southern Africa"];
 
 function readinessTone(value: number) {
   if (value >= 62) return "bg-emerald-50 text-emerald-700";
@@ -18,12 +18,12 @@ export default function CountriesPage() {
     <main className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-6 py-8">
       <section className="space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight">
-          Open DPGs by African country
+          Cohort 1 country readiness
         </h1>
         <p className="max-w-3xl text-sm leading-6 text-muted-foreground">
-          A country-by-country view of priority use cases, readiness signals,
-          and relevant open Digital Public Goods to evaluate. This is a working
-          prototype for how AA4DPI can connect country needs to reusable code.
+          The first AA4DPI country dashboards focus on Sierra Leone, Ethiopia,
+          and Zambia because those are the countries with active Cohort 1
+          programme material behind them.
         </p>
       </section>
 
@@ -53,7 +53,7 @@ export default function CountriesPage() {
             </tr>
           </thead>
           <tbody>
-            {countries.map((country) => (
+            {cohortCountries.map((country) => (
               <tr
                 key={country.id}
                 className="group border-b last:border-b-0 hover:bg-secondary/45"
@@ -98,13 +98,35 @@ export default function CountriesPage() {
         </table>
       </section>
 
+      <section className="rounded-lg border bg-background p-4 shadow-sm">
+        <div className="mb-3 flex items-center gap-2">
+          <Clock3 className="size-4 text-primary" />
+          <div>
+            <div className="text-sm font-semibold">Coming soon</div>
+            <p className="text-xs text-muted-foreground">
+              These countries remain useful peer references, but they do not
+              have full AA4DPI readiness pages in this version.
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {upcomingCountries.map((country) => (
+            <Badge key={country.id} variant="secondary" className="rounded-md">
+              <span className="mr-1">{country.flag}</span>
+              {country.name}
+            </Badge>
+          ))}
+        </div>
+      </section>
+
       <section className="grid gap-4 md:grid-cols-3">
         <div className="rounded-lg border bg-background p-4 shadow-sm">
           <MapPinned className="mb-3 size-4 text-primary" />
           <div className="text-sm font-semibold">Country pages are dashboards</div>
           <p className="mt-2 text-xs leading-5 text-muted-foreground">
-            Each country page mixes development priorities, DPI readiness, and
-            open-source components that could support the next implementation.
+            Each Cohort 1 page mixes development priorities, DPI readiness, and
+            open-source components that could support the first implementation
+            sprint.
           </p>
         </div>
         <div className="rounded-lg border bg-background p-4 shadow-sm md:col-span-2">
@@ -113,7 +135,8 @@ export default function CountriesPage() {
           <p className="mt-2 text-xs leading-5 text-muted-foreground">
             The DPGs listed here are not claims that a country has deployed
             those tools. They are relevant open-source options to assess against
-            the country&apos;s use cases, standards, safeguards, and existing systems.
+            each country&apos;s selected use cases, standards, safeguards, and
+            existing systems.
           </p>
         </div>
       </section>

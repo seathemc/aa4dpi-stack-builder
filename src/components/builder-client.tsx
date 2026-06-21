@@ -9,11 +9,19 @@ import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { countries, priorities, useCases } from "@/lib/data";
+import {
+  cohortCountries,
+  priorities,
+  upcomingCountries,
+  useCases,
+} from "@/lib/data";
 
 function Field({
   label,
@@ -32,13 +40,16 @@ function Field({
 
 export function BuilderClient({
   initialUseCaseId = "farmer-support",
-  initialCountryId = "kenya",
+  initialCountryId = "ethiopia",
 }: {
   initialUseCaseId?: string;
   initialCountryId?: string;
 }) {
   const router = useRouter();
-  const [countryId, setCountryId] = useState(initialCountryId);
+  const initialCountry =
+    cohortCountries.find((item) => item.id === initialCountryId) ??
+    cohortCountries[0];
+  const [countryId, setCountryId] = useState(initialCountry.id);
   const [useCaseId, setUseCaseId] = useState(initialUseCaseId);
   const [maturity, setMaturity] = useState("Building");
   const [selectedPriorities, setSelectedPriorities] = useState<string[]>([
@@ -48,7 +59,9 @@ export function BuilderClient({
   ]);
   const [isGenerating, setIsGenerating] = useState(false);
 
-  const country = countries.find((item) => item.id === countryId) ?? countries[0];
+  const country =
+    cohortCountries.find((item) => item.id === countryId) ??
+    cohortCountries[0];
   const useCase =
     useCases.find((item) => item.id === useCaseId) ?? useCases[0];
 
@@ -82,7 +95,8 @@ export function BuilderClient({
           Start your DPI stack
         </h1>
         <p className="text-sm text-muted-foreground">
-          Answer a few questions to generate a recommended stack.
+          Pick one Cohort 1 country and one service problem to generate a
+          recommended starter kit.
         </p>
       </section>
 
@@ -96,12 +110,28 @@ export function BuilderClient({
               <SelectValue placeholder="Choose a country" />
             </SelectTrigger>
             <SelectContent>
-              {countries.map((item) => (
-                <SelectItem key={item.id} value={item.id}>
-                  <span className="mr-2">{item.flag}</span>
-                  {item.name}
-                </SelectItem>
-              ))}
+              <SelectGroup>
+                <SelectLabel>Cohort 1 countries</SelectLabel>
+                {cohortCountries.map((item) => (
+                  <SelectItem key={item.id} value={item.id}>
+                    <span className="mr-2">{item.flag}</span>
+                    {item.name}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+              <SelectSeparator />
+              <SelectGroup>
+                <SelectLabel>Coming soon</SelectLabel>
+                {upcomingCountries.map((item) => (
+                  <SelectItem key={item.id} value={item.id} disabled>
+                    <span className="mr-2">{item.flag}</span>
+                    <span>{item.name}</span>
+                    <span className="ml-auto text-[10px] text-muted-foreground">
+                      Coming soon
+                    </span>
+                  </SelectItem>
+                ))}
+              </SelectGroup>
             </SelectContent>
           </Select>
         </Field>

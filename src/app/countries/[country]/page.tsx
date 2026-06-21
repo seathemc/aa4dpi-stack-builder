@@ -4,10 +4,10 @@ import { ArrowRight, Download, Layers3 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { countries, dpgs } from "@/lib/data";
+import { cohortCountries, cohortCountryIds, countries, dpgs } from "@/lib/data";
 
 export function generateStaticParams() {
-  return countries.map((country) => ({ country: country.id }));
+  return cohortCountries.map((country) => ({ country: country.id }));
 }
 
 function metricValue(country: (typeof countries)[number], keyword: string) {
@@ -103,6 +103,40 @@ export default async function CountryPage({
 
   if (!country) {
     notFound();
+  }
+
+  const isCohortCountry = cohortCountryIds.some((id) => id === country.id);
+
+  if (!isCohortCountry) {
+    return (
+      <main className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-6 py-8">
+        <section className="rounded-lg border bg-background p-6 shadow-sm">
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <Badge variant="secondary" className="gap-1">
+              <span>{country.flag}</span>
+              {country.name}
+            </Badge>
+            <Badge variant="secondary">Coming soon</Badge>
+          </div>
+          <h1 className="text-2xl font-semibold tracking-tight">
+            {country.name} readiness page is coming soon
+          </h1>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
+            This version focuses the full country-readiness experience on the
+            three AA4DPI Cohort 1 countries: Sierra Leone, Ethiopia, and Zambia.
+            {country.name} remains a peer reference for future expansion.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <Button asChild size="sm" className="text-xs">
+              <Link href="/countries">View Cohort 1 countries</Link>
+            </Button>
+            <Button asChild variant="outline" size="sm" className="text-xs">
+              <Link href="/builder">Open Stack Builder</Link>
+            </Button>
+          </div>
+        </section>
+      </main>
+    );
   }
 
   const relevantDpgs = country.relevantDpgs.map((name) => {

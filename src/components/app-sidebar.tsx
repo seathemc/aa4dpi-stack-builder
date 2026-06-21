@@ -17,7 +17,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { countries } from "@/lib/data";
+import { cohortCountries } from "@/lib/data";
 
 type NavItem = {
   title: string;
@@ -75,7 +75,7 @@ const navGroups: NavGroup[] = [
     title: "Country Readiness",
     items: [
       { title: "Country Overview", url: "/countries" },
-      ...countries.map((country) => ({
+      ...cohortCountries.map((country) => ({
         title: `${country.flag} ${country.name}`,
         url: `/countries/${country.id}`,
       })),

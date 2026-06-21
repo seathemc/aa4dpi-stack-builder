@@ -808,10 +808,17 @@ export const countries: CountryProfile[] = [
     maturity: "Building",
     readiness: 57,
     relevantDpgs: ["MOSIP", "DHIS2", "OpenMRS", "OpenFn", "ODK"],
-    priorityUseCases: ["Land and climate", "Health interoperability", "Agriculture"],
+    priorityUseCases: [
+      "Land and climate",
+      "Forest governance",
+      "Health interoperability",
+      "Agriculture",
+    ],
     publicSystems: [
       "Smart Zambia Government Service Bus",
       "ZILAS land administration",
+      "Timber Traceability System",
+      "Community Forest Management Group records",
       "Smart Care Pro electronic health record",
       "DHIS2 and eLMIS health reporting",
       "MOSIP-supported digital ID rollout",
@@ -842,6 +849,18 @@ export const countries: CountryProfile[] = [
         note: "Check whether land, health, finance, and identity systems can exchange only the data required for each service.",
       },
       {
+        name: "Timber Traceability System",
+        layer: "Data exchange",
+        kind: "national system",
+        note: "Check permit monitoring, province coverage, revenue flows, exporter requirements, and links to land and community forest records.",
+      },
+      {
+        name: "Community Forest Management Group records",
+        layer: "Registries",
+        kind: "national system",
+        note: "Check mapped forest groups, tenure claims, reporting channels, and eligibility for climate finance or carbon-market payments.",
+      },
+      {
         name: "MTN, Airtel, Zamtel and bank rails",
         layer: "Payments",
         kind: "private rail",
@@ -849,9 +868,9 @@ export const countries: CountryProfile[] = [
       },
     ],
     summary:
-      "Zambia is useful for showing how DPI can connect land, health, climate, finance, and service delivery without treating each sector as a separate technology project.",
-    strengths: ["Smart Zambia coordination", "health digitization", "land reform priority"],
-    gaps: ["identity rollout gap", "customary land complexity", "health system sustainability"],
+      "Zambia is the Cohort 1 example for land, climate, and natural-resource governance: the opportunity is to connect ZILAS, forest traceability, community forest records, and public-service rails.",
+    strengths: ["Smart Zambia coordination", "executive-level land priority", "forest traceability entry point"],
+    gaps: ["customary land complexity", "province coverage gaps", "identity and safeguards design"],
     metrics: [
       { label: "Identity readiness", value: 55, note: "MOSIP-supported rollout still needs operational depth" },
       { label: "Payment reach", value: 59, note: "banks and MNOs available for public-service flows" },
@@ -860,9 +879,9 @@ export const countries: CountryProfile[] = [
       { label: "Safeguards maturity", value: 56, note: "land, health, and ID safeguards must be explicit" },
     ],
     implementationFocus: [
-      { label: "Lead systems", value: "ZILAS, Smart Care Pro, Smart Zambia GSB" },
-      { label: "Priority sectors", value: "Land, climate resilience, health, agriculture" },
-      { label: "Key question", value: "Can sector platforms exchange trusted data without weakening privacy or local ownership?" },
+      { label: "Lead systems", value: "ZILAS, Timber Traceability System, Smart Zambia GSB" },
+      { label: "Priority sectors", value: "Land, climate resilience, forestry, agriculture" },
+      { label: "Key question", value: "Can land and forest records support revenue, climate payments, and community trust without creating another silo?" },
     ],
     countryUseCases: [
       {
@@ -872,6 +891,14 @@ export const countries: CountryProfile[] = [
         systems: ["ZILAS", "customary land workflows", "climate risk data", "agriculture services", "payment or revenue systems"],
         outcome:
           "Farmers, planners, and investors can verify land information faster while government improves land revenue and climate project delivery.",
+      },
+      {
+        title: "Forest governance and timber traceability",
+        description:
+          "Scale timber traceability through the Government Service Bus, connect community forest records to land systems, and support legal timber, non-timber products, and climate finance.",
+        systems: ["Timber Traceability System", "Smart Zambia GSB", "CFMG records", "ZILAS", "permit and revenue systems"],
+        outcome:
+          "Communities, forestry officials, and private operators can verify provenance, report activity, and connect forest stewardship to payments or market access.",
       },
       {
         title: "Health records and medicine accountability",
@@ -1172,3 +1199,17 @@ export const priorities = [
   "Safeguards",
   "Financing",
 ] as const;
+
+export const cohortCountryIds = [
+  "sierra-leone",
+  "ethiopia",
+  "zambia",
+] as const;
+
+export const cohortCountries = cohortCountryIds
+  .map((id) => countries.find((country) => country.id === id))
+  .filter((country): country is CountryProfile => Boolean(country));
+
+export const upcomingCountries = countries.filter(
+  (country) => !cohortCountryIds.some((id) => id === country.id)
+);

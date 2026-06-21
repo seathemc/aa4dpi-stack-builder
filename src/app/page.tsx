@@ -73,9 +73,10 @@ export default function Home() {
             Turn a use case into a DPI starter kit
           </h2>
           <p className="max-w-lg text-sm leading-6 text-muted-foreground">
-            Choose a country and a service problem. The Stack Builder suggests
-            open tools to evaluate, local systems to connect, safeguards to
-            check, and first artifacts a technical team can review.
+            Choose a Cohort 1 country and a service problem. The Stack Builder
+            suggests open tools to evaluate, local systems to connect,
+            safeguards to check, and first artifacts a technical team can
+            review.
           </p>
           <Button asChild className="h-9 text-xs">
             <Link href="/builder">
@@ -88,8 +89,8 @@ export default function Home() {
       </section>
 
       <p className="text-xs text-muted-foreground">
-        AA4DPI supports country-owned DPI work across readiness, technical
-        design, safeguards, financing, and implementation.
+        This version focuses on AA4DPI Cohort 1: Sierra Leone, Ethiopia, and
+        Zambia.
       </p>
     </main>
   );

@@ -1,4 +1,10 @@
-import { countries, dpgs, useCases, type DpgLayer } from "@/lib/data";
+import {
+  cohortCountries,
+  countries,
+  dpgs,
+  useCases,
+  type DpgLayer,
+} from "@/lib/data";
 
 export type StackInput = {
   countryId: string;
@@ -136,7 +142,8 @@ function countryUseCaseMatch(
 
 export function buildStack(input: StackInput) {
   const country =
-    countries.find((item) => item.id === input.countryId) ?? countries[0];
+    cohortCountries.find((item) => item.id === input.countryId) ??
+    cohortCountries[0];
   const useCase =
     useCases.find((item) => item.id === input.useCaseId) ?? useCases[0];
   const matchedCountryUseCase = countryUseCaseMatch(country, useCase.id);
