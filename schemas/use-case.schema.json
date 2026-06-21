@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AA4DPI use-case reference stack",
+  "type": "object",
+  "required": ["id", "name", "problem", "outcome", "layers", "systems", "safeguards", "sequence"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "problem": { "type": "string" },
+    "outcome": { "type": "string" },
+    "layers": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "systems": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "safeguards": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "sequence": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

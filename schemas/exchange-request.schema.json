@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AA4DPI data exchange sandbox request",
+  "type": "object",
+  "required": ["requestId", "requester", "provider", "purpose", "subjectId", "fields"],
+  "properties": {
+    "requestId": { "type": "string" },
+    "requester": { "type": "string" },
+    "provider": { "type": "string" },
+    "purpose": { "type": "string" },
+    "subjectId": { "type": "string" },
+    "fields": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

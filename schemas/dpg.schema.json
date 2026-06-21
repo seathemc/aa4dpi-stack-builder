@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Digital Public Good or open-source government tool",
+  "type": "object",
+  "required": ["id", "name", "layer", "github", "description", "fit", "maturity"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "layer": { "type": "string" },
+    "github": { "type": "string", "format": "uri" },
+    "description": { "type": "string" },
+    "fit": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "maturity": {
+      "type": "string",
+      "enum": ["Established", "Growing", "Reference", "Specialized"]
+    },
+    "standards": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

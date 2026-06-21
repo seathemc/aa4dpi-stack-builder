@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AA4DPI country readiness profile",
+  "type": "object",
+  "required": ["id", "name", "region", "maturity", "summary", "strengths", "gaps", "metrics"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "region": { "type": "string" },
+    "maturity": {
+      "type": "string",
+      "enum": ["Early", "Building", "Scaling"]
+    },
+    "summary": { "type": "string" },
+    "strengths": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "gaps": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["label", "value", "note"],
+        "properties": {
+          "label": { "type": "string" },
+          "value": { "type": "number", "minimum": 0, "maximum": 100 },
+          "note": { "type": "string" }
+        }
+      }
+    }
+  }
+}
