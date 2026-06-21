@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function PageLoadingSkeleton() {
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-8">
+    <main className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-6 sm:gap-6 sm:px-6 sm:py-8">
       <section className="space-y-3">
         <Skeleton className="h-5 w-24" />
         <Skeleton className="h-9 w-full max-w-xl" />
@@ -20,7 +20,7 @@ export function PageLoadingSkeleton() {
           </div>
           <div className="grid gap-3 p-4">
             {[0, 1, 2, 3, 4].map((item) => (
-              <div key={item} className="grid grid-cols-[2rem_1fr_8rem] gap-3">
+              <div key={item} className="grid gap-3 sm:grid-cols-[2rem_1fr_8rem]">
                 <Skeleton className="size-6 rounded-full" />
                 <Skeleton className="h-6" />
                 <Skeleton className="h-6" />
@@ -36,9 +36,9 @@ export function PageLoadingSkeleton() {
 
 export function TableLoadingSkeleton() {
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-6 py-8">
+    <main className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-6 sm:px-6 sm:py-8">
       <section className="space-y-3">
-        <Skeleton className="h-8 w-80" />
+        <Skeleton className="h-8 w-full max-w-80" />
         <Skeleton className="h-4 w-full max-w-2xl" />
       </section>
       <Skeleton className="h-9 w-full max-w-md" />
@@ -48,7 +48,7 @@ export function TableLoadingSkeleton() {
         </div>
         <div className="grid gap-3 p-4">
           {[0, 1, 2, 3, 4, 5].map((item) => (
-            <div key={item} className="grid grid-cols-[2rem_1fr_7rem_7rem] gap-3">
+            <div key={item} className="grid gap-3 sm:grid-cols-[2rem_1fr_7rem_7rem]">
               <Skeleton className="size-7 rounded-md" />
               <Skeleton className="h-7" />
               <Skeleton className="h-7" />

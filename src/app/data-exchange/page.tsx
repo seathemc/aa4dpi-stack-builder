@@ -10,7 +10,7 @@ function Lane({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative min-h-[27rem] rounded-lg border bg-background p-4 shadow-sm">
+    <div className="relative min-h-0 rounded-lg border bg-background p-4 shadow-sm lg:min-h-[27rem]">
       <div className="mb-6">
         <div className="text-xs font-semibold">{title}</div>
         <div className="text-[10px] text-muted-foreground">{subtitle}</div>
@@ -44,7 +44,7 @@ function FlowStep({
 
 export default function DataExchangePage() {
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 py-8">
+    <main className="mx-auto flex w-full max-w-5xl flex-col gap-5 px-4 py-6 sm:gap-6 sm:px-6 sm:py-8">
       <section className="space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight">
           Data exchange flow
@@ -56,7 +56,7 @@ export default function DataExchangePage() {
 
       <section className="relative grid gap-5 lg:grid-cols-[1fr_1.1fr_1fr]">
         <Lane title="Agency A" subtitle="eGP procurement">
-          <div className="grid gap-20 text-xs">
+          <div className="grid gap-5 text-xs lg:gap-20">
             <div>
               <div className="font-semibold">Requests data</div>
               <p className="mt-2 text-muted-foreground">Purpose</p>
@@ -91,7 +91,7 @@ export default function DataExchangePage() {
         </Lane>
 
         <Lane title="Agency B" subtitle="CRVS · IFMIS · T24">
-          <div className="grid gap-20 text-xs">
+          <div className="grid gap-5 text-xs lg:gap-20">
             <div>
               <div className="font-semibold">Verifies request</div>
               <p className="mt-2 text-muted-foreground">

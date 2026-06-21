@@ -36,14 +36,16 @@ function BreadcrumbLabel() {
       .join(" ");
 
   return (
-    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-      <span>DPG Stack Builder</span>
+    <div className="flex min-w-0 items-center gap-2 text-xs text-muted-foreground">
+      <span className="hidden shrink-0 sm:inline">DPG Stack Builder</span>
       {parts.length ? (
         <>
-          <span>›</span>
-          <span className="text-foreground">{label}</span>
+          <span className="hidden sm:inline">›</span>
+          <span className="truncate text-foreground">{label}</span>
         </>
-      ) : null}
+      ) : (
+        <span className="truncate text-foreground sm:hidden">Home</span>
+      )}
     </div>
   );
 }
@@ -52,10 +54,10 @@ export function AppFrame({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-12 shrink-0 items-center gap-3 border-b bg-background/95 px-4 backdrop-blur">
+      <SidebarInset className="min-w-0">
+        <header className="sticky top-0 z-40 flex h-12 shrink-0 items-center gap-2 border-b bg-background/95 px-3 backdrop-blur sm:gap-3 sm:px-4">
           <SidebarTrigger />
-          <Separator orientation="vertical" className="mr-2 h-4" />
+          <Separator orientation="vertical" className="mr-1 h-4 sm:mr-2" />
           <BreadcrumbLabel />
         </header>
         {children}

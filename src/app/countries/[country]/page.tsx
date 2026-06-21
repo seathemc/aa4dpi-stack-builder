@@ -90,8 +90,8 @@ export default async function CountryPage({
 
   if (!isCohortCountry) {
     return (
-      <main className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-6 py-8">
-        <section className="rounded-lg border bg-background p-6 shadow-sm">
+      <main className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-6 sm:px-6 sm:py-8">
+        <section className="rounded-lg border bg-background p-4 shadow-sm sm:p-6">
           <div className="mb-3 flex flex-wrap items-center gap-2">
             <Badge variant="secondary" className="gap-1">
               <span>{country.flag}</span>
@@ -107,11 +107,11 @@ export default async function CountryPage({
             three AA4DPI Cohort 1 countries: Sierra Leone, Ethiopia, and Zambia.
             {country.name} remains a peer reference for future expansion.
           </p>
-          <div className="mt-5 flex flex-wrap gap-2">
-            <Button asChild size="sm" className="text-xs">
+          <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+            <Button asChild size="sm" className="w-full text-xs sm:w-auto">
               <Link href="/countries">View Cohort 1 countries</Link>
             </Button>
-            <Button asChild variant="outline" size="sm" className="text-xs">
+            <Button asChild variant="outline" size="sm" className="w-full text-xs sm:w-auto">
               <Link href="/builder">Open Stack Builder</Link>
             </Button>
           </div>
@@ -134,8 +134,8 @@ export default async function CountryPage({
   const safeguardsMetric = getMetric(country, "safeguards");
 
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-8">
-      <section className="flex items-start justify-between gap-4">
+    <main className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-6 sm:gap-6 sm:px-6 sm:py-8">
+      <section className="flex flex-col items-start justify-between gap-4 sm:flex-row">
         <div>
           <div className="mb-3 flex flex-wrap items-center gap-2">
             <Badge variant="secondary" className="gap-1">
@@ -154,11 +154,11 @@ export default async function CountryPage({
             {country.summary}
           </p>
         </div>
-        <div className="flex gap-2">
-          <Button asChild variant="outline" size="sm" className="text-xs">
+        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+          <Button asChild variant="outline" size="sm" className="w-full text-xs sm:w-auto">
             <Link href="/countries">Compare countries</Link>
           </Button>
-          <Button asChild size="sm" className="text-xs">
+          <Button asChild size="sm" className="w-full text-xs sm:w-auto">
             <Link href={`/builder?country=${country.id}`}>
               Build stack
               <ArrowRight className="size-3.5" />
@@ -168,7 +168,7 @@ export default async function CountryPage({
       </section>
 
       <Tabs defaultValue="readiness" className="gap-5">
-        <TabsList className="flex h-auto w-full flex-wrap justify-start gap-1 rounded-lg p-1 sm:w-fit">
+        <TabsList className="flex h-auto w-full flex-nowrap justify-start gap-1 rounded-lg p-1 sm:w-fit">
           <TabsTrigger value="readiness">Readiness</TabsTrigger>
           <TabsTrigger value="data">Country data</TabsTrigger>
           <TabsTrigger value="use-cases">Use cases</TabsTrigger>
@@ -334,10 +334,7 @@ export default async function CountryPage({
               </div>
               <div className="grid gap-3">
                 {country.countryUseCases.map((useCase) => (
-                  <article
-                    key={useCase.title}
-                    className="rounded-md border p-4"
-                  >
+                  <article key={useCase.title} className="rounded-md border p-3 sm:p-4">
                     <div className="grid gap-4 md:grid-cols-[1fr_0.8fr]">
                       <div>
                         <h2 className="text-base font-semibold">

@@ -16,7 +16,7 @@ const layerFilters = [
 
 export default function CataloguePage() {
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-col gap-5 px-6 py-8">
+    <main className="mx-auto flex w-full max-w-5xl flex-col gap-5 px-4 py-6 sm:px-6 sm:py-8">
       <section className="space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight">DPG Catalogue</h1>
         <p className="text-sm text-muted-foreground">
@@ -25,11 +25,11 @@ export default function CataloguePage() {
       </section>
 
       <section className="flex flex-wrap items-center gap-3">
-        <div className="flex h-9 min-w-80 items-center gap-2 rounded-md border bg-background px-3 text-sm text-muted-foreground">
+        <div className="flex h-9 w-full min-w-0 items-center gap-2 rounded-md border bg-background px-3 text-sm text-muted-foreground sm:min-w-80 sm:flex-1">
           <Search className="size-4" />
           Search DPGs...
         </div>
-        <Button variant="outline" size="sm" className="ml-auto text-xs">
+        <Button variant="outline" size="sm" className="w-full text-xs sm:ml-auto sm:w-auto">
           All layers
         </Button>
       </section>
@@ -46,7 +46,40 @@ export default function CataloguePage() {
         ))}
       </section>
 
-      <section className="overflow-hidden rounded-lg border bg-background shadow-sm">
+      <section className="grid gap-3 md:hidden">
+        {dpgs.map((dpg) => (
+          <article key={dpg.id} className="rounded-lg border bg-background p-4 shadow-sm">
+            <div className="flex items-start gap-3">
+              <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-secondary text-[10px] font-semibold text-primary">
+                {dpg.name.slice(0, 2)}
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="font-semibold">{dpg.name}</div>
+                <div className="mt-1 text-xs text-muted-foreground">
+                  {dpg.layer}
+                </div>
+              </div>
+              <Badge variant="secondary" className="bg-emerald-50 text-emerald-700">
+                {dpg.maturity}
+              </Badge>
+            </div>
+            <p className="mt-3 text-xs leading-5 text-muted-foreground">
+              {dpg.description}
+            </p>
+            <a
+              href={dpg.github}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-3 inline-flex items-center gap-2 text-xs font-medium text-primary"
+            >
+              <GitBranch className="size-3.5" />
+              Open GitHub
+            </a>
+          </article>
+        ))}
+      </section>
+
+      <section className="hidden overflow-hidden rounded-lg border bg-background shadow-sm md:block">
         <table className="w-full text-left text-xs">
           <thead className="border-b bg-secondary/50 text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
             <tr>
@@ -88,7 +121,7 @@ export default function CataloguePage() {
         </table>
       </section>
 
-      <div className="flex items-center justify-between text-xs text-muted-foreground">
+      <div className="flex flex-col gap-1 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
         <span>Showing {dpgs.length} DPGs</span>
         <span>Open-source tools and standards to evaluate by use case</span>
       </div>

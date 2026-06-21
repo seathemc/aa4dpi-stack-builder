@@ -55,16 +55,16 @@ export function SandboxClient() {
             API contract and test request
           </div>
           <CardTitle>POST /api/sandbox/verify-registration</CardTitle>
-          <CardDescription className="text-base leading-7">
+          <CardDescription className="text-sm leading-6 sm:text-base sm:leading-7">
             The social registry asks the civil registry for only the facts needed
             to confirm child benefit eligibility.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <pre className="overflow-auto rounded-lg bg-secondary p-4 text-sm leading-6">
+          <pre className="max-w-full overflow-auto rounded-lg bg-secondary p-3 text-xs leading-5 sm:p-4 sm:text-sm sm:leading-6">
             {JSON.stringify(demoExchangeRequest, null, 2)}
           </pre>
-          <Button onClick={runTest} disabled={loading} className="w-fit">
+          <Button onClick={runTest} disabled={loading} className="w-full sm:w-fit">
             {loading ? "Running..." : "Run test request"}
           </Button>
         </CardContent>
@@ -77,7 +77,7 @@ export function SandboxClient() {
             Decision and audit record
           </div>
           <CardTitle>Verified response</CardTitle>
-          <CardDescription className="text-base leading-7">
+          <CardDescription className="text-sm leading-6 sm:text-base sm:leading-7">
             The sandbox returns an authorization decision, a minimized response,
             safeguards, and an audit entry.
           </CardDescription>
@@ -89,7 +89,7 @@ export function SandboxClient() {
                 <Badge>{result.decision}</Badge>
                 <Badge variant="secondary">{result.audit.status}</Badge>
               </div>
-              <pre className="overflow-auto rounded-lg bg-secondary p-4 text-sm leading-6">
+              <pre className="max-w-full overflow-auto rounded-lg bg-secondary p-3 text-xs leading-5 sm:p-4 sm:text-sm sm:leading-6">
                 {JSON.stringify(result, null, 2)}
               </pre>
             </div>

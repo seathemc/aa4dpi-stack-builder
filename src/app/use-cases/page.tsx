@@ -78,8 +78,8 @@ export default function UseCasesPage() {
                   </Badge>
                 ))}
               </div>
-              <CardTitle className="text-2xl">{useCase.name}</CardTitle>
-              <CardDescription className="max-w-3xl text-base leading-7">
+              <CardTitle className="text-xl sm:text-2xl">{useCase.name}</CardTitle>
+              <CardDescription className="max-w-3xl text-sm leading-6 sm:text-base sm:leading-7">
                 {useCase.problem}
               </CardDescription>
             </CardHeader>
@@ -102,7 +102,7 @@ export default function UseCasesPage() {
               </div>
               <Link
                 href={`/builder?useCase=${useCase.id}`}
-                className="inline-flex items-center gap-2 text-sm font-medium text-primary"
+                className="inline-flex w-full items-center justify-between gap-2 rounded-md border px-3 py-2 text-sm font-medium text-primary md:w-auto md:border-0 md:px-0 md:py-0"
               >
                 Build this stack
                 <ArrowRight className="size-4" />

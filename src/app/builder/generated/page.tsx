@@ -78,8 +78,8 @@ export default async function GeneratedStackPage({
   const stackSignal = evidenceLevel(stack.fitScore);
 
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-8">
-      <section className="flex flex-wrap items-start justify-between gap-6">
+    <main className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-6 sm:gap-6 sm:px-6 sm:py-8">
+      <section className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:gap-6">
         <div className="max-w-3xl space-y-3">
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="secondary" className="gap-1">
@@ -100,15 +100,15 @@ export default async function GeneratedStackPage({
             and first artifacts a technical team would need to start building.
           </p>
         </div>
-        <div className="flex flex-wrap gap-2">
-          <Button asChild variant="outline" size="sm" className="text-xs">
+        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
+          <Button asChild variant="outline" size="sm" className="w-full text-xs sm:w-auto">
             <Link
               href={`/builder?country=${stack.country.id}&useCase=${stack.useCase.id}`}
             >
               Change inputs
             </Link>
           </Button>
-          <Button size="sm" className="text-xs">
+          <Button size="sm" className="w-full text-xs sm:w-auto">
             <Download className="size-3.5" />
             Download stack brief
           </Button>
@@ -116,7 +116,7 @@ export default async function GeneratedStackPage({
       </section>
 
       <Tabs defaultValue="overview" className="gap-5">
-        <TabsList className="flex h-auto w-full flex-wrap justify-start gap-1 rounded-lg p-1 sm:w-fit">
+        <TabsList className="flex h-auto w-full flex-nowrap justify-start gap-1 rounded-lg p-1 sm:w-fit">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="architecture">Architecture</TabsTrigger>
           <TabsTrigger value="integrations">Integrations</TabsTrigger>
@@ -126,7 +126,7 @@ export default async function GeneratedStackPage({
 
         <TabsContent value="overview" className="space-y-5">
           <section className="grid gap-5 lg:grid-cols-[1fr_17rem]">
-            <div className="rounded-lg border bg-background p-5 shadow-sm">
+            <div className="rounded-lg border bg-background p-4 shadow-sm sm:p-5">
               <div className="mb-4 flex items-center gap-2">
                 <div className="flex size-8 items-center justify-center rounded-md bg-secondary text-primary">
                   <Bot className="size-4" />
@@ -141,7 +141,7 @@ export default async function GeneratedStackPage({
                   </div>
                 </div>
               </div>
-              <div className="grid gap-3 md:grid-cols-3">
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {stack.analysis.map((item) => (
                   <div
                     key={item}
@@ -189,7 +189,7 @@ export default async function GeneratedStackPage({
           </section>
 
           {stack.matchedCountryUseCase ? (
-            <section className="rounded-lg border bg-background p-5 shadow-sm">
+            <section className="rounded-lg border bg-background p-4 shadow-sm sm:p-5">
               <div className="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
                 Country use case match
               </div>
@@ -248,7 +248,7 @@ export default async function GeneratedStackPage({
             {stack.architectureRows.map((row, index) => (
               <article
                 key={`${row.system}-${index}`}
-                className="grid gap-4 rounded-lg border bg-background p-4 shadow-sm lg:grid-cols-[1.1fr_0.9fr_0.9fr_1.15fr]"
+                className="grid gap-4 rounded-lg border bg-background p-4 shadow-sm sm:grid-cols-2 lg:grid-cols-[1.1fr_0.9fr_0.9fr_1.15fr]"
               >
                 <div className="flex gap-3">
                   <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">
@@ -314,7 +314,7 @@ export default async function GeneratedStackPage({
         </TabsContent>
 
         <TabsContent value="integrations">
-          <section className="grid gap-4 md:grid-cols-2">
+          <section className="grid gap-4 lg:grid-cols-2">
             <div className="rounded-lg border bg-background p-4 shadow-sm">
               <div className="mb-3 flex items-center gap-2 text-sm font-semibold">
                 <PlugZap className="size-4 text-primary" />
@@ -357,7 +357,7 @@ export default async function GeneratedStackPage({
         </TabsContent>
 
         <TabsContent value="checks">
-          <section className="grid gap-4 md:grid-cols-[1fr_1fr]">
+          <section className="grid gap-4 lg:grid-cols-[1fr_1fr]">
             <div className="rounded-lg border bg-background p-4 shadow-sm">
               <div className="mb-3 text-sm font-semibold">
                 What to validate next
@@ -391,7 +391,7 @@ export default async function GeneratedStackPage({
         </TabsContent>
 
         <TabsContent value="kit">
-          <section className="grid gap-4 md:grid-cols-4">
+          <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {starterArtifacts.map((artifact) => (
               <Link
                 key={artifact.title}

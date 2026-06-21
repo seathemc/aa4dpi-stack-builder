@@ -89,7 +89,7 @@ export function BuilderClient({
   };
 
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-6 py-8">
+    <main className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-6 sm:gap-6 sm:px-6 sm:py-8">
       <section className="space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight">
           Start your DPI stack
@@ -203,21 +203,21 @@ export function BuilderClient({
         <div className="rounded-lg border bg-secondary/70 p-4">
           <div className="mb-3 text-xs font-semibold">Your selections</div>
           <div className="grid gap-2 text-xs text-muted-foreground">
-            <div className="grid grid-cols-[7rem_1fr]">
+            <div className="grid gap-1 sm:grid-cols-[7rem_1fr]">
               <span>Country</span>
               <span className="text-foreground">
                 {country.flag} {country.name}
               </span>
             </div>
-            <div className="grid grid-cols-[7rem_1fr]">
+            <div className="grid gap-1 sm:grid-cols-[7rem_1fr]">
               <span>Use case</span>
               <span className="text-foreground">{useCase.shortName}</span>
             </div>
-            <div className="grid grid-cols-[7rem_1fr]">
+            <div className="grid gap-1 sm:grid-cols-[7rem_1fr]">
               <span>Maturity</span>
               <span className="text-foreground">{maturity}</span>
             </div>
-            <div className="grid grid-cols-[7rem_1fr]">
+            <div className="grid gap-1 sm:grid-cols-[7rem_1fr]">
               <span>Priorities</span>
               <div className="flex flex-wrap gap-1">
                 {selectedPriorities.map((priority) => (
@@ -231,7 +231,7 @@ export function BuilderClient({
         </div>
 
         <Button
-          className="h-10 justify-between text-xs"
+          className="h-10 w-full justify-between text-xs"
           disabled={isGenerating}
           onClick={generateStack}
         >

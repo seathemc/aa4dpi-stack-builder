@@ -10,7 +10,7 @@ const regions = ["Cohort 1", "East Africa", "West Africa", "Southern Africa"];
 
 export default function CountriesPage() {
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-6 py-8">
+    <main className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-6 sm:px-6 sm:py-8">
       <section className="space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight">
           Cohort 1 country readiness
@@ -34,7 +34,50 @@ export default function CountriesPage() {
         ))}
       </section>
 
-      <section className="overflow-hidden rounded-lg border bg-background shadow-sm">
+      <section className="grid gap-3 md:hidden">
+        {cohortCountries.map((country) => (
+          <article key={country.id} className="rounded-lg border bg-background p-4 shadow-sm">
+            <div className="flex items-start gap-3">
+              <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-secondary text-base font-semibold text-primary">
+                {country.flag}
+              </div>
+              <div className="min-w-0 flex-1">
+                <Link
+                  href={`/countries/${country.id}`}
+                  className="font-semibold hover:underline"
+                >
+                  {country.name}
+                </Link>
+                <div className="mt-1 text-xs text-muted-foreground">
+                  {country.region}
+                </div>
+              </div>
+              <Badge variant="secondary">{country.maturity}</Badge>
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Badge className={evidenceTone(evidenceLevel(country.readiness))}>
+                {evidenceLevel(country.readiness)}
+              </Badge>
+              {country.relevantDpgs.slice(0, 3).map((dpg) => (
+                <Badge key={dpg} variant="secondary">
+                  {dpg}
+                </Badge>
+              ))}
+            </div>
+            <p className="mt-3 text-xs leading-5 text-muted-foreground">
+              {country.priorityUseCases.join(", ")}
+            </p>
+            <Button asChild variant="outline" size="sm" className="mt-3 w-full text-xs">
+              <Link href={`/countries/${country.id}`}>
+                Open country dashboard
+                <ArrowRight className="size-3.5" />
+              </Link>
+            </Button>
+          </article>
+        ))}
+      </section>
+
+      <section className="hidden overflow-hidden rounded-lg border bg-background shadow-sm md:block">
         <table className="w-full text-left text-xs">
           <thead className="border-b bg-secondary/50 text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
             <tr>

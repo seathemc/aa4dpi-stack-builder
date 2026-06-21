@@ -23,12 +23,12 @@ function CubeVisual() {
 
 export default function Home() {
   return (
-    <main className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-6 py-10">
+    <main className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 py-6 sm:gap-8 sm:px-6 sm:py-10">
       <section className="max-w-2xl space-y-4">
         <div className="inline-flex rounded-full bg-secondary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-primary">
           README first
         </div>
-        <h1 className="text-3xl font-semibold tracking-tight text-foreground">
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
           DPI connects public investment to real services
         </h1>
         <p className="max-w-xl text-sm leading-6 text-muted-foreground">
@@ -67,7 +67,7 @@ export default function Home() {
         ))}
       </section>
 
-      <section className="grid items-center gap-5 rounded-lg border bg-secondary/60 p-5 shadow-sm md:grid-cols-[1fr_auto]">
+      <section className="grid items-center gap-5 rounded-lg border bg-secondary/60 p-4 shadow-sm sm:p-5 md:grid-cols-[1fr_auto]">
         <div className="space-y-3">
           <h2 className="text-xl font-semibold">
             Turn a use case into a DPI starter kit
@@ -78,14 +78,16 @@ export default function Home() {
             safeguards to check, and first artifacts a technical team can
             review.
           </p>
-          <Button asChild className="h-9 text-xs">
+          <Button asChild className="h-9 w-full text-xs sm:w-fit">
             <Link href="/builder">
               Open the Stack Builder
               <ArrowRight className="size-3.5" />
             </Link>
           </Button>
         </div>
-        <CubeVisual />
+        <div className="hidden justify-self-center sm:block">
+          <CubeVisual />
+        </div>
       </section>
 
       <p className="text-xs text-muted-foreground">

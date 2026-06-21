@@ -19,7 +19,7 @@ const safeguards = [
 
 export default function AuditPage() {
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 py-8">
+    <main className="mx-auto flex w-full max-w-5xl flex-col gap-5 px-4 py-6 sm:gap-6 sm:px-6 sm:py-8">
       <section className="grid gap-5 lg:grid-cols-[1fr_17rem]">
         <div className="space-y-5">
           <section className="space-y-2">
@@ -29,7 +29,29 @@ export default function AuditPage() {
             </p>
           </section>
 
-          <div className="overflow-hidden rounded-lg border bg-background shadow-sm">
+          <div className="grid gap-3 md:hidden">
+            {rows.map(([time, requester, data]) => (
+              <article key={`${time}-${requester}`} className="rounded-lg border bg-background p-4 shadow-sm">
+                <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+                  {time}
+                </div>
+                <div className="mt-2 text-sm font-semibold">{requester}</div>
+                <div
+                  className={`mt-2 text-xs ${
+                    data === "Denied"
+                      ? "text-red-600"
+                      : data === "Success"
+                        ? "text-emerald-700"
+                        : "text-muted-foreground"
+                  }`}
+                >
+                  {data}
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="hidden overflow-hidden rounded-lg border bg-background shadow-sm md:block">
             <table className="w-full text-left text-xs">
               <thead className="border-b bg-secondary/50 text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
                 <tr>

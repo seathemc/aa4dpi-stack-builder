@@ -9,7 +9,7 @@ const responseExample = {
 
 export default function ApiContractPage() {
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 py-8">
+    <main className="mx-auto flex w-full max-w-5xl flex-col gap-5 px-4 py-6 sm:gap-6 sm:px-6 sm:py-8">
       <section className="space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight">
           API: Verify Registration
@@ -20,12 +20,12 @@ export default function ApiContractPage() {
       </section>
 
       <section className="grid gap-5 lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="rounded-lg border bg-background p-5 shadow-sm">
-          <div className="mb-5 flex border-b text-xs">
+        <div className="rounded-lg border bg-background p-4 shadow-sm sm:p-5">
+          <div className="mb-5 flex overflow-x-auto border-b text-xs">
             {["Request", "Response", "OpenAPI"].map((tab, index) => (
               <div
                 key={tab}
-                className={`px-4 py-2 ${
+                className={`shrink-0 px-4 py-2 ${
                   index === 0
                     ? "border-b-2 border-primary text-primary"
                     : "text-muted-foreground"
@@ -39,7 +39,7 @@ export default function ApiContractPage() {
           <div className="grid gap-4 text-xs">
             <div>
               <div className="font-semibold">Endpoint</div>
-              <div className="mt-1 rounded bg-secondary px-2 py-1 text-primary">
+              <div className="mt-1 overflow-x-auto rounded bg-secondary px-2 py-1 text-primary">
                 GET /v1/verify-registration
               </div>
             </div>
@@ -82,7 +82,7 @@ export default function ApiContractPage() {
         </div>
 
         <div className="grid gap-4">
-          <pre className="overflow-auto rounded-lg bg-slate-950 p-5 text-xs leading-6 text-slate-100 shadow-sm">
+          <pre className="max-w-full overflow-auto rounded-lg bg-slate-950 p-4 text-xs leading-6 text-slate-100 shadow-sm sm:p-5">
             {`{
   "individual": {
     "name": "Jean Katende",
@@ -94,17 +94,17 @@ export default function ApiContractPage() {
   "request_id": "05bd-7e-7a14-a2b-d0f3-3a1c..."
 }`}
           </pre>
-          <div className="flex flex-wrap gap-2">
-            <Button size="sm" className="text-xs">Run test</Button>
-            <Button size="sm" variant="outline" className="text-xs">
+          <div className="grid gap-2 sm:flex sm:flex-wrap">
+            <Button size="sm" className="w-full text-xs sm:w-auto">Run test</Button>
+            <Button size="sm" variant="outline" className="w-full text-xs sm:w-auto">
               View audit log
             </Button>
-            <Button size="sm" variant="outline" className="text-xs">
+            <Button size="sm" variant="outline" className="w-full text-xs sm:w-auto">
               Export OpenAPI
             </Button>
           </div>
           <div className="text-xs font-semibold">Response (200)</div>
-          <pre className="overflow-auto rounded-lg bg-slate-950 p-5 text-xs leading-6 text-emerald-300 shadow-sm">
+          <pre className="max-w-full overflow-auto rounded-lg bg-slate-950 p-4 text-xs leading-6 text-emerald-300 shadow-sm sm:p-5">
             {JSON.stringify(responseExample, null, 2)}
           </pre>
           <div className="flex justify-end">
