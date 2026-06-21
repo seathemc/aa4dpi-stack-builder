@@ -9,6 +9,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { countries } from "@/lib/data";
 
 const labels: Record<string, string> = {
   catalogue: "DPG Catalogue",
@@ -19,14 +20,20 @@ const labels: Record<string, string> = {
   audit: "Audit & Safeguards",
   standards: "Interoperability",
   countries: "Country Readiness",
-  rwanda: "Rwanda",
 };
 
 function BreadcrumbLabel() {
   const pathname = usePathname();
   const parts = pathname.split("/").filter(Boolean);
   const current = parts.length ? parts[parts.length - 1] : "Home";
-  const label = labels[current] ?? current.replaceAll("-", " ");
+  const country = countries.find((item) => item.id === current);
+  const label =
+    country?.name ??
+    labels[current] ??
+    current
+      .split("-")
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
 
   return (
     <div className="flex items-center gap-2 text-xs text-muted-foreground">

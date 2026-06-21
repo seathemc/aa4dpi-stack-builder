@@ -7,7 +7,7 @@ function CubeVisual() {
   return (
     <div className="relative h-28 w-36">
       <div className="absolute bottom-4 left-7 grid grid-cols-2 gap-1">
-        {["bg-sky-200", "bg-sky-500", "bg-blue-700", "bg-sky-300"].map(
+        {["bg-secondary", "bg-primary/75", "bg-primary", "bg-accent"].map(
           (color, index) => (
             <div
               key={`${color}-${index}`}
@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <main className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-6 py-10">
       <section className="max-w-2xl space-y-4">
-        <div className="inline-flex rounded-full bg-sky-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-sky-700">
+        <div className="inline-flex rounded-full bg-secondary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-primary">
           Welcome
         </div>
         <h1 className="text-3xl font-semibold tracking-tight text-foreground">
@@ -65,7 +65,7 @@ export default function Home() {
         ))}
       </section>
 
-      <section className="grid items-center gap-5 rounded-lg border bg-sky-50/60 p-5 shadow-sm md:grid-cols-[1fr_auto]">
+      <section className="grid items-center gap-5 rounded-lg border bg-secondary/60 p-5 shadow-sm md:grid-cols-[1fr_auto]">
         <div className="space-y-3">
           <h2 className="text-xl font-semibold">Design and deploy your DPI stack</h2>
           <p className="max-w-lg text-sm leading-6 text-muted-foreground">

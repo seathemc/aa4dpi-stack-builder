@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -25,17 +25,21 @@ function Field({
 
 export function BuilderClient({
   initialUseCaseId = "farmer-support",
+  initialCountryId = "rwanda",
 }: {
   initialUseCaseId?: string;
+  initialCountryId?: string;
 }) {
-  const [countryId, setCountryId] = useState("rwanda");
+  const router = useRouter();
+  const [countryId, setCountryId] = useState(initialCountryId);
   const [useCaseId, setUseCaseId] = useState(initialUseCaseId);
   const [maturity, setMaturity] = useState("Building");
   const [selectedPriorities, setSelectedPriorities] = useState<string[]>([
     "Inclusion",
     "Payments",
-    "Data Exchange",
+    "Data exchange",
   ]);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const country = countries.find((item) => item.id === countryId) ?? countries[0];
   const useCase =
@@ -47,6 +51,21 @@ export function BuilderClient({
         ? current.filter((item) => item !== priority)
         : [...current, priority].slice(0, 3)
     );
+  };
+
+  const generateStack = () => {
+    setIsGenerating(true);
+
+    const params = new URLSearchParams({
+      country: countryId,
+      useCase: useCaseId,
+      maturity,
+      priorities: selectedPriorities.join(","),
+    });
+
+    window.setTimeout(() => {
+      router.push(`/builder/generated?${params.toString()}`);
+    }, 650);
   };
 
   return (
@@ -99,7 +118,7 @@ export function BuilderClient({
                 onClick={() => setMaturity(stage)}
                 className={`rounded-md border px-4 py-2 text-xs font-medium ${
                   maturity === stage
-                    ? "border-primary bg-sky-50 text-primary"
+                    ? "border-primary bg-secondary text-primary"
                     : "bg-background text-muted-foreground"
                 }`}
               >
@@ -119,7 +138,7 @@ export function BuilderClient({
                 onClick={() => togglePriority(priority)}
                 className={`rounded-md border px-3 py-2 text-xs font-medium ${
                   selectedPriorities.includes(priority)
-                    ? "border-primary bg-sky-50 text-primary"
+                    ? "border-primary bg-secondary text-primary"
                     : "bg-background text-muted-foreground"
                 }`}
               >
@@ -135,7 +154,7 @@ export function BuilderClient({
           </div>
         </div>
 
-        <div className="rounded-lg border bg-sky-50/70 p-4">
+        <div className="rounded-lg border bg-secondary/70 p-4">
           <div className="mb-3 text-xs font-semibold">Your selections</div>
           <div className="grid gap-2 text-xs text-muted-foreground">
             <div className="grid grid-cols-[7rem_1fr]">
@@ -163,11 +182,18 @@ export function BuilderClient({
           </div>
         </div>
 
-        <Button asChild className="h-10 justify-between text-xs">
-          <Link href="/builder/generated">
-            Generate my DPI stack
-            <ArrowRight className="size-3.5" />
-          </Link>
+        <Button
+          className="h-10 justify-between text-xs"
+          disabled={isGenerating}
+          onClick={generateStack}
+        >
+          <span className="flex items-center gap-2">
+            {isGenerating ? (
+              <Loader2 className="size-3.5 animate-spin" />
+            ) : null}
+            {isGenerating ? "Generating stack..." : "Generate my DPI stack"}
+          </span>
+          <ArrowRight className="size-3.5" />
         </Button>
       </section>
     </main>

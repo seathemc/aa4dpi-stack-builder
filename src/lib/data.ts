@@ -39,6 +39,10 @@ export type CountryProfile = {
   name: string;
   region: string;
   maturity: "Early" | "Building" | "Scaling";
+  readiness: number;
+  relevantDpgs: string[];
+  priorityUseCases: string[];
+  publicSystems: string[];
   summary: string;
   strengths: string[];
   gaps: string[];
@@ -370,6 +374,10 @@ export const countries: CountryProfile[] = [
     name: "Rwanda",
     region: "East Africa",
     maturity: "Scaling",
+    readiness: 62,
+    relevantDpgs: ["OpenSPP", "X-Road", "OpenG2P", "DHIS2"],
+    priorityUseCases: ["Farmer support", "Financial inclusion", "Public services"],
+    publicSystems: ["Irembo-style service delivery", "financial inclusion use cases"],
     summary:
       "Strong public service digitization and high policy focus make Rwanda a good demo country for integrated DPI use cases.",
     strengths: ["digital services", "financial inclusion", "coordinated delivery"],
@@ -387,6 +395,10 @@ export const countries: CountryProfile[] = [
     name: "Nigeria",
     region: "West Africa",
     maturity: "Building",
+    readiness: 58,
+    relevantDpgs: ["MOSIP", "OpenCRVS", "Mojaloop", "OpenFn"],
+    priorityUseCases: ["Identity", "Payments", "Social protection"],
+    publicSystems: ["national identity ecosystem", "payments ecosystem"],
     summary:
       "Large-scale identity and payments activity creates major DPI potential, with coordination and inclusion as central challenges.",
     strengths: ["identity scale", "payments ecosystem", "private innovation"],
@@ -404,6 +416,10 @@ export const countries: CountryProfile[] = [
     name: "Malawi",
     region: "Southern Africa",
     maturity: "Building",
+    readiness: 51,
+    relevantDpgs: ["OpenCRVS", "OpenG2P", "ODK", "X-Road"],
+    priorityUseCases: ["Legal identity", "Offline verification", "Social protection"],
+    publicSystems: ["national registration", "offline verification priorities"],
     summary:
       "Useful country for showing how inclusion and offline access shape digital ID, social protection, and service delivery.",
     strengths: ["legal identity momentum", "inclusion focus", "partner alignment"],
@@ -421,6 +437,10 @@ export const countries: CountryProfile[] = [
     name: "South Africa",
     region: "Southern Africa",
     maturity: "Building",
+    readiness: 64,
+    relevantDpgs: ["X-Road", "OpenFn", "OpenFisca", "Open Contracting"],
+    priorityUseCases: ["Data exchange", "Service delivery", "Safeguards"],
+    publicSystems: ["digital roadmap", "foundational data exchange work"],
     summary:
       "Strong institutional capacity and digital roadmap work make data exchange, safeguards, and trust architecture the right focus.",
     strengths: ["institutional capacity", "service delivery base", "digital roadmap"],
@@ -438,6 +458,10 @@ export const countries: CountryProfile[] = [
     name: "Tanzania",
     region: "East Africa",
     maturity: "Scaling",
+    readiness: 60,
+    relevantDpgs: ["Mojaloop", "OpenG2P", "OpenSPP", "DHIS2"],
+    priorityUseCases: ["Instant payments", "Farmer support", "Health access"],
+    publicSystems: ["instant payment momentum", "mobile money ecosystem"],
     summary:
       "Interoperable payments momentum makes Tanzania a strong example for payments-linked public service delivery.",
     strengths: ["instant payments", "mobile money", "regional relevance"],
@@ -448,6 +472,111 @@ export const countries: CountryProfile[] = [
       { label: "Registry quality", value: 54, note: "needs mapping" },
       { label: "API readiness", value: 55, note: "payments-first opportunity" },
       { label: "Safeguards maturity", value: 48, note: "show user protections" },
+    ],
+  },
+  {
+    id: "kenya",
+    name: "Kenya",
+    region: "East Africa",
+    maturity: "Scaling",
+    readiness: 66,
+    relevantDpgs: ["Mojaloop", "OpenSPP", "OpenFn", "ODK"],
+    priorityUseCases: ["Financial inclusion", "Farmer support", "MSME services"],
+    publicSystems: ["mobile money ecosystem", "digital government services"],
+    summary:
+      "Kenya is useful for showing how payment reach and private innovation can connect to public-service DPI use cases.",
+    strengths: ["payments ecosystem", "digital entrepreneurship", "service demand"],
+    gaps: ["registry integration", "public API evidence", "cross-agency safeguards"],
+    metrics: [
+      { label: "Identity readiness", value: 69, note: "coverage and verification path" },
+      { label: "Payment reach", value: 86, note: "strong payment ecosystem" },
+      { label: "Registry quality", value: 58, note: "needs use-case mapping" },
+      { label: "API readiness", value: 60, note: "integration potential" },
+      { label: "Safeguards maturity", value: 55, note: "trust layer to validate" },
+    ],
+  },
+  {
+    id: "ghana",
+    name: "Ghana",
+    region: "West Africa",
+    maturity: "Building",
+    readiness: 57,
+    relevantDpgs: ["MOSIP", "Mojaloop", "OpenG2P", "Open Contracting"],
+    priorityUseCases: ["Identity", "Payments", "Public procurement"],
+    publicSystems: ["digital identity ecosystem", "payments interoperability priorities"],
+    summary:
+      "Ghana is a strong candidate for demonstrating identity, payments, and public service integration patterns.",
+    strengths: ["identity foundations", "financial services", "institutional capacity"],
+    gaps: ["verified DPG mapping", "social registry integration", "audit visibility"],
+    metrics: [
+      { label: "Identity readiness", value: 70, note: "identity base to map" },
+      { label: "Payment reach", value: 65, note: "interoperability opportunity" },
+      { label: "Registry quality", value: 54, note: "programme alignment needed" },
+      { label: "API readiness", value: 50, note: "evidence to collect" },
+      { label: "Safeguards maturity", value: 52, note: "public trust review" },
+    ],
+  },
+  {
+    id: "egypt",
+    name: "Egypt",
+    region: "North Africa",
+    maturity: "Building",
+    readiness: 59,
+    relevantDpgs: ["OpenFn", "OpenFisca", "Open Contracting", "DHIS2"],
+    priorityUseCases: ["Service delivery", "Benefits", "Health data"],
+    publicSystems: ["digital government services", "large-scale public administration"],
+    summary:
+      "Egypt is useful for showing how large public administration systems can be assessed for open standards and interoperability.",
+    strengths: ["scale", "public administration capacity", "service delivery base"],
+    gaps: ["open-source fit validation", "standards mapping", "data exchange governance"],
+    metrics: [
+      { label: "Identity readiness", value: 68, note: "national systems to map" },
+      { label: "Payment reach", value: 58, note: "benefit flows to validate" },
+      { label: "Registry quality", value: 61, note: "large administrative base" },
+      { label: "API readiness", value: 52, note: "interoperability review needed" },
+      { label: "Safeguards maturity", value: 55, note: "governance mapping needed" },
+    ],
+  },
+  {
+    id: "sierra-leone",
+    name: "Sierra Leone",
+    region: "West Africa",
+    maturity: "Early",
+    readiness: 43,
+    relevantDpgs: ["OpenCRVS", "OpenG2P", "ODK", "OpenFn"],
+    priorityUseCases: ["Civil registration", "Social protection", "Health access"],
+    publicSystems: ["digital transformation priorities", "service delivery needs"],
+    summary:
+      "Sierra Leone is a useful early-stage profile for showing how AA4DPI can turn priorities into an investment-ready stack.",
+    strengths: ["policy momentum", "partner interest", "high-value use cases"],
+    gaps: ["foundational coverage", "implementation capacity", "financing readiness"],
+    metrics: [
+      { label: "Identity readiness", value: 45, note: "foundational work needed" },
+      { label: "Payment reach", value: 38, note: "inclusive rails to assess" },
+      { label: "Registry quality", value: 41, note: "programme data fragmented" },
+      { label: "API readiness", value: 30, note: "early architecture stage" },
+      { label: "Safeguards maturity", value: 44, note: "design from start" },
+    ],
+  },
+  {
+    id: "morocco",
+    name: "Morocco",
+    region: "North Africa",
+    maturity: "Building",
+    readiness: 61,
+    relevantDpgs: ["X-Road", "OpenFn", "OpenFisca", "Open Contracting"],
+    priorityUseCases: ["Digital administration", "Benefits", "MSME services"],
+    publicSystems: ["digital administration", "public service modernization"],
+    summary:
+      "Morocco is useful for showing how administrative reform, digital services, and standards can be mapped into DPI layers.",
+    strengths: ["administrative capacity", "digital reform", "regional leadership"],
+    gaps: ["DPG fit validation", "API visibility", "cross-border use cases"],
+    metrics: [
+      { label: "Identity readiness", value: 67, note: "foundations to verify" },
+      { label: "Payment reach", value: 62, note: "service flows to map" },
+      { label: "Registry quality", value: 59, note: "registry interoperability" },
+      { label: "API readiness", value: 55, note: "public integration evidence" },
+      { label: "Safeguards maturity", value: 60, note: "governance review" },
     ],
   },
 ];

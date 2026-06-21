@@ -30,7 +30,7 @@ function FlowStep({
   body: string;
 }) {
   return (
-    <div className="rounded-md border bg-sky-50/70 p-3 text-xs">
+    <div className="rounded-md border bg-secondary/70 p-3 text-xs">
       <div className="mb-2 flex items-center gap-2 font-semibold">
         <span className="flex size-5 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
           {n}
@@ -103,7 +103,7 @@ export default function DataExchangePage() {
           </div>
         </Lane>
 
-        <div className="absolute left-1/2 top-[8.5rem] hidden -translate-x-1/2 items-center gap-2 text-sky-500 lg:flex">
+        <div className="absolute left-1/2 top-[8.5rem] hidden -translate-x-1/2 items-center gap-2 text-primary lg:flex">
           <ArrowRight className="size-4" />
           <ArrowRight className="size-4" />
         </div>
@@ -113,7 +113,7 @@ export default function DataExchangePage() {
         </div>
       </section>
 
-      <section className="mx-auto grid w-full max-w-md place-items-center rounded-lg border bg-sky-50/60 p-4 text-center shadow-sm">
+      <section className="mx-auto grid w-full max-w-md place-items-center rounded-lg border bg-secondary/60 p-4 text-center shadow-sm">
         <ArrowDown className="mb-2 size-4 text-muted-foreground" />
         <div className="text-xs font-semibold">Audit Log</div>
         <p className="mt-1 text-xs text-muted-foreground">

@@ -17,6 +17,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { countries } from "@/lib/data";
 
 type NavItem = {
   title: string;
@@ -72,7 +73,19 @@ const navGroups: NavGroup[] = [
   },
   {
     title: "Country Readiness",
-    items: [{ title: "Country Overview", url: "/countries/rwanda" }],
+    items: [
+      { title: "Country Overview", url: "/countries" },
+      ...countries
+        .filter((country) =>
+          ["kenya", "rwanda", "nigeria", "south-africa", "egypt"].includes(
+            country.id
+          )
+        )
+        .map((country) => ({
+          title: country.name,
+          url: `/countries/${country.id}`,
+        })),
+    ],
   },
 ];
 

@@ -39,7 +39,7 @@ export default function ApiContractPage() {
           <div className="grid gap-4 text-xs">
             <div>
               <div className="font-semibold">Endpoint</div>
-              <div className="mt-1 rounded bg-sky-50 px-2 py-1 text-primary">
+              <div className="mt-1 rounded bg-secondary px-2 py-1 text-primary">
                 GET /v1/verify-registration
               </div>
             </div>

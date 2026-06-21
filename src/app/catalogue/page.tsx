@@ -58,11 +58,11 @@ export default function CataloguePage() {
             </tr>
           </thead>
           <tbody>
-            {dpgs.slice(0, 6).map((dpg) => (
+            {dpgs.map((dpg) => (
               <tr key={dpg.id} className="border-b last:border-b-0">
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
-                    <div className="flex size-7 items-center justify-center rounded-md bg-sky-50 text-[10px] font-semibold text-primary">
+                    <div className="flex size-7 items-center justify-center rounded-md bg-secondary text-[10px] font-semibold text-primary">
                       {dpg.name.slice(0, 2)}
                     </div>
                     <span className="font-semibold">{dpg.name}</span>
@@ -74,7 +74,7 @@ export default function CataloguePage() {
                 </td>
                 <td className="px-4 py-3">
                   <Badge variant="secondary" className="bg-emerald-50 text-emerald-700">
-                    Mature
+                    {dpg.maturity}
                   </Badge>
                 </td>
                 <td className="px-4 py-3">
@@ -89,22 +89,8 @@ export default function CataloguePage() {
       </section>
 
       <div className="flex items-center justify-between text-xs text-muted-foreground">
-        <span>Showing 6 of {dpgs.length} DPGs</span>
-        <div className="flex gap-1">
-          {[1, 2, 3, 4, 5].map((page) => (
-            <div
-              key={page}
-              className={`flex size-7 items-center justify-center rounded-md border ${
-                page === 1 ? "bg-primary text-primary-foreground" : "bg-background"
-              }`}
-            >
-              {page}
-            </div>
-          ))}
-          <div className="flex size-7 items-center justify-center rounded-md border">
-            ...
-          </div>
-        </div>
+        <span>Showing {dpgs.length} DPGs</span>
+        <span>Open-source tools and standards to evaluate by use case</span>
       </div>
     </main>
   );

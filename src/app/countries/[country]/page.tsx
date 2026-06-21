@@ -1,69 +1,94 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Download } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { countries } from "@/lib/data";
+import { countries, dpgs } from "@/lib/data";
 
 export function generateStaticParams() {
   return countries.map((country) => ({ country: country.id }));
 }
 
+function metricValue(country: (typeof countries)[number], keyword: string) {
+  return (
+    country.metrics.find((metric) =>
+      metric.label.toLowerCase().includes(keyword)
+    )?.value ?? country.readiness
+  );
+}
+
 function MetricCard({
   label,
   value,
-  tone = "blue",
+  note,
 }: {
   label: string;
-  value: string;
-  tone?: "blue" | "amber" | "green";
+  value: number;
+  note: string;
 }) {
-  const color =
-    tone === "green"
-      ? "text-emerald-600"
-      : tone === "amber"
-        ? "text-amber-600"
-        : "text-primary";
-
   return (
     <div className="rounded-lg border bg-background p-4 shadow-sm">
       <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
         {label}
       </div>
-      <div className={`mt-2 text-3xl font-semibold ${color}`}>{value}</div>
-      <div className="mt-3 h-9 rounded-md bg-gradient-to-r from-sky-50 via-background to-sky-100" />
+      <div className="mt-2 text-3xl font-semibold text-primary">{value}%</div>
+      <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-secondary">
+        <div className="h-full rounded-full bg-primary" style={{ width: `${value}%` }} />
+      </div>
+      <div className="mt-3 text-xs leading-5 text-muted-foreground">{note}</div>
     </div>
   );
 }
 
-function LineChart() {
+function ReadinessChart({ values }: { values: number[] }) {
+  const points = values
+    .map((value, index) => {
+      const x = (index / Math.max(values.length - 1, 1)) * 420;
+      const y = 112 - value;
+      return `${x},${y}`;
+    })
+    .join(" ");
+
   return (
-    <div className="h-48 rounded-lg border bg-background p-4 shadow-sm">
-      <div className="mb-4 text-xs font-semibold">Trend (last 12 months)</div>
-      <div className="grid h-32 grid-rows-4 gap-0 border-l border-muted pl-2">
-        {[0, 1, 2, 3].map((line) => (
-          <div key={line} className="border-t border-dashed" />
-        ))}
+    <div className="rounded-lg border bg-background p-4 shadow-sm">
+      <div className="mb-4 text-xs font-semibold">DPI readiness profile</div>
+      <div className="relative h-48">
+        <div className="absolute inset-0 grid grid-rows-4">
+          {[0, 1, 2, 3].map((line) => (
+            <div key={line} className="border-t border-dashed" />
+          ))}
+        </div>
+        <svg
+          viewBox="0 0 420 120"
+          className="relative h-full w-full overflow-visible text-primary"
+        >
+          <polyline
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="3"
+            points={points}
+          />
+          {values.map((value, index) => {
+            const x = (index / Math.max(values.length - 1, 1)) * 420;
+            const y = 112 - value;
+
+            return (
+              <circle
+                key={`${value}-${index}`}
+                cx={x}
+                cy={y}
+                fill="white"
+                r="4"
+                stroke="currentColor"
+                strokeWidth="2"
+              />
+            );
+          })}
+        </svg>
       </div>
-      <svg viewBox="0 0 420 120" className="-mt-32 h-32 w-full overflow-visible">
-        <polyline
-          fill="none"
-          stroke="#2563eb"
-          strokeWidth="3"
-          points="0,80 45,62 90,70 135,48 180,58 225,36 270,50 315,42 360,34 420,28"
-        />
-        <polyline
-          fill="none"
-          stroke="#0ea5e9"
-          strokeWidth="2"
-          points="0,95 45,88 90,76 135,72 180,60 225,68 270,58 315,62 360,54 420,48"
-        />
-        <polyline
-          fill="none"
-          stroke="#d946ef"
-          strokeWidth="2"
-          points="0,106 45,100 90,98 135,94 180,88 225,92 270,84 315,86 360,82 420,78"
-        />
-      </svg>
     </div>
   );
 }
@@ -80,64 +105,143 @@ export default async function CountryPage({
     notFound();
   }
 
+  const relevantDpgs = country.relevantDpgs.map((name) => {
+    const match = dpgs.find((dpg) => dpg.name === name);
+    return {
+      name,
+      layer: match?.layer ?? "Operations",
+      description: match?.description ?? "Open-source tool to evaluate.",
+    };
+  });
+
+  const chartValues = country.metrics.map((metric) => metric.value);
+
   return (
     <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-8">
       <section className="flex items-start justify-between gap-4">
         <div>
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <Badge variant="secondary">{country.region}</Badge>
+            <Badge className="bg-emerald-50 text-emerald-700">
+              {country.maturity}
+            </Badge>
+          </div>
           <h1 className="text-2xl font-semibold tracking-tight">
             {country.name} DPI readiness
           </h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Snapshot of key indicators across DPI building blocks.
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
+            {country.summary}
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="text-xs">
-            Compare countries
+          <Button asChild variant="outline" size="sm" className="text-xs">
+            <Link href="/countries">Compare countries</Link>
           </Button>
-          <Button variant="outline" size="sm" className="text-xs">
-            {country.name}
+          <Button asChild size="sm" className="text-xs">
+            <Link href={`/builder?country=${country.id}`}>
+              Build stack
+              <ArrowRight className="size-3.5" />
+            </Link>
           </Button>
         </div>
       </section>
 
       <section className="grid gap-4 md:grid-cols-4">
-        <MetricCard label="Overall readiness" value="62%" />
-        <MetricCard label="DPI coverage" value="48%" />
-        <MetricCard label="API readiness" value="58%" tone="amber" />
-        <MetricCard label="Safeguards maturity" value="65%" tone="green" />
+        <MetricCard
+          label="Overall readiness"
+          note="Composite prototype score for this country page"
+          value={country.readiness}
+        />
+        <MetricCard
+          label="Identity readiness"
+          note="Ability to verify people or entities for service delivery"
+          value={metricValue(country, "identity")}
+        />
+        <MetricCard
+          label="Payment reach"
+          note="How usable payment rails may be for public services"
+          value={metricValue(country, "payment")}
+        />
+        <MetricCard
+          label="Safeguards maturity"
+          note="Privacy, redress, auditability, and trust signals"
+          value={metricValue(country, "safeguards")}
+        />
       </section>
 
-      <section className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+      <section className="grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
         <div className="rounded-lg border bg-background p-4 shadow-sm">
           <div className="mb-4 text-xs font-semibold">Building block snapshot</div>
           <div className="grid gap-4 text-xs">
-            {[
-              ["Identity coverage", "72%"],
-              ["Civil registration quality", "68%"],
-              ["Payment reach", "60%"],
-              ["Data exchange readiness", "56%"],
-              ["Trust & safeguards", "66%"],
-            ].map(([label, value]) => (
-              <div key={label} className="grid grid-cols-[11rem_1fr_3rem] items-center gap-3">
-                <span>{label}</span>
+            {country.metrics.map((metric) => (
+              <div
+                key={metric.label}
+                className="grid grid-cols-[10rem_1fr_3rem] items-center gap-3"
+              >
+                <span>{metric.label}</span>
                 <div className="h-1.5 overflow-hidden rounded-full bg-secondary">
-                  <div className="h-full rounded-full bg-emerald-500" style={{ width: value }} />
+                  <div
+                    className="h-full rounded-full bg-primary"
+                    style={{ width: `${metric.value}%` }}
+                  />
                 </div>
-                <span className="text-muted-foreground">{value}</span>
+                <span className="text-muted-foreground">{metric.value}%</span>
               </div>
             ))}
           </div>
         </div>
-        <LineChart />
+        <ReadinessChart values={chartValues} />
       </section>
 
-      <section className="rounded-lg border bg-background p-4 shadow-sm">
-        <div className="mb-3 text-xs font-semibold">Next steps</div>
-        <div className="grid gap-2 text-xs text-muted-foreground">
-          <div>○ Strengthen legal framework for data sharing</div>
-          <div>○ Expand digital ID coverage in rural areas</div>
-          <div>○ Onboard more agencies to data exchange layer</div>
+      <section className="grid gap-4 lg:grid-cols-[1fr_1fr]">
+        <div className="rounded-lg border bg-background p-4 shadow-sm">
+          <div className="mb-3 text-xs font-semibold">
+            Relevant open DPGs to evaluate
+          </div>
+          <div className="grid gap-3">
+            {relevantDpgs.map((dpg) => (
+              <div key={dpg.name} className="rounded-md border p-3">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="font-semibold">{dpg.name}</div>
+                  <Badge variant="secondary">{dpg.layer}</Badge>
+                </div>
+                <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                  {dpg.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid gap-4">
+          <div className="rounded-lg border bg-background p-4 shadow-sm">
+            <div className="mb-3 text-xs font-semibold">Priority use cases</div>
+            <div className="flex flex-wrap gap-2">
+              {country.priorityUseCases.map((item) => (
+                <Badge key={item} variant="secondary" className="rounded-md">
+                  {item}
+                </Badge>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-lg border bg-background p-4 shadow-sm">
+            <div className="mb-3 text-xs font-semibold">
+              Public systems or signals to validate
+            </div>
+            <div className="grid gap-2 text-xs text-muted-foreground">
+              {country.publicSystems.map((item) => (
+                <div key={item}>- {item}</div>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-lg border bg-background p-4 shadow-sm">
+            <div className="mb-3 text-xs font-semibold">Next validation work</div>
+            <div className="grid gap-2 text-xs text-muted-foreground">
+              {country.gaps.map((item) => (
+                <div key={item}>- {item}</div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
