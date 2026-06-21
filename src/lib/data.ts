@@ -75,6 +75,21 @@ export type CountryProfile = {
     systems: string[];
     outcome: string;
   }[];
+  agencyFlow?: {
+    title: string;
+    summary: string;
+    nodes: {
+      id: string;
+      label: string;
+      type: "lead" | "agency" | "system" | "rail" | "safeguard";
+      description: string;
+    }[];
+    flows: {
+      from: string;
+      to: string;
+      label: string;
+    }[];
+  };
 };
 
 export type Standard = {
@@ -925,6 +940,56 @@ export const countries: CountryProfile[] = [
           "Facilities can record patient care, track supply needs, and produce trusted indicators with fewer parallel reporting systems.",
       },
     ],
+    agencyFlow: {
+      title: "Land, forest, and service-delivery data flow",
+      summary:
+        "Draft flow inferred from the Zambia AA4DPI materials: Smart Zambia convenes the service bus pattern while land, forest, health, identity, and payment systems remain owned by their respective institutions.",
+      nodes: [
+        {
+          id: "smart-zambia",
+          label: "Smart Zambia Institute",
+          type: "lead",
+          description: "Central digital convener and Government Service Bus steward.",
+        },
+        {
+          id: "zilas",
+          label: "ZILAS",
+          type: "system",
+          description: "Land administration records, title data, and customary land workflows.",
+        },
+        {
+          id: "forest",
+          label: "Timber Traceability System",
+          type: "system",
+          description: "Permit, provenance, revenue, and forest-product traceability records.",
+        },
+        {
+          id: "cfmg",
+          label: "Community Forest Management Groups",
+          type: "agency",
+          description: "Community forest records, stewardship claims, and local reporting.",
+        },
+        {
+          id: "health",
+          label: "Smart Care Pro / DHIS2 / eLMIS",
+          type: "system",
+          description: "Patient, facility, medicine, and health-reporting systems.",
+        },
+        {
+          id: "payments",
+          label: "Banks, MTN, Airtel, Zamtel",
+          type: "rail",
+          description: "Payment and reconciliation rails for public-service flows.",
+        },
+      ],
+      flows: [
+        { from: "zilas", to: "smart-zambia", label: "Land record or tenure check" },
+        { from: "forest", to: "smart-zambia", label: "Permit, traceability, revenue status" },
+        { from: "cfmg", to: "smart-zambia", label: "Community forest and eligibility records" },
+        { from: "health", to: "smart-zambia", label: "Health record or reporting query" },
+        { from: "smart-zambia", to: "payments", label: "Approved payment or revenue event" },
+      ],
+    },
   },
   {
     id: "ethiopia",
@@ -1032,6 +1097,63 @@ export const countries: CountryProfile[] = [
           "Young workers can prove skills, access jobs or finance, and build portable records across public and private services.",
       },
     ],
+    agencyFlow: {
+      title: "MESOB service orchestration flow",
+      summary:
+        "Draft flow inferred from Ethiopia AA4DPI materials: MESOB acts as the citizen-facing service gateway while ministries keep their backend registries and exchange data through an API-driven integration layer.",
+      nodes: [
+        {
+          id: "pmo-mof",
+          label: "PMO / Ministry of Finance",
+          type: "lead",
+          description: "Political mandate, fiscal accountability, and programme sign-off.",
+        },
+        {
+          id: "mesob",
+          label: "MESOB",
+          type: "system",
+          description: "One-stop public-service gateway and service orchestration layer.",
+        },
+        {
+          id: "fayda",
+          label: "Fayda Digital ID",
+          type: "system",
+          description: "Authentication and remote identity verification for service users.",
+        },
+        {
+          id: "apisix",
+          label: "APISIX integration gateway",
+          type: "system",
+          description: "API routing, authorization, audit logging, and ministry data access.",
+        },
+        {
+          id: "agriculture",
+          label: "Ministry of Agriculture / OpenAgriNet",
+          type: "agency",
+          description: "Agriculture records, permits, farmer services, and sector workflows.",
+        },
+        {
+          id: "nbemoney",
+          label: "NBE / MESOB Pay",
+          type: "rail",
+          description: "Regulatory oversight and future sovereign payment gateway or wallet.",
+        },
+        {
+          id: "csc",
+          label: "Community Service Centers",
+          type: "agency",
+          description: "Assisted access points for people who cannot use digital channels alone.",
+        },
+      ],
+      flows: [
+        { from: "csc", to: "mesob", label: "Service request or assisted enrollment" },
+        { from: "mesob", to: "fayda", label: "Authenticate person or business" },
+        { from: "mesob", to: "apisix", label: "Route approved service query" },
+        { from: "apisix", to: "agriculture", label: "Fetch permit, farmer, or sector record" },
+        { from: "mesob", to: "nbemoney", label: "Trigger disbursement or payment event" },
+        { from: "pmo-mof", to: "mesob", label: "Mandate, budget, operating model" },
+      ],
+    },
   },
   {
     id: "sierra-leone",
@@ -1135,6 +1257,63 @@ export const countries: CountryProfile[] = [
           "Young workers and MSMEs can build trusted participation records instead of staying invisible to formal finance and public programmes.",
       },
     ],
+    agencyFlow: {
+      title: "Procurement-to-payment data loop",
+      summary:
+        "This is the clearest flow in the documents: MoCTI and Ministry of Finance use the Government Service Bus to connect CRVS, eGP, IFMIS, and T24 without forcing agencies to give up their own systems.",
+      nodes: [
+        {
+          id: "mocti",
+          label: "MoCTI / DSTI",
+          type: "lead",
+          description: "Digital transformation lead, interoperability governance, and technical safeguards.",
+        },
+        {
+          id: "mof",
+          label: "Ministry of Finance",
+          type: "lead",
+          description: "Fiscal backbone, recurrent-cost model, IFMIS, and sustainability anchor.",
+        },
+        {
+          id: "gsb",
+          label: "Government Service Bus / X-Road",
+          type: "system",
+          description: "Secure data-exchange layer for approved cross-agency checks.",
+        },
+        {
+          id: "crvs",
+          label: "CRVS / NCRA",
+          type: "system",
+          description: "Civil registration and identity validation token source.",
+        },
+        {
+          id: "egp",
+          label: "eGP / NPPA",
+          type: "system",
+          description: "Electronic procurement, supplier, contract, and award records.",
+        },
+        {
+          id: "ifmis",
+          label: "IFMIS",
+          type: "system",
+          description: "Treasury approval, budget execution, and payment instruction.",
+        },
+        {
+          id: "t24",
+          label: "Temenos T24 / Bank of Sierra Leone",
+          type: "rail",
+          description: "Banking settlement confirmation and payment status.",
+        },
+      ],
+      flows: [
+        { from: "mocti", to: "gsb", label: "Governance, standards, sandbox rules" },
+        { from: "mof", to: "gsb", label: "Fiscal use case and operating model" },
+        { from: "crvs", to: "gsb", label: "Identity validation token" },
+        { from: "egp", to: "gsb", label: "Supplier and contract-award status" },
+        { from: "gsb", to: "ifmis", label: "Approved payment instruction" },
+        { from: "ifmis", to: "t24", label: "Settlement request and confirmation" },
+      ],
+    },
   },
   {
     id: "morocco",

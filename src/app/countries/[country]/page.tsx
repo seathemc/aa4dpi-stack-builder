@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Download, Layers3 } from "lucide-react";
 
+import { AgencyFlowDiagram } from "@/components/agency-flow-diagram";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -69,6 +70,71 @@ function DataCard({
       <p className="mt-2 text-xs leading-5 text-muted-foreground">{note}</p>
       <div className="mt-3 text-[10px] text-muted-foreground">
         Source: {source}
+      </div>
+    </div>
+  );
+}
+
+function compactMetricValue(value: string) {
+  if (value === "No recent value") return null;
+  const cleaned = value.replace(/[$,%]/g, "").replace(/M|B| \/ 100 people/g, "");
+  const parsed = Number.parseFloat(cleaned);
+  if (Number.isNaN(parsed)) return null;
+  return parsed;
+}
+
+function CountryChartCard({
+  title,
+  label,
+  selectedCountryId,
+  getValue,
+}: {
+  title: string;
+  label: string;
+  selectedCountryId: string;
+  getValue: (country: (typeof cohortCountries)[number]) => string | undefined;
+}) {
+  const values = cohortCountries
+    .map((item) => ({
+      id: item.id,
+      name: item.name,
+      flag: item.flag,
+      valueLabel: getValue(item) ?? "No data",
+      value: compactMetricValue(getValue(item) ?? "No recent value"),
+    }))
+    .filter((item) => item.value !== null);
+  const max = Math.max(...values.map((item) => item.value ?? 0), 1);
+
+  return (
+    <div className="rounded-lg border bg-background p-4 shadow-sm">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <div className="text-sm font-semibold">{title}</div>
+          <div className="mt-1 text-xs text-muted-foreground">{label}</div>
+        </div>
+      </div>
+      <div className="mt-5 grid gap-3">
+        {values.map((item) => {
+          const width = `${Math.max(((item.value ?? 0) / max) * 100, 4)}%`;
+          const isSelected = item.id === selectedCountryId;
+
+          return (
+            <div key={item.id} className="grid gap-1.5">
+              <div className="flex items-center justify-between gap-3 text-xs">
+                <span className={isSelected ? "font-semibold" : "text-muted-foreground"}>
+                  {item.flag} {item.name}
+                </span>
+                <span className="font-medium">{item.valueLabel}</span>
+              </div>
+              <div className="h-2 overflow-hidden rounded-full bg-secondary">
+                <div
+                  className={isSelected ? "h-full rounded-full bg-primary" : "h-full rounded-full bg-sky-200"}
+                  style={{ width }}
+                />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -168,11 +234,11 @@ export default async function CountryPage({
       </section>
 
       <Tabs defaultValue="readiness" className="gap-5">
-        <TabsList className="flex h-auto w-full flex-nowrap justify-start gap-1 rounded-lg p-1 sm:w-fit">
-          <TabsTrigger value="readiness">Readiness</TabsTrigger>
-          <TabsTrigger value="data">Country data</TabsTrigger>
-          <TabsTrigger value="use-cases">Use cases</TabsTrigger>
-          <TabsTrigger value="systems">Systems</TabsTrigger>
+        <TabsList className="flex h-auto w-full flex-nowrap justify-start gap-1 overflow-x-auto rounded-lg p-1 sm:w-fit">
+          <TabsTrigger value="readiness" className="shrink-0">Readiness</TabsTrigger>
+          <TabsTrigger value="data" className="shrink-0">Country data</TabsTrigger>
+          <TabsTrigger value="use-cases" className="shrink-0">Use cases</TabsTrigger>
+          <TabsTrigger value="systems" className="shrink-0">Systems</TabsTrigger>
         </TabsList>
 
         <TabsContent value="readiness" className="space-y-5">
@@ -305,7 +371,35 @@ export default async function CountryPage({
         </TabsContent>
 
         <TabsContent value="data" className="space-y-4">
-          <section className="grid gap-4 md:grid-cols-3">
+          <section className="grid gap-4 lg:grid-cols-3">
+            <CountryChartCard
+              title="Population"
+              label="Cohort 1 comparison"
+              selectedCountryId={country.id}
+              getValue={(item) =>
+                item.countryData?.find((datum) => datum.label === "Population")
+                  ?.value
+              }
+            />
+            <CountryChartCard
+              title="GDP"
+              label="Current US dollars"
+              selectedCountryId={country.id}
+              getValue={(item) =>
+                item.countryData?.find((datum) => datum.label === "GDP")?.value
+              }
+            />
+            <CountryChartCard
+              title="Internet use"
+              label="Individuals using the internet"
+              selectedCountryId={country.id}
+              getValue={(item) =>
+                item.countryData?.find((datum) => datum.label === "Internet use")
+                  ?.value
+              }
+            />
+          </section>
+          <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {country.countryData?.map((item) => (
               <DataCard key={item.label} {...item} />
             ))}
@@ -375,6 +469,10 @@ export default async function CountryPage({
         </TabsContent>
 
         <TabsContent value="systems">
+          <div className="space-y-4">
+          {country.agencyFlow ? (
+            <AgencyFlowDiagram flow={country.agencyFlow} />
+          ) : null}
           <section className="grid gap-4 lg:grid-cols-[1fr_1fr]">
             <div className="rounded-lg border bg-background p-4 shadow-sm">
               <div className="mb-3 text-xs font-semibold">
@@ -434,6 +532,7 @@ export default async function CountryPage({
               </div>
             </div>
           </section>
+          </div>
         </TabsContent>
       </Tabs>
 

@@ -32,7 +32,7 @@ function FlowStep({
   return (
     <div className="rounded-md border bg-secondary/70 p-3 text-xs">
       <div className="mb-2 flex items-center gap-2 font-semibold">
-        <span className="flex size-5 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
+        <span className="flex size-5 items-center justify-center rounded-full bg-primary text-[10px] text-white">
           {n}
         </span>
         {title}

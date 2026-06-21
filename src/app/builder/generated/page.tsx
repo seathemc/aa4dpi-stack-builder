@@ -11,6 +11,7 @@ import {
   Sparkles,
 } from "lucide-react";
 
+import { AgencyFlowDiagram } from "@/components/agency-flow-diagram";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -116,12 +117,12 @@ export default async function GeneratedStackPage({
       </section>
 
       <Tabs defaultValue="overview" className="gap-5">
-        <TabsList className="flex h-auto w-full flex-nowrap justify-start gap-1 rounded-lg p-1 sm:w-fit">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="architecture">Architecture</TabsTrigger>
-          <TabsTrigger value="integrations">Integrations</TabsTrigger>
-          <TabsTrigger value="checks">Checks</TabsTrigger>
-          <TabsTrigger value="kit">Starter kit</TabsTrigger>
+        <TabsList className="flex h-auto w-full flex-nowrap justify-start gap-1 overflow-x-auto rounded-lg p-1 sm:w-fit">
+          <TabsTrigger value="overview" className="shrink-0">Overview</TabsTrigger>
+          <TabsTrigger value="architecture" className="shrink-0">Architecture</TabsTrigger>
+          <TabsTrigger value="integrations" className="shrink-0">Integrations</TabsTrigger>
+          <TabsTrigger value="checks" className="shrink-0">Checks</TabsTrigger>
+          <TabsTrigger value="kit" className="shrink-0">Starter kit</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-5">
@@ -243,7 +244,11 @@ export default async function GeneratedStackPage({
           ) : null}
         </TabsContent>
 
-        <TabsContent value="architecture">
+        <TabsContent value="architecture" className="space-y-4">
+          {stack.country.agencyFlow ? (
+            <AgencyFlowDiagram flow={stack.country.agencyFlow} />
+          ) : null}
+
           <section className="grid gap-3">
             {stack.architectureRows.map((row, index) => (
               <article
@@ -251,7 +256,7 @@ export default async function GeneratedStackPage({
                 className="grid gap-4 rounded-lg border bg-background p-4 shadow-sm sm:grid-cols-2 lg:grid-cols-[1.1fr_0.9fr_0.9fr_1.15fr]"
               >
                 <div className="flex gap-3">
-                  <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">
+                  <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-white">
                     {index + 1}
                   </div>
                   <div>

@@ -109,7 +109,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild className="gap-2">
               <Link href="/">
-                <div className="flex aspect-square size-7 items-center justify-center rounded-md bg-primary text-[10px] font-semibold text-primary-foreground">
+                <div className="flex aspect-square size-7 items-center justify-center rounded-md bg-primary text-[10px] font-semibold text-white">
                   AA
                 </div>
                 <div className="flex flex-col gap-0.5 leading-none">
