@@ -4,6 +4,7 @@ import { ArrowRight, Download, Layers3 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cohortCountries, cohortCountryIds, countries, dpgs } from "@/lib/data";
 
 export function generateStaticParams() {
@@ -34,9 +35,44 @@ function MetricCard({
       </div>
       <div className="mt-2 text-3xl font-semibold text-primary">{value}%</div>
       <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-secondary">
-        <div className="h-full rounded-full bg-primary" style={{ width: `${value}%` }} />
+        <div
+          className="h-full rounded-full bg-primary"
+          style={{ width: `${value}%` }}
+        />
       </div>
       <div className="mt-3 text-xs leading-5 text-muted-foreground">{note}</div>
+    </div>
+  );
+}
+
+function DataCard({
+  label,
+  value,
+  year,
+  source,
+  note,
+}: {
+  label: string;
+  value: string;
+  year: string;
+  source: string;
+  note: string;
+}) {
+  return (
+    <div className="rounded-lg border bg-background p-4 shadow-sm">
+      <div className="flex items-center justify-between gap-3">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+          {label}
+        </div>
+        <Badge variant="secondary" className="rounded-md">
+          {year}
+        </Badge>
+      </div>
+      <div className="mt-3 text-2xl font-semibold text-foreground">{value}</div>
+      <p className="mt-2 text-xs leading-5 text-muted-foreground">{note}</p>
+      <div className="mt-3 text-[10px] text-muted-foreground">
+        Source: {source}
+      </div>
     </div>
   );
 }
@@ -184,175 +220,233 @@ export default async function CountryPage({
         </div>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-4">
-        <MetricCard
-          label="Overall readiness"
-          note="Composite prototype score for this country page"
-          value={country.readiness}
-        />
-        <MetricCard
-          label="Identity readiness"
-          note="Ability to verify people or entities for service delivery"
-          value={metricValue(country, "identity")}
-        />
-        <MetricCard
-          label="Payment reach"
-          note="How usable payment rails may be for public services"
-          value={metricValue(country, "payment")}
-        />
-        <MetricCard
-          label="Safeguards maturity"
-          note="Privacy, redress, auditability, and trust signals"
-          value={metricValue(country, "safeguards")}
-        />
-      </section>
+      <Tabs defaultValue="readiness" className="gap-5">
+        <TabsList className="flex h-auto w-full flex-wrap justify-start gap-1 rounded-lg p-1 sm:w-fit">
+          <TabsTrigger value="readiness">Readiness</TabsTrigger>
+          <TabsTrigger value="data">Country data</TabsTrigger>
+          <TabsTrigger value="use-cases">Use cases</TabsTrigger>
+          <TabsTrigger value="systems">Systems</TabsTrigger>
+        </TabsList>
 
-      {country.implementationFocus?.length ? (
-        <section className="grid gap-3 md:grid-cols-3">
-          {country.implementationFocus.map((item) => (
-            <div
-              key={item.label}
-              className="rounded-lg border bg-background p-4 shadow-sm"
-            >
-              <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
-                {item.label}
+        <TabsContent value="readiness" className="space-y-5">
+          <section className="grid gap-4 md:grid-cols-4">
+            <MetricCard
+              label="Overall readiness"
+              note="Prototype composite score from the five visible DPI dimensions below"
+              value={country.readiness}
+            />
+            <MetricCard
+              label="Identity readiness"
+              note="Ability to verify people or entities for service delivery"
+              value={metricValue(country, "identity")}
+            />
+            <MetricCard
+              label="Payment reach"
+              note="How usable payment rails may be for public services"
+              value={metricValue(country, "payment")}
+            />
+            <MetricCard
+              label="Safeguards maturity"
+              note="Privacy, redress, auditability, and trust signals"
+              value={metricValue(country, "safeguards")}
+            />
+          </section>
+
+          {country.implementationFocus?.length ? (
+            <section className="grid gap-3 md:grid-cols-3">
+              {country.implementationFocus.map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-lg border bg-background p-4 shadow-sm"
+                >
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+                    {item.label}
+                  </div>
+                  <p className="mt-2 text-sm leading-6">{item.value}</p>
+                </div>
+              ))}
+            </section>
+          ) : null}
+
+          <section className="grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
+            <div className="rounded-lg border bg-background p-4 shadow-sm">
+              <div className="mb-4 text-xs font-semibold">
+                Building block snapshot
               </div>
-              <p className="mt-2 text-sm leading-6">{item.value}</p>
-            </div>
-          ))}
-        </section>
-      ) : null}
-
-      <section className="grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="rounded-lg border bg-background p-4 shadow-sm">
-          <div className="mb-4 text-xs font-semibold">Building block snapshot</div>
-          <div className="grid gap-4 text-xs">
-            {country.metrics.map((metric) => (
-              <div
-                key={metric.label}
-                className="grid grid-cols-[10rem_1fr_3rem] items-center gap-3"
-              >
-                <span>{metric.label}</span>
-                <div className="h-1.5 overflow-hidden rounded-full bg-secondary">
+              <div className="grid gap-4 text-xs">
+                {country.metrics.map((metric) => (
                   <div
-                    className="h-full rounded-full bg-primary"
-                    style={{ width: `${metric.value}%` }}
-                  />
-                </div>
-                <span className="text-muted-foreground">{metric.value}%</span>
+                    key={metric.label}
+                    className="grid grid-cols-[10rem_1fr_3rem] items-center gap-3"
+                  >
+                    <span>{metric.label}</span>
+                    <div className="h-1.5 overflow-hidden rounded-full bg-secondary">
+                      <div
+                        className="h-full rounded-full bg-primary"
+                        style={{ width: `${metric.value}%` }}
+                      />
+                    </div>
+                    <span className="text-muted-foreground">
+                      {metric.value}%
+                    </span>
+                  </div>
+                ))}
               </div>
+            </div>
+            <ReadinessChart values={chartValues} />
+          </section>
+
+          <section className="rounded-lg border bg-background p-4 shadow-sm">
+            <div className="text-sm font-semibold">
+              Where the readiness score comes from
+            </div>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
+              The readiness score is a prototype AA4DPI assessment, not an
+              official external index. It is the rounded average of five
+              visible dimensions: identity readiness, payment reach, registry
+              quality, API/data-exchange readiness, and safeguards maturity.
+              The dimension scores are curated from the Cohort 1 programme
+              materials and should be replaced with a validated methodology as
+              the programme matures.
+            </p>
+          </section>
+        </TabsContent>
+
+        <TabsContent value="data" className="space-y-4">
+          <section className="grid gap-4 md:grid-cols-3">
+            {country.countryData?.map((item) => (
+              <DataCard key={item.label} {...item} />
             ))}
-          </div>
-        </div>
-        <ReadinessChart values={chartValues} />
-      </section>
+          </section>
+          <p className="text-xs leading-5 text-muted-foreground">
+            Country data uses World Bank indicators returned by the API in June
+            2026. Values are rounded for dashboard readability; 2024 is used
+            where available and 2023 is used where 2024 is missing.
+          </p>
+        </TabsContent>
 
-      <section className="grid gap-4 lg:grid-cols-[1fr_1fr]">
-        <div className="rounded-lg border bg-background p-4 shadow-sm">
-          <div className="mb-3 text-xs font-semibold">
-            Relevant open DPGs to evaluate
-          </div>
-          <div className="grid gap-3">
-            {relevantDpgs.map((dpg) => (
-              <div key={dpg.name} className="rounded-md border p-3">
-                <div className="flex items-center justify-between gap-3">
-                  <div className="font-semibold">{dpg.name}</div>
-                  <Badge variant="secondary">{dpg.layer}</Badge>
+        <TabsContent value="use-cases">
+          {country.countryUseCases?.length ? (
+            <section className="rounded-lg border bg-background p-4 shadow-sm">
+              <div className="mb-4 flex items-center gap-2">
+                <Layers3 className="size-4 text-primary" />
+                <div>
+                  <div className="text-sm font-semibold">
+                    Country implementation examples
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Concrete service flows that can anchor a country-specific
+                    DPI build.
+                  </p>
                 </div>
-                <p className="mt-2 text-xs leading-5 text-muted-foreground">
-                  {dpg.description}
-                </p>
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid gap-4">
-          <div className="rounded-lg border bg-background p-4 shadow-sm">
-            <div className="mb-3 text-xs font-semibold">Priority use cases</div>
-            <div className="flex flex-wrap gap-2">
-              {country.priorityUseCases.map((item) => (
-                <Badge key={item} variant="secondary" className="rounded-md">
-                  {item}
-                </Badge>
-              ))}
-            </div>
-          </div>
-          <div className="rounded-lg border bg-background p-4 shadow-sm">
-            <div className="mb-3 text-xs font-semibold">
-              Public systems or signals to validate
-            </div>
-            <div className="grid gap-2 text-xs text-muted-foreground">
-              {country.publicSystems.map((item) => (
-                <div key={item}>- {item}</div>
-              ))}
-            </div>
-          </div>
-          <div className="rounded-lg border bg-background p-4 shadow-sm">
-            <div className="mb-3 text-xs font-semibold">Next validation work</div>
-            <div className="grid gap-2 text-xs text-muted-foreground">
-              {country.gaps.map((item) => (
-                <div key={item}>- {item}</div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {country.countryUseCases?.length ? (
-        <section className="rounded-lg border bg-background p-4 shadow-sm">
-          <div className="mb-4 flex items-center gap-2">
-            <Layers3 className="size-4 text-primary" />
-            <div>
-              <div className="text-sm font-semibold">
-                Country implementation examples
+              <div className="grid gap-3">
+                {country.countryUseCases.map((useCase) => (
+                  <article
+                    key={useCase.title}
+                    className="rounded-md border p-4"
+                  >
+                    <div className="grid gap-4 md:grid-cols-[1fr_0.8fr]">
+                      <div>
+                        <h2 className="text-base font-semibold">
+                          {useCase.title}
+                        </h2>
+                        <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                          {useCase.description}
+                        </p>
+                        <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                          <span className="font-medium text-foreground">
+                            Outcome:
+                          </span>{" "}
+                          {useCase.outcome}
+                        </p>
+                      </div>
+                      <div>
+                        <div className="mb-2 text-xs font-semibold">
+                          Systems involved
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {useCase.systems.map((system) => (
+                            <Badge
+                              key={system}
+                              variant="secondary"
+                              className="rounded-md"
+                            >
+                              {system}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                ))}
               </div>
-              <p className="text-xs text-muted-foreground">
-                Concrete service flows that can anchor a country-specific DPI
-                build.
-              </p>
-            </div>
-          </div>
-          <div className="grid gap-3">
-            {country.countryUseCases.map((useCase) => (
-              <article key={useCase.title} className="rounded-md border p-4">
-                <div className="grid gap-4 md:grid-cols-[1fr_0.8fr]">
-                  <div>
-                    <h2 className="text-base font-semibold">
-                      {useCase.title}
-                    </h2>
-                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                      {useCase.description}
-                    </p>
-                    <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                      <span className="font-medium text-foreground">
-                        Outcome:
-                      </span>{" "}
-                      {useCase.outcome}
+            </section>
+          ) : null}
+        </TabsContent>
+
+        <TabsContent value="systems">
+          <section className="grid gap-4 lg:grid-cols-[1fr_1fr]">
+            <div className="rounded-lg border bg-background p-4 shadow-sm">
+              <div className="mb-3 text-xs font-semibold">
+                Relevant open DPGs to evaluate
+              </div>
+              <div className="grid gap-3">
+                {relevantDpgs.map((dpg) => (
+                  <div key={dpg.name} className="rounded-md border p-3">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="font-semibold">{dpg.name}</div>
+                      <Badge variant="secondary">{dpg.layer}</Badge>
+                    </div>
+                    <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                      {dpg.description}
                     </p>
                   </div>
-                  <div>
-                    <div className="mb-2 text-xs font-semibold">
-                      Systems involved
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {useCase.systems.map((system) => (
-                        <Badge
-                          key={system}
-                          variant="secondary"
-                          className="rounded-md"
-                        >
-                          {system}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid gap-4">
+              <div className="rounded-lg border bg-background p-4 shadow-sm">
+                <div className="mb-3 text-xs font-semibold">
+                  Priority use cases
                 </div>
-              </article>
-            ))}
-          </div>
-        </section>
-      ) : null}
+                <div className="flex flex-wrap gap-2">
+                  {country.priorityUseCases.map((item) => (
+                    <Badge
+                      key={item}
+                      variant="secondary"
+                      className="rounded-md"
+                    >
+                      {item}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+              <div className="rounded-lg border bg-background p-4 shadow-sm">
+                <div className="mb-3 text-xs font-semibold">
+                  Public systems or signals to validate
+                </div>
+                <div className="grid gap-2 text-xs text-muted-foreground">
+                  {country.publicSystems.map((item) => (
+                    <div key={item}>- {item}</div>
+                  ))}
+                </div>
+              </div>
+              <div className="rounded-lg border bg-background p-4 shadow-sm">
+                <div className="mb-3 text-xs font-semibold">
+                  Next validation work
+                </div>
+                <div className="grid gap-2 text-xs text-muted-foreground">
+                  {country.gaps.map((item) => (
+                    <div key={item}>- {item}</div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        </TabsContent>
+      </Tabs>
 
       <div className="flex justify-end">
         <Button size="sm" className="text-xs">

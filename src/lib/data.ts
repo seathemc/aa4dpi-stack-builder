@@ -58,6 +58,13 @@ export type CountryProfile = {
     value: number;
     note: string;
   }[];
+  countryData?: {
+    label: string;
+    value: string;
+    year: string;
+    source: string;
+    note: string;
+  }[];
   implementationFocus?: {
     label: string;
     value: string;
@@ -878,6 +885,15 @@ export const countries: CountryProfile[] = [
       { label: "API readiness", value: 53, note: "service bus pattern needs use-case validation" },
       { label: "Safeguards maturity", value: 56, note: "land, health, and ID safeguards must be explicit" },
     ],
+    countryData: [
+      { label: "Population", value: "21.3M", year: "2024", source: "World Bank", note: "Total population" },
+      { label: "GDP", value: "$25.3B", year: "2024", source: "World Bank", note: "Current US dollars" },
+      { label: "GDP per capita", value: "$1,187", year: "2024", source: "World Bank", note: "Current US dollars" },
+      { label: "GDP growth", value: "3.8%", year: "2024", source: "World Bank", note: "Annual real GDP growth" },
+      { label: "Internet use", value: "17.1%", year: "2024", source: "World Bank", note: "Individuals using the internet" },
+      { label: "Mobile subscriptions", value: "108.7 / 100 people", year: "2024", source: "World Bank", note: "Mobile cellular subscriptions" },
+      { label: "Electricity access", value: "51.1%", year: "2023", source: "World Bank", note: "Share of population with access" },
+    ],
     implementationFocus: [
       { label: "Lead systems", value: "ZILAS, Timber Traceability System, Smart Zambia GSB" },
       { label: "Priority sectors", value: "Land, climate resilience, forestry, agriculture" },
@@ -976,6 +992,15 @@ export const countries: CountryProfile[] = [
       { label: "API readiness", value: 74, note: "APISIX gateway gives a real exchange pattern" },
       { label: "Safeguards maturity", value: 63, note: "privacy, rights, and access rules need visible design" },
     ],
+    countryData: [
+      { label: "Population", value: "132.1M", year: "2024", source: "World Bank", note: "Total population" },
+      { label: "GDP", value: "$149.7B", year: "2024", source: "World Bank", note: "Current US dollars" },
+      { label: "GDP per capita", value: "$1,134", year: "2024", source: "World Bank", note: "Current US dollars" },
+      { label: "GDP growth", value: "7.6%", year: "2024", source: "World Bank", note: "Annual real GDP growth" },
+      { label: "Internet use", value: "21.9%", year: "2024", source: "World Bank", note: "Individuals using the internet" },
+      { label: "Mobile subscriptions", value: "65.1 / 100 people", year: "2024", source: "World Bank", note: "Mobile cellular subscriptions" },
+      { label: "Electricity access", value: "55.4%", year: "2023", source: "World Bank", note: "Share of population with access" },
+    ],
     implementationFocus: [
       { label: "Lead platform", value: "MESOB one-stop service delivery" },
       { label: "Core stack", value: "Fayda ID, APISIX gateway, MESOB Pay, Community Service Centers" },
@@ -1014,7 +1039,7 @@ export const countries: CountryProfile[] = [
     flag: "🇸🇱",
     region: "West Africa",
     maturity: "Building",
-    readiness: 55,
+    readiness: 53,
     relevantDpgs: ["X-Road", "Open Contracting", "OpenFn", "OpenSPP", "ODK"],
     priorityUseCases: ["Procurement to payment", "Farmer support", "Youth productive digitalization"],
     publicSystems: [
@@ -1069,6 +1094,15 @@ export const countries: CountryProfile[] = [
       { label: "Registry quality", value: 56, note: "finance and agriculture records give useful anchors" },
       { label: "API readiness", value: 61, note: "GSB and X-Road environments create a real starting point" },
       { label: "Safeguards maturity", value: 50, note: "governance and redress need to be designed into pilots" },
+    ],
+    countryData: [
+      { label: "Population", value: "8.6M", year: "2024", source: "World Bank", note: "Total population" },
+      { label: "GDP", value: "$7.0B", year: "2024", source: "World Bank", note: "Current US dollars" },
+      { label: "GDP per capita", value: "$807", year: "2024", source: "World Bank", note: "Current US dollars" },
+      { label: "GDP growth", value: "4.3%", year: "2024", source: "World Bank", note: "Annual real GDP growth" },
+      { label: "Internet use", value: "25.1%", year: "2024", source: "World Bank", note: "Individuals using the internet" },
+      { label: "Mobile subscriptions", value: "No recent value", year: "2024", source: "World Bank", note: "Indicator missing in latest pull" },
+      { label: "Electricity access", value: "35.5%", year: "2023", source: "World Bank", note: "Share of population with access" },
     ],
     implementationFocus: [
       { label: "Lead pattern", value: "Government Service Bus with X-Road-style exchange" },
@@ -1206,10 +1240,17 @@ export const cohortCountryIds = [
   "zambia",
 ] as const;
 
+export const comingSoonCountryIds = [
+  "rwanda",
+  "nigeria",
+  "tanzania",
+  "south-africa",
+] as const;
+
 export const cohortCountries = cohortCountryIds
   .map((id) => countries.find((country) => country.id === id))
   .filter((country): country is CountryProfile => Boolean(country));
 
-export const upcomingCountries = countries.filter(
-  (country) => !cohortCountryIds.some((id) => id === country.id)
-);
+export const upcomingCountries = comingSoonCountryIds
+  .map((id) => countries.find((country) => country.id === id))
+  .filter((country): country is CountryProfile => Boolean(country));

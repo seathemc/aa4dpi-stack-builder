@@ -17,11 +17,14 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { cohortCountries } from "@/lib/data";
+import { Badge } from "@/components/ui/badge";
+import { cohortCountries, upcomingCountries } from "@/lib/data";
 
 type NavItem = {
   title: string;
-  url: string;
+  url?: string;
+  disabled?: boolean;
+  badge?: string;
 };
 
 type NavGroup = {
@@ -79,6 +82,11 @@ const navGroups: NavGroup[] = [
         title: `${country.flag} ${country.name}`,
         url: `/countries/${country.id}`,
       })),
+      ...upcomingCountries.map((country) => ({
+        title: `${country.flag} ${country.name}`,
+        disabled: true,
+        badge: "Soon",
+      })),
     ],
   },
 ];
@@ -126,15 +134,32 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
               <SidebarMenu>
                 {group.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={isActive(item.url)}
-                      className="h-7 rounded-md text-xs"
-                    >
-                      <Link href={item.url}>
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
+                    {item.disabled ? (
+                      <SidebarMenuButton
+                        disabled
+                        className="h-7 rounded-md text-xs opacity-70"
+                      >
+                        <span className="truncate">{item.title}</span>
+                        {item.badge ? (
+                          <Badge
+                            variant="secondary"
+                            className="ml-auto h-4 rounded px-1 text-[9px]"
+                          >
+                            {item.badge}
+                          </Badge>
+                        ) : null}
+                      </SidebarMenuButton>
+                    ) : (
+                      <SidebarMenuButton
+                        asChild
+                        isActive={item.url ? isActive(item.url) : false}
+                        className="h-7 rounded-md text-xs"
+                      >
+                        <Link href={item.url ?? "/"}>
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    )}
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>
