@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   ArrowRight,
+  ClipboardCheck,
   GraduationCap,
   HeartPulse,
   Landmark,
@@ -25,37 +26,38 @@ const iconMap = {
   "health-access": HeartPulse,
   "education-credentials": GraduationCap,
   "msme-trade": Store,
+  "procurement-payments": ClipboardCheck,
+};
+
+const countryExamples = {
+  "farmer-support":
+    "Sierra Leone's Feed Salone and Ethiopia's agriculture services show how farmer records, payments, insurance, and advisory services can connect.",
+  "cash-transfers":
+    "Ethiopia's MESOB wallet roadmap shows how social protection can move from fragmented payout channels toward a verifiable G2P flow.",
+  "health-access":
+    "Zambia's Smart Care Pro, DHIS2, and eLMIS stack shows why patient records, supply chains, and reporting need to interoperate.",
+  "education-credentials":
+    "Ethiopia's youth jobs pathway shows how skills records, labor-market data, identity, and finance can become one service flow.",
+  "msme-trade":
+    "AfCFTA-related trade services need business identity, payment rails, credentials, and customs or tax data to work across borders.",
+  "procurement-payments":
+    "Sierra Leone's CRVS, eGP, IFMIS, and T24 flow shows how procurement, treasury, and settlement can become visible end to end.",
 };
 
 export default function UseCasesPage() {
   return (
     <PageShell
       eyebrow="Use cases"
-      title="Use cases turn DPI into something a ministry can build"
-      summary="These are not random features. They are common public-service patterns where identity, payments, registries, data exchange, and safeguards need to work together."
+      title="Use cases show what DPI is for"
+      summary="DPI only matters when it makes a public service easier, faster, fairer, or more trustworthy. These use cases connect the development problem to the systems that need to work together."
     >
-      <section className="grid gap-4 md:grid-cols-3">
-        {[
-          {
-            title: "Where they come from",
-            body: "AA4DPI programme materials, DPI service-catalogue themes, and recurring country priorities such as agriculture, social protection, health, education, and trade.",
-          },
-          {
-            title: "What each use case does",
-            body: "Each one starts with a real delivery problem, then maps the systems, DPGs, integrations, standards, and safeguards needed to make it work.",
-          },
-          {
-            title: "How to use them",
-            body: "Choose a use case in the Stack Builder to generate a starter kit for a country, including local rails to verify and code to evaluate.",
-          },
-        ].map((item) => (
-          <Card key={item.title} className="rounded-lg">
-            <CardHeader>
-              <CardTitle className="text-base">{item.title}</CardTitle>
-              <CardDescription className="leading-6">{item.body}</CardDescription>
-            </CardHeader>
-          </Card>
-        ))}
+      <section className="rounded-lg border bg-background p-5 shadow-sm">
+        <h2 className="text-lg font-semibold">How to read a use case</h2>
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
+          Start with the service problem. Then identify the identity check,
+          registry, payment route, data exchange, grievance path, and safeguards
+          required to make the service work in practice.
+        </p>
       </section>
 
       <div className="grid gap-4">
@@ -82,10 +84,22 @@ export default function UseCasesPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4 md:grid-cols-[1fr_auto]">
-              <p className="text-sm leading-6 text-muted-foreground">
-                <span className="font-medium text-foreground">Outcome: </span>
-                {useCase.outcome}
-              </p>
+              <div className="space-y-3">
+                <p className="text-sm leading-6 text-muted-foreground">
+                  <span className="font-medium text-foreground">Outcome: </span>
+                  {useCase.outcome}
+                </p>
+                <p className="text-sm leading-6 text-muted-foreground">
+                  <span className="font-medium text-foreground">
+                    Country signal:{" "}
+                  </span>
+                  {
+                    countryExamples[
+                      useCase.id as keyof typeof countryExamples
+                    ]
+                  }
+                </p>
+              </div>
               <Link
                 href={`/builder?useCase=${useCase.id}`}
                 className="inline-flex items-center gap-2 text-sm font-medium text-primary"

@@ -50,55 +50,59 @@ export default function DataExchangePage() {
           Data exchange flow
         </h1>
         <p className="text-sm text-muted-foreground">
-          Example: Social Registry checks if a birth is registered
+          Example: Sierra Leone procurement-to-payment tracking
         </p>
       </section>
 
       <section className="relative grid gap-5 lg:grid-cols-[1fr_1.1fr_1fr]">
-        <Lane title="Agency A" subtitle="Social Registry">
+        <Lane title="Agency A" subtitle="eGP procurement">
           <div className="grid gap-20 text-xs">
             <div>
               <div className="font-semibold">Requests data</div>
               <p className="mt-2 text-muted-foreground">Purpose</p>
-              <p className="mt-1">Benefit eligibility verification</p>
+              <p className="mt-1">Verify supplier and contract status</p>
             </div>
             <div>
               <p className="text-muted-foreground">Data needed</p>
-              <p className="mt-1">Is birth registered?</p>
+              <p className="mt-1">Supplier verified? Contract awarded?</p>
             </div>
             <div>
               <p className="text-muted-foreground">Legal basis</p>
-              <p className="mt-1">Social Protection Act</p>
+              <p className="mt-1">Digital Government Bill and procurement rules</p>
             </div>
           </div>
         </Lane>
 
-        <Lane title="Data Exchange Layer" subtitle="X-Road">
+        <Lane title="Data Exchange Layer" subtitle="Government Service Bus / X-Road">
           <div className="grid gap-3">
             <FlowStep
               n={1}
-              title="Authenticate"
-              body="Verify requester"
+              title="Authenticate request"
+              body="Confirm the requesting agency and system"
             />
             <FlowStep
               n={2}
               title="Authorize"
-              body="Check consent and policy"
+              body="Check purpose, data-sharing rule, and role"
             />
-            <FlowStep n={3} title="Route" body="Secure API call" />
-            <FlowStep n={4} title="Respond" body="Signed response" />
+            <FlowStep n={3} title="Route" body="Query CRVS, IFMIS, or T24" />
+            <FlowStep n={4} title="Respond" body="Return signed status, not raw databases" />
           </div>
         </Lane>
 
-        <Lane title="Agency B" subtitle="Civil Registry">
+        <Lane title="Agency B" subtitle="CRVS · IFMIS · T24">
           <div className="grid gap-20 text-xs">
             <div>
               <div className="font-semibold">Verifies request</div>
-              <p className="mt-2 text-muted-foreground">Checks record</p>
+              <p className="mt-2 text-muted-foreground">
+                Checks identity, treasury, or settlement record
+              </p>
             </div>
             <div>
               <p className="text-muted-foreground">Returns response</p>
-              <p className="mt-1 text-emerald-700">Yes / No</p>
+              <p className="mt-1 text-emerald-700">
+                Verified / allocated / paid
+              </p>
             </div>
           </div>
         </Lane>
@@ -117,7 +121,8 @@ export default function DataExchangePage() {
         <ArrowDown className="mb-2 size-4 text-muted-foreground" />
         <div className="text-xs font-semibold">Audit Log</div>
         <p className="mt-1 text-xs text-muted-foreground">
-          All requests and responses are recorded and immutable.
+          Every request records who asked, why they asked, what system answered,
+          and what status was returned.
         </p>
       </section>
     </main>

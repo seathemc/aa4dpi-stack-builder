@@ -23,10 +23,15 @@ const systemDpgMap: Record<string, string[]> = {
   credential: ["openfn"],
   scholarship: ["openfisca", "openfn"],
   business: ["ocds", "openfn"],
+  supplier: ["ocds", "openfn"],
+  procurement: ["ocds", "openfn"],
+  treasury: ["openfn", "openfisca"],
+  bank: ["mojaloop", "openfn"],
+  status: ["xroad", "openfn"],
   tax: ["openfisca", "openfn"],
   customs: ["openfn", "xroad"],
   trade: ["openfn", "xroad"],
-  exchange: ["xroad", "openfn"],
+  exchange: ["xroad", "apisix", "openfn"],
   registry: ["openspp", "openg2p", "opencrvs"],
 };
 
@@ -75,6 +80,14 @@ function explainSystem(system: string) {
 function integrationLayersForSystem(system: string, fallbackLayer: DpgLayer) {
   const normalized = system.toLowerCase();
 
+  if (normalized.includes("procurement") || normalized.includes("treasury")) {
+    return ["Operations", "Data exchange"] satisfies DpgLayer[];
+  }
+  if (normalized.includes("bank")) return ["Payments"] satisfies DpgLayer[];
+  if (normalized.includes("supplier")) return ["Registries", "Civil registration"] satisfies DpgLayer[];
+  if (normalized.includes("status")) {
+    return ["Service delivery", "Data exchange", "Safeguards"] satisfies DpgLayer[];
+  }
   if (normalized.includes("payment")) return ["Payments"] satisfies DpgLayer[];
   if (normalized.includes("identity")) {
     return ["Identity", "Civil registration"] satisfies DpgLayer[];
@@ -96,11 +109,37 @@ function integrationLayersForSystem(system: string, fallbackLayer: DpgLayer) {
   return [fallbackLayer];
 }
 
+function countryUseCaseMatch(
+  country: (typeof countries)[number],
+  useCaseId: string
+) {
+  if (!country.countryUseCases?.length) return undefined;
+
+  const keywordsByUseCase: Record<string, string[]> = {
+    "farmer-support": ["farmer", "agriculture", "land", "climate"],
+    "cash-transfers": ["social", "pension", "payment", "safety", "protection"],
+    "health-access": ["health", "patient", "medicine"],
+    "education-credentials": ["youth", "jobs", "credential", "skills", "education"],
+    "msme-trade": ["trade", "enterprise", "business", "msme", "youth"],
+    "procurement-payments": ["procurement", "payment", "supplier", "treasury"],
+  };
+
+  const keywords = keywordsByUseCase[useCaseId] ?? [];
+
+  return (
+    country.countryUseCases.find((item) => {
+      const haystack = `${item.title} ${item.description} ${item.systems.join(" ")}`.toLowerCase();
+      return keywords.some((keyword) => haystack.includes(keyword));
+    }) ?? country.countryUseCases[0]
+  );
+}
+
 export function buildStack(input: StackInput) {
   const country =
     countries.find((item) => item.id === input.countryId) ?? countries[0];
   const useCase =
     useCases.find((item) => item.id === input.useCaseId) ?? useCases[0];
+  const matchedCountryUseCase = countryUseCaseMatch(country, useCase.id);
 
   const architectureRows = useCase.systems.map((system, index) => {
     const candidates = dpgsForSystem(system, country.relevantDpgs);
@@ -184,19 +223,22 @@ export function buildStack(input: StackInput) {
   return {
     country,
     useCase,
+    matchedCountryUseCase,
     recommendedDpgs,
     architectureRows,
     relevantIntegrations,
     fitScore,
     analysis: [
-      `${country.name} has ${country.maturity.toLowerCase()}-stage DPI signals, so the first build should connect existing systems before adding new platforms.`,
+      matchedCountryUseCase
+        ? `${country.name}'s strongest fit is ${matchedCountryUseCase.title.toLowerCase()}: ${matchedCountryUseCase.outcome}`
+        : `${country.name} has ${country.maturity.toLowerCase()}-stage DPI signals, so the first build should connect existing systems before adding new platforms.`,
       `${useCase.shortName} depends most on ${useCase.layers.slice(0, 3).join(", ").toLowerCase()}, which is why the stack prioritizes those layers first.`,
       relevantIntegrations.length
         ? `The country-specific checks include ${relevantIntegrations
             .slice(0, 3)
             .map((item) => item.name)
             .join(", ")}.`
-        : "The first field mission should identify local payment, registry, and service-channel integrations.",
+        : "The first discovery session should identify local payment, registry, and service-channel integrations.",
     ],
     gaps,
     sequence,

@@ -26,14 +26,16 @@ export default function Home() {
     <main className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-6 py-10">
       <section className="max-w-2xl space-y-4">
         <div className="inline-flex rounded-full bg-secondary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-primary">
-          Welcome
+          README first
         </div>
         <h1 className="text-3xl font-semibold tracking-tight text-foreground">
-          Build safer DPI with open tools
+          DPI connects public investment to real services
         </h1>
         <p className="max-w-xl text-sm leading-6 text-muted-foreground">
-          AA4DPI curates, connects, and helps implement open Digital Public
-          Infrastructure across Africa.
+          A country can fund a clinic, subsidy, transfer, or permit and still
+          miss the person who needs it. Digital Public Infrastructure helps the
+          systems behind that service find the right person, verify the right
+          record, route the right payment, and leave an accountable trail.
         </p>
       </section>
 
@@ -41,18 +43,18 @@ export default function Home() {
         {[
           {
             icon: ShieldCheck,
-            title: "Open by design",
-            body: "Open source, open standards, open governance.",
+            title: "Trusted systems",
+            body: "Identity, registries, data exchange, payments, and audit logs that can work together.",
           },
           {
             icon: UsersRound,
-            title: "Built for inclusion",
-            body: "Interoperable systems that put people first.",
+            title: "People-first delivery",
+            body: "Services that still work for rural users, offline users, excluded groups, and people who need redress.",
           },
           {
             icon: BarChart3,
-            title: "Proven impact",
-            body: "Read implementations that improve lives at scale.",
+            title: "Investment-ready plans",
+            body: "Use cases, standards, safeguards, and systems that can be financed and implemented.",
           },
         ].map((item) => (
           <div key={item.title} className="border-b p-5 last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0">
@@ -67,10 +69,13 @@ export default function Home() {
 
       <section className="grid items-center gap-5 rounded-lg border bg-secondary/60 p-5 shadow-sm md:grid-cols-[1fr_auto]">
         <div className="space-y-3">
-          <h2 className="text-xl font-semibold">Design and deploy your DPI stack</h2>
+          <h2 className="text-xl font-semibold">
+            Turn a use case into a DPI starter kit
+          </h2>
           <p className="max-w-lg text-sm leading-6 text-muted-foreground">
-            Use the Stack Builder to assemble the right open tools for your
-            country priority and maturity stage.
+            Choose a country and a service problem. The Stack Builder suggests
+            open tools to evaluate, local systems to connect, safeguards to
+            check, and first artifacts a technical team can review.
           </p>
           <Button asChild className="h-9 text-xs">
             <Link href="/builder">
@@ -83,7 +88,8 @@ export default function Home() {
       </section>
 
       <p className="text-xs text-muted-foreground">
-        Trusted by governments, UN agencies, and partners across Africa.
+        AA4DPI supports country-owned DPI work across readiness, technical
+        design, safeguards, financing, and implementation.
       </p>
     </main>
   );

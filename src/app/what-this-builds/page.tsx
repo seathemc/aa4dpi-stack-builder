@@ -8,16 +8,16 @@ import {
 
 const points = [
   {
-    title: "A planning tool",
-    body: "It helps teams discuss the systems, open-source tools, standards, safeguards, and investment gaps behind a DPI use case.",
+    title: "Start with the service",
+    body: "A subsidy, license, benefit, payment, clinic visit, or permit is the easiest way to explain why DPI matters.",
   },
   {
-    title: "A shared language layer",
-    body: "It translates open-source and DPI architecture into language that policy, programme, finance, and technical teams can use together.",
+    title: "Find the systems behind it",
+    body: "Most services need identity, registries, payment rails, data exchange, consent, redress, and auditability.",
   },
   {
-    title: "A path to real implementation",
-    body: "It identifies which parts can use existing DPGs, which parts need national systems, and which safeguards must be designed before scale.",
+    title: "Make it fundable",
+    body: "AA4DPI turns scattered systems into a clearer plan that can be governed, tested, financed, and implemented.",
   },
 ];
 
@@ -25,8 +25,8 @@ export default function WhatThisBuildsPage() {
   return (
     <PageShell
       eyebrow="Plain language"
-      title="This is not a national platform"
-      summary="The Stack Builder is a public prototype that helps countries and partners understand what they may need to build, buy, adapt, govern, or finance."
+      title="What is digital public infrastructure?"
+      summary="Digital Public Infrastructure is the shared digital foundation that lets public services work across agencies, providers, and communities without rebuilding everything from scratch."
     >
       <div className="grid gap-4 md:grid-cols-3">
         {points.map((point) => (
@@ -41,18 +41,22 @@ export default function WhatThisBuildsPage() {
 
       <section className="max-w-3xl space-y-5 text-base leading-8 text-muted-foreground">
         <h2 className="text-2xl font-semibold text-foreground">
-          What digital public infrastructure means here
+          What that means in practice
         </h2>
         <p>
-          DPI is the set of shared digital systems that lets people, businesses,
-          and public institutions interact safely at scale. In practice, this
-          can include identity, civil registration, payments, registries, data
-          exchange, credentials, consent, grievance channels, and audit logs.
+          DPI is not one website and not one vendor product. It is the shared
+          infrastructure that lets a person prove who they are, a ministry check
+          the right record, a payment reach the right account, and an oversight
+          team see what happened.
         </p>
         <p>
-          The important question is not whether a country has a single product.
-          The question is whether the systems behind public services can work
-          together in a trusted, inclusive, and accountable way.
+          For example, a farmer subsidy may need a farmer registry, an identity
+          check, an eligibility rule, a payment rail, a complaint channel, and an
+          audit log. DPI is what lets those pieces work together safely.
+        </p>
+        <p>
+          The goal is not to digitize every form. The goal is to make public
+          services more reliable, inclusive, transparent, and easier to scale.
         </p>
       </section>
     </PageShell>

@@ -58,6 +58,16 @@ export type CountryProfile = {
     value: number;
     note: string;
   }[];
+  implementationFocus?: {
+    label: string;
+    value: string;
+  }[];
+  countryUseCases?: {
+    title: string;
+    description: string;
+    systems: string[];
+    outcome: string;
+  }[];
 };
 
 export type Standard = {
@@ -112,6 +122,17 @@ export const dpgs: Dpg[] = [
     fit: ["agency-to-agency exchange", "audit logs", "trusted service queries"],
     maturity: "Established",
     standards: ["signed messages", "service registry", "audit logging"],
+  },
+  {
+    id: "apisix",
+    name: "Apache APISIX",
+    layer: "Data exchange",
+    github: "https://github.com/apache/apisix",
+    description:
+      "Open-source API gateway for routing, authentication, observability, and policy controls across services.",
+    fit: ["API gateway", "service orchestration", "data exchange"],
+    maturity: "Established",
+    standards: ["OpenAPI", "API gateway policies", "access logging"],
   },
   {
     id: "openg2p",
@@ -371,6 +392,43 @@ export const useCases: UseCase[] = [
       "Route payment or fee",
       "Share permitted customs or tax data",
       "Record service outcome and dispute options",
+    ],
+  },
+  {
+    id: "procurement-payments",
+    name: "Transparent procurement-to-payment",
+    shortName: "Procurement to payment",
+    problem:
+      "Small suppliers can win contracts and still wait months for payment because procurement, treasury, identity, and banking systems do not share status.",
+    outcome:
+      "A supplier can be verified once, see contract and payment status, receive settlement through a trusted rail, and challenge delays or errors.",
+    layers: [
+      "Registries",
+      "Civil registration",
+      "Payments",
+      "Data exchange",
+      "Operations",
+      "Safeguards",
+    ],
+    systems: [
+      "Supplier registry",
+      "Procurement system",
+      "Treasury or IFMIS",
+      "Bank settlement rail",
+      "Public status and audit log",
+    ],
+    safeguards: [
+      "supplier consent and notice",
+      "minimal validation tokens",
+      "procurement audit trail",
+      "payment dispute channel",
+    ],
+    sequence: [
+      "Verify supplier and beneficial ownership",
+      "Record awarded contract",
+      "Confirm delivery and treasury approval",
+      "Settle payment through bank or wallet rail",
+      "Publish permitted status and audit evidence",
     ],
   },
 ];
@@ -743,45 +801,278 @@ export const countries: CountryProfile[] = [
     ],
   },
   {
+    id: "zambia",
+    name: "Zambia",
+    flag: "🇿🇲",
+    region: "Southern Africa",
+    maturity: "Building",
+    readiness: 57,
+    relevantDpgs: ["MOSIP", "DHIS2", "OpenMRS", "OpenFn", "ODK"],
+    priorityUseCases: ["Land and climate", "Health interoperability", "Agriculture"],
+    publicSystems: [
+      "Smart Zambia Government Service Bus",
+      "ZILAS land administration",
+      "Smart Care Pro electronic health record",
+      "DHIS2 and eLMIS health reporting",
+      "MOSIP-supported digital ID rollout",
+    ],
+    integrationChecks: [
+      {
+        name: "ZILAS land administration",
+        layer: "Registries",
+        kind: "national system",
+        note: "Check title records, customary land workflows, revenue collection, and links to climate or agriculture planning.",
+      },
+      {
+        name: "Smart Care Pro",
+        layer: "Health",
+        kind: "national system",
+        note: "Check patient records, facility use, medicine accountability, referrals, and interoperability with DHIS2 and eLMIS.",
+      },
+      {
+        name: "MOSIP digital ID programme",
+        layer: "Identity",
+        kind: "national system",
+        note: "Check rollout status, verification APIs, safeguards, and how identity can reduce duplicate patient or beneficiary records.",
+      },
+      {
+        name: "Smart Zambia service bus",
+        layer: "Data exchange",
+        kind: "national system",
+        note: "Check whether land, health, finance, and identity systems can exchange only the data required for each service.",
+      },
+      {
+        name: "MTN, Airtel, Zamtel and bank rails",
+        layer: "Payments",
+        kind: "private rail",
+        note: "Check cash transfer, agro-input, health payment, reconciliation, agent reach, and beneficiary support flows.",
+      },
+    ],
+    summary:
+      "Zambia is useful for showing how DPI can connect land, health, climate, finance, and service delivery without treating each sector as a separate technology project.",
+    strengths: ["Smart Zambia coordination", "health digitization", "land reform priority"],
+    gaps: ["identity rollout gap", "customary land complexity", "health system sustainability"],
+    metrics: [
+      { label: "Identity readiness", value: 55, note: "MOSIP-supported rollout still needs operational depth" },
+      { label: "Payment reach", value: 59, note: "banks and MNOs available for public-service flows" },
+      { label: "Registry quality", value: 62, note: "ZILAS and health records give concrete systems to connect" },
+      { label: "API readiness", value: 53, note: "service bus pattern needs use-case validation" },
+      { label: "Safeguards maturity", value: 56, note: "land, health, and ID safeguards must be explicit" },
+    ],
+    implementationFocus: [
+      { label: "Lead systems", value: "ZILAS, Smart Care Pro, Smart Zambia GSB" },
+      { label: "Priority sectors", value: "Land, climate resilience, health, agriculture" },
+      { label: "Key question", value: "Can sector platforms exchange trusted data without weakening privacy or local ownership?" },
+    ],
+    countryUseCases: [
+      {
+        title: "Land records for agriculture and climate resilience",
+        description:
+          "Connect land records, geospatial data, climate risk, and agriculture services so secure tenure can support investment, planning, and smallholder resilience.",
+        systems: ["ZILAS", "customary land workflows", "climate risk data", "agriculture services", "payment or revenue systems"],
+        outcome:
+          "Farmers, planners, and investors can verify land information faster while government improves land revenue and climate project delivery.",
+      },
+      {
+        title: "Health records and medicine accountability",
+        description:
+          "Use Smart Care Pro, DHIS2, eLMIS, and identity checks to reduce duplicate records, improve medicine traceability, and automate reporting.",
+        systems: ["Smart Care Pro", "DHIS2", "eLMIS", "MOSIP digital ID", "facility records"],
+        outcome:
+          "Facilities can record patient care, track supply needs, and produce trusted indicators with fewer parallel reporting systems.",
+      },
+    ],
+  },
+  {
+    id: "ethiopia",
+    name: "Ethiopia",
+    flag: "🇪🇹",
+    region: "East Africa",
+    maturity: "Scaling",
+    readiness: 68,
+    relevantDpgs: ["MOSIP", "Apache APISIX", "OpenG2P", "OpenSPP", "OpenFn"],
+    priorityUseCases: ["Financial inclusion", "Social protection", "Agriculture and climate", "Youth jobs"],
+    publicSystems: [
+      "MESOB one-stop service platform",
+      "Fayda digital ID",
+      "APISIX-based API gateway",
+      "MESOB Pay and wallet roadmap",
+      "Community Service Centers",
+      "OpenAgriNet agriculture data initiative",
+    ],
+    integrationChecks: [
+      {
+        name: "MESOB",
+        layer: "Service delivery",
+        kind: "service channel",
+        note: "Check which high-volume services are already inside the one-stop model and which ministries are next in the pipeline.",
+      },
+      {
+        name: "Fayda digital ID",
+        layer: "Identity",
+        kind: "national system",
+        note: "Check authentication coverage, verification APIs, inclusion safeguards, and exception handling.",
+      },
+      {
+        name: "APISIX national integration gateway",
+        layer: "Data exchange",
+        kind: "national system",
+        note: "Check routing, authorization, audit logs, ministry data ownership, and API lifecycle governance.",
+      },
+      {
+        name: "MESOB Pay and wallet",
+        layer: "Payments",
+        kind: "payment rail",
+        note: "Check regulatory approvals, NBE oversight, settlement, fees, reconciliation, and G2P readiness.",
+      },
+      {
+        name: "OpenAgriNet",
+        layer: "Registries",
+        kind: "national system",
+        note: "Check whether agriculture records can connect to MESOB so farmers do not face separate unlinked portals.",
+      },
+      {
+        name: "Labor Market Information System",
+        layer: "Education",
+        kind: "national system",
+        note: "Check whether youth credentials, job matching, and payment histories can connect to Fayda and service delivery flows.",
+      },
+    ],
+    summary:
+      "Ethiopia is the clearest example of DPI as a live government service platform: MESOB combines service delivery, Fayda identity, API exchange, branch networks, and a future sovereign payment layer.",
+    strengths: ["political mandate", "one-stop service scale", "identity and API gateway foundations"],
+    gaps: ["payment gateway approvals", "OpenAgriNet integration", "safeguards and API governance"],
+    metrics: [
+      { label: "Identity readiness", value: 76, note: "Fayda provides the authentication base" },
+      { label: "Payment reach", value: 61, note: "MESOB Pay is a roadmap priority, not yet the full rail" },
+      { label: "Registry quality", value: 66, note: "service and sector registries are expanding" },
+      { label: "API readiness", value: 74, note: "APISIX gateway gives a real exchange pattern" },
+      { label: "Safeguards maturity", value: 63, note: "privacy, rights, and access rules need visible design" },
+    ],
+    implementationFocus: [
+      { label: "Lead platform", value: "MESOB one-stop service delivery" },
+      { label: "Core stack", value: "Fayda ID, APISIX gateway, MESOB Pay, Community Service Centers" },
+      { label: "Immediate design challenge", value: "Connect priority services without creating another fragmented portal" },
+    ],
+    countryUseCases: [
+      {
+        title: "Social protection and pension payments",
+        description:
+          "Use Fayda identity, MESOB service channels, and the future MESOB wallet to digitize safety-net and pension disbursements.",
+        systems: ["Fayda", "MESOB", "MESOB Pay", "safety-net registries", "case and grievance channels"],
+        outcome:
+          "People can be verified, enrolled, paid, and supported through one auditable public-service route.",
+      },
+      {
+        title: "Agriculture services through one window",
+        description:
+          "Connect agricultural licenses, land certification, irrigation permits, OpenAgriNet records, and farmer-facing service centers.",
+        systems: ["MESOB", "OpenAgriNet", "Ministry of Agriculture services", "Fayda", "payment gateway"],
+        outcome:
+          "Farmers can access permits, subsidies, insurance, and advisory services without moving between disconnected portals.",
+      },
+      {
+        title: "Youth jobs and verified credentials",
+        description:
+          "Link youth identity, TVET records, labor-market data, enterprise registration, and payment histories through trusted service flows.",
+        systems: ["LMIS", "Fayda", "MESOB", "TVET records", "micro-enterprise registration"],
+        outcome:
+          "Young workers can prove skills, access jobs or finance, and build portable records across public and private services.",
+      },
+    ],
+  },
+  {
     id: "sierra-leone",
     name: "Sierra Leone",
     flag: "🇸🇱",
     region: "West Africa",
-    maturity: "Early",
-    readiness: 43,
-    relevantDpgs: ["OpenCRVS", "OpenG2P", "ODK", "OpenFn"],
-    priorityUseCases: ["Civil registration", "Social protection", "Health access"],
-    publicSystems: ["digital transformation priorities", "service delivery needs"],
+    maturity: "Building",
+    readiness: 55,
+    relevantDpgs: ["X-Road", "Open Contracting", "OpenFn", "OpenSPP", "ODK"],
+    priorityUseCases: ["Procurement to payment", "Farmer support", "Youth productive digitalization"],
+    publicSystems: [
+      "Government Service Bus",
+      "X-Road 7.7.1 environments",
+      "CRVS",
+      "eGP procurement",
+      "IFMIS treasury",
+      "T24 banking settlement",
+      "ASYCUDA, ITAS, PFM Smart",
+      "Digital Government Bill 2025",
+    ],
     integrationChecks: [
       {
-        name: "Civil registration systems",
+        name: "CRVS",
         layer: "Civil registration",
         kind: "national system",
-        note: "Check birth and identity data quality before connecting benefit or education services.",
+        note: "Use minimal validation tokens for identity checks rather than copying raw identity data between systems.",
       },
       {
-        name: "Mobile money providers",
-        layer: "Payments",
-        kind: "private rail",
-        note: "Check coverage, agent liquidity, offline support, and payment failure workflows.",
-      },
-      {
-        name: "Social safety net programmes",
-        layer: "Social protection",
+        name: "eGP procurement",
+        layer: "Operations",
         kind: "national system",
-        note: "Check registry quality, targeting, grievance channels, and audit requirements.",
+        note: "Check contract award status, supplier records, and Open Contracting Data Standard alignment.",
+      },
+      {
+        name: "IFMIS",
+        layer: "Operations",
+        kind: "national system",
+        note: "Check treasury approval, payment status, reconciliation, and audit requirements.",
+      },
+      {
+        name: "T24 banking settlement",
+        layer: "Payments",
+        kind: "payment rail",
+        note: "Check settlement confirmation, failed-payment handling, and supplier notification.",
+      },
+      {
+        name: "Feed Salone farmer registry",
+        layer: "Registries",
+        kind: "national system",
+        note: "Check farmer profiles, farm and plot data, subsidy targeting, extension records, and grievance workflows.",
       },
     ],
     summary:
-      "Sierra Leone is a useful early-stage profile for showing how AA4DPI can turn priorities into an investment-ready stack.",
-    strengths: ["policy momentum", "partner interest", "high-value use cases"],
-    gaps: ["foundational coverage", "implementation capacity", "financing readiness"],
+      "Sierra Leone is the strongest data-exchange demo: the current opportunity is to connect existing public finance, procurement, civil registration, and banking systems into visible service outcomes.",
+    strengths: ["Government Service Bus architecture", "clear procurement-to-payment flow", "Digital Government Bill momentum"],
+    gaps: ["data-sharing rules", "agency onboarding process", "sustainable operating model"],
     metrics: [
-      { label: "Identity readiness", value: 45, note: "foundational work needed" },
-      { label: "Payment reach", value: 38, note: "inclusive rails to assess" },
-      { label: "Registry quality", value: 41, note: "programme data fragmented" },
-      { label: "API readiness", value: 30, note: "early architecture stage" },
-      { label: "Safeguards maturity", value: 44, note: "design from start" },
+      { label: "Identity readiness", value: 52, note: "CRVS can support tokenized checks" },
+      { label: "Payment reach", value: 48, note: "bank and wallet settlement paths need validation" },
+      { label: "Registry quality", value: 56, note: "finance and agriculture records give useful anchors" },
+      { label: "API readiness", value: 61, note: "GSB and X-Road environments create a real starting point" },
+      { label: "Safeguards maturity", value: 50, note: "governance and redress need to be designed into pilots" },
+    ],
+    implementationFocus: [
+      { label: "Lead pattern", value: "Government Service Bus with X-Road-style exchange" },
+      { label: "First visible flow", value: "CRVS -> eGP -> IFMIS -> T24 procurement-to-payment tracking" },
+      { label: "Second flow", value: "Feed Salone farmer registry, subsidy, payment, and grievance path" },
+    ],
+    countryUseCases: [
+      {
+        title: "Transparent procurement-to-payment tracking",
+        description:
+          "Connect CRVS, procurement, treasury, and banking settlement so suppliers can see where a payment is and government can audit the full chain.",
+        systems: ["CRVS", "eGP", "IFMIS", "T24", "Government Service Bus"],
+        outcome:
+          "Supplier verification, contract award, funds allocation, and payment settlement become traceable without every agency giving up its own system.",
+      },
+      {
+        title: "Feed Salone agriculture DPI",
+        description:
+          "Build a farmer-facing path for registration, farm profiles, extension records, climate-smart inputs, insurance, payments, and market access.",
+        systems: ["farmer registry", "digital ID linkage", "agriculture payments", "extension records", "grievance workflow"],
+        outcome:
+          "Farmers can be registered once, targeted more fairly, paid faster, and supported through a clear complaint and correction process.",
+      },
+      {
+        title: "Youth productive digitalization",
+        description:
+          "Use payments, enterprise records, skills data, and service channels to help youth entrepreneurs receive grants, build histories, and access finance.",
+        systems: ["enterprise registry", "skills records", "payment rails", "case management", "credit or grant records"],
+        outcome:
+          "Young workers and MSMEs can build trusted participation records instead of staying invisible to formal finance and public programmes.",
+      },
     ],
   },
   {

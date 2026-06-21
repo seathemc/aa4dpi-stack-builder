@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download, Layers3 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -173,6 +173,22 @@ export default async function CountryPage({
         />
       </section>
 
+      {country.implementationFocus?.length ? (
+        <section className="grid gap-3 md:grid-cols-3">
+          {country.implementationFocus.map((item) => (
+            <div
+              key={item.label}
+              className="rounded-lg border bg-background p-4 shadow-sm"
+            >
+              <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+                {item.label}
+              </div>
+              <p className="mt-2 text-sm leading-6">{item.value}</p>
+            </div>
+          ))}
+        </section>
+      ) : null}
+
       <section className="grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
         <div className="rounded-lg border bg-background p-4 shadow-sm">
           <div className="mb-4 text-xs font-semibold">Building block snapshot</div>
@@ -248,6 +264,61 @@ export default async function CountryPage({
           </div>
         </div>
       </section>
+
+      {country.countryUseCases?.length ? (
+        <section className="rounded-lg border bg-background p-4 shadow-sm">
+          <div className="mb-4 flex items-center gap-2">
+            <Layers3 className="size-4 text-primary" />
+            <div>
+              <div className="text-sm font-semibold">
+                Country implementation examples
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Concrete service flows that can anchor a country-specific DPI
+                build.
+              </p>
+            </div>
+          </div>
+          <div className="grid gap-3">
+            {country.countryUseCases.map((useCase) => (
+              <article key={useCase.title} className="rounded-md border p-4">
+                <div className="grid gap-4 md:grid-cols-[1fr_0.8fr]">
+                  <div>
+                    <h2 className="text-base font-semibold">
+                      {useCase.title}
+                    </h2>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      {useCase.description}
+                    </p>
+                    <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                      <span className="font-medium text-foreground">
+                        Outcome:
+                      </span>{" "}
+                      {useCase.outcome}
+                    </p>
+                  </div>
+                  <div>
+                    <div className="mb-2 text-xs font-semibold">
+                      Systems involved
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {useCase.systems.map((system) => (
+                        <Badge
+                          key={system}
+                          variant="secondary"
+                          className="rounded-md"
+                        >
+                          {system}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <div className="flex justify-end">
         <Button size="sm" className="text-xs">
