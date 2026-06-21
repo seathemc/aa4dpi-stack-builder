@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, DatabaseZap, GitBranch, ShieldCheck } from "lucide-react";
 
 import { PageShell } from "@/components/page-shell";
+import { WorkflowStrip } from "@/components/storyboard-panels";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,16 +14,16 @@ import {
 
 const steps = [
   {
-    title: "Catalogue what exists",
-    body: "Start from real DPGs and open standards, not blank diagrams.",
+    title: "Open DPG catalogue",
+    body: "Real repositories grouped by identity, payments, data exchange, registries, health, and delivery.",
   },
   {
-    title: "Assemble by use case",
-    body: "Show how identity, payments, registries, data exchange, and safeguards work together.",
+    title: "Stack Builder",
+    body: "Select a country and use case, then generate the DPI layers, standards, and gaps.",
   },
   {
-    title: "Make gaps visible",
-    body: "Surface the readiness, financing, governance, and implementation work needed before scale.",
+    title: "Data Exchange Sandbox",
+    body: "Run a narrow verified exchange and inspect the API contract, response, and audit record.",
   },
 ];
 
@@ -33,9 +34,12 @@ export default function Home() {
       title="Build safer DPI with open tools"
       summary="AA4DPI Stack Builder is a public working prototype for turning Digital Public Goods, standards, safeguards, and country context into practical DPI reference stacks for Africa."
     >
-      <section className="grid gap-4 md:grid-cols-[1.3fr_0.7fr]">
-        <Card className="rounded-lg">
+      <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+        <Card className="rounded-lg border-primary/20">
           <CardHeader>
+            <div className="mb-2 inline-flex w-fit rounded-full bg-secondary px-3 py-1 text-xs font-medium text-muted-foreground">
+              AA4DPI docs home
+            </div>
             <CardTitle className="text-2xl">What this helps answer</CardTitle>
             <CardDescription className="text-base leading-7">
               If a country wants to improve farmer support, social protection,
@@ -57,31 +61,31 @@ export default function Home() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-lg border-primary/30 bg-accent/40">
+        <Card className="rounded-lg bg-secondary/35">
           <CardHeader>
-            <CardTitle className="text-xl">Showable this week</CardTitle>
+            <CardTitle className="text-xl">Demo route</CardTitle>
             <CardDescription className="text-sm leading-6">
-              A real open-source repo with working code, structured data, and a
-              frontend that explains the concept without claiming to be national
-              infrastructure.
+              The story is intentionally simple: explain the ecosystem, assemble
+              a stack, then prove one narrow data exchange in code.
             </CardDescription>
           </CardHeader>
+          <CardContent>
+            <div className="grid gap-2 text-sm">
+              <div className="rounded-md border bg-background px-3 py-2">
+                1. Browse tools and standards
+              </div>
+              <div className="rounded-md border bg-background px-3 py-2">
+                2. Generate a country/use-case stack
+              </div>
+              <div className="rounded-md border bg-background px-3 py-2">
+                3. Run a data exchange sandbox request
+              </div>
+            </div>
+          </CardContent>
         </Card>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-3">
-        {steps.map((step, index) => (
-          <Card key={step.title} className="rounded-lg">
-            <CardHeader>
-              <div className="mb-2 flex size-8 items-center justify-center rounded-full bg-secondary text-sm font-semibold text-muted-foreground">
-                {index + 1}
-              </div>
-              <CardTitle>{step.title}</CardTitle>
-              <CardDescription className="leading-6">{step.body}</CardDescription>
-            </CardHeader>
-          </Card>
-        ))}
-      </section>
+      <WorkflowStrip items={steps} />
 
       <section className="grid gap-4 md:grid-cols-3">
         <Card className="rounded-lg">

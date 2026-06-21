@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FileCode2, ListChecks } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -46,11 +47,15 @@ export function SandboxClient() {
   };
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[1fr_0.8fr]">
+    <div className="grid gap-4 lg:grid-cols-[1fr_0.85fr]">
       <Card className="rounded-lg">
         <CardHeader>
-          <CardTitle>Test exchange request</CardTitle>
-          <CardDescription>
+          <div className="flex items-center gap-2 text-sm font-medium text-primary">
+            <FileCode2 className="size-4" />
+            API contract and test request
+          </div>
+          <CardTitle>POST /api/sandbox/verify-registration</CardTitle>
+          <CardDescription className="text-base leading-7">
             The social registry asks the civil registry for only the facts needed
             to confirm child benefit eligibility.
           </CardDescription>
@@ -67,8 +72,12 @@ export function SandboxClient() {
 
       <Card className="rounded-lg">
         <CardHeader>
+          <div className="flex items-center gap-2 text-sm font-medium text-primary">
+            <ListChecks className="size-4" />
+            Decision and audit record
+          </div>
           <CardTitle>Verified response</CardTitle>
-          <CardDescription>
+          <CardDescription className="text-base leading-7">
             The sandbox returns an authorization decision, a minimized response,
             safeguards, and an audit entry.
           </CardDescription>

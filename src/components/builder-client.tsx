@@ -1,9 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, FileDown } from "lucide-react";
 
 import { ProgressBar } from "@/components/progress-bar";
+import {
+  ReadinessChecklist,
+  StackArchitecture,
+} from "@/components/storyboard-panels";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -66,10 +70,14 @@ export function BuilderClient({
 
   return (
     <div className="grid gap-6">
-      <Card className="rounded-lg">
+      <Card className="rounded-lg border-primary/20">
         <CardHeader>
-          <CardTitle>Build a reference stack</CardTitle>
-          <CardDescription>
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge>Stack Builder start</Badge>
+            <Badge variant="secondary">Phase 2.5</Badge>
+          </div>
+          <CardTitle className="text-2xl">Build a reference stack</CardTitle>
+          <CardDescription className="max-w-3xl text-base leading-7">
             Choose a country and use case. The prototype generates the systems,
             candidate DPGs, standards, safeguards, and readiness gaps to discuss.
           </CardDescription>
@@ -139,7 +147,7 @@ export function BuilderClient({
         </CardContent>
       </Card>
 
-      <section className="grid gap-4 lg:grid-cols-[1.25fr_0.75fr]">
+      <section className="grid gap-4 lg:grid-cols-[1.35fr_0.65fr]">
         <Card className="rounded-lg">
           <CardHeader>
             <div className="flex flex-wrap items-center gap-2">
@@ -153,22 +161,13 @@ export function BuilderClient({
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-5">
-            <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-              {stack.useCase.systems.map((system, index) => (
-                <div
-                  key={system}
-                  className="rounded-lg border bg-secondary/35 p-4"
-                >
-                  <div className="mb-4 flex size-7 items-center justify-center rounded-full bg-background text-sm font-semibold">
-                    {index + 1}
-                  </div>
-                  <div className="font-medium">{system}</div>
-                </div>
-              ))}
-            </div>
+            <StackArchitecture useCase={stack.useCase} />
 
             <div className="rounded-lg border p-4">
-              <h3 className="mb-3 font-semibold">Implementation sequence</h3>
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <h3 className="font-semibold">Implementation sequence</h3>
+                <Badge variant="outline">Generated brief</Badge>
+              </div>
               <div className="grid gap-3">
                 {stack.sequence.map((item, index) => (
                   <div
@@ -212,12 +211,7 @@ export function BuilderClient({
               <CardTitle>Readiness gaps to resolve</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-3">
-              {stack.gaps.slice(0, 6).map((gap) => (
-                <div key={gap} className="flex items-start gap-2 text-sm">
-                  <CheckCircle2 className="mt-0.5 size-4 text-primary" />
-                  <span>{gap}</span>
-                </div>
-              ))}
+              <ReadinessChecklist items={stack.gaps.slice(0, 6)} />
             </CardContent>
           </Card>
         </div>
@@ -253,7 +247,7 @@ export function BuilderClient({
           </CardContent>
         </Card>
 
-        <Card className="rounded-lg">
+        <Card className="rounded-lg border-primary/20 bg-accent/25">
           <CardHeader>
             <CardTitle>Standards and safeguards</CardTitle>
             <CardDescription>
@@ -282,6 +276,10 @@ export function BuilderClient({
                 Open data exchange sandbox
                 <ArrowRight />
               </a>
+            </Button>
+            <Button variant="ghost" className="w-fit" disabled>
+              <FileDown />
+              Export implementation brief
             </Button>
           </CardContent>
         </Card>

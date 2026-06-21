@@ -1,4 +1,5 @@
 import { PageShell } from "@/components/page-shell";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -26,6 +27,7 @@ export default function ApiContractPage() {
       <div className="grid gap-4 lg:grid-cols-2">
         <Card className="rounded-lg">
           <CardHeader>
+            <Badge className="w-fit">Request</Badge>
             <CardTitle>POST /api/sandbox/verify-registration</CardTitle>
             <CardDescription>
               Submit a data exchange request with purpose and requested fields.
@@ -40,6 +42,9 @@ export default function ApiContractPage() {
 
         <Card className="rounded-lg">
           <CardHeader>
+            <Badge className="w-fit" variant="secondary">
+              OpenAPI
+            </Badge>
             <CardTitle>GET /api/sandbox/openapi</CardTitle>
             <CardDescription>
               Export the machine-readable OpenAPI-style contract for the demo
@@ -47,14 +52,32 @@ export default function ApiContractPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <a
-              href="/api/sandbox/openapi"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex rounded-md border px-3 py-2 text-sm font-medium hover:bg-secondary"
-            >
-              View OpenAPI JSON
-            </a>
+            <div className="grid gap-4">
+              <pre className="overflow-auto rounded-lg bg-secondary p-4 text-sm leading-6">
+                {`{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AA4DPI Data Exchange Sandbox",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/sandbox/verify-registration": {
+      "post": {
+        "summary": "Verify a civil registration fact"
+      }
+    }
+  }
+}`}
+              </pre>
+              <a
+                href="/api/sandbox/openapi"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex w-fit rounded-md border px-3 py-2 text-sm font-medium hover:bg-secondary"
+              >
+                View full contract
+              </a>
+            </div>
           </CardContent>
         </Card>
       </div>
