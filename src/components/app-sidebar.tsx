@@ -75,16 +75,10 @@ const navGroups: NavGroup[] = [
     title: "Country Readiness",
     items: [
       { title: "Country Overview", url: "/countries" },
-      ...countries
-        .filter((country) =>
-          ["kenya", "rwanda", "nigeria", "south-africa", "egypt"].includes(
-            country.id
-          )
-        )
-        .map((country) => ({
-          title: country.name,
-          url: `/countries/${country.id}`,
-        })),
+      ...countries.map((country) => ({
+        title: `${country.flag} ${country.name}`,
+        url: `/countries/${country.id}`,
+      })),
     ],
   },
 ];

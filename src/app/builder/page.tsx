@@ -12,7 +12,7 @@ export default async function BuilderPage({
     : "farmer-support";
   const initialCountryId = countries.some((item) => item.id === params.country)
     ? params.country
-    : "rwanda";
+    : "kenya";
 
   return (
     <BuilderClient

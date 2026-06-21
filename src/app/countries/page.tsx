@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, MapPinned } from "lucide-react";
+import { ArrowRight, MapPinned, PlugZap } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -64,7 +64,7 @@ export default function CountriesPage() {
                     className="flex items-center gap-2 font-semibold hover:underline"
                   >
                     <div className="flex size-7 items-center justify-center rounded-md bg-secondary text-[10px] font-semibold text-primary">
-                      {country.name.slice(0, 2).toUpperCase()}
+                      <span className="text-base">{country.flag}</span>
                     </div>
                     {country.name}
                   </Link>
@@ -79,7 +79,7 @@ export default function CountriesPage() {
                   </Badge>
                 </td>
                 <td className="max-w-xs px-4 py-3 text-muted-foreground">
-                  {country.relevantDpgs.join(", ")}
+                  {country.relevantDpgs.slice(0, 4).join(", ")}
                 </td>
                 <td className="max-w-xs px-4 py-3 text-muted-foreground">
                   {country.priorityUseCases.join(", ")}
@@ -108,6 +108,7 @@ export default function CountriesPage() {
           </p>
         </div>
         <div className="rounded-lg border bg-background p-4 shadow-sm md:col-span-2">
+          <PlugZap className="mb-3 size-4 text-primary" />
           <div className="text-sm font-semibold">How to read this table</div>
           <p className="mt-2 text-xs leading-5 text-muted-foreground">
             The DPGs listed here are not claims that a country has deployed

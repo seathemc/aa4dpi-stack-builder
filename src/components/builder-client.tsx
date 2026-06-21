@@ -6,6 +6,13 @@ import { ArrowRight, Loader2 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { countries, priorities, useCases } from "@/lib/data";
 
 function Field({
@@ -25,7 +32,7 @@ function Field({
 
 export function BuilderClient({
   initialUseCaseId = "farmer-support",
-  initialCountryId = "rwanda",
+  initialCountryId = "kenya",
 }: {
   initialUseCaseId?: string;
   initialCountryId?: string;
@@ -81,31 +88,40 @@ export function BuilderClient({
 
       <section className="grid gap-5">
         <Field label="Country">
-          <select
+          <Select
             value={countryId}
-            onChange={(event) => setCountryId(event.target.value)}
-            className="h-10 rounded-md border bg-background px-3 text-sm"
+            onValueChange={(value) => setCountryId(value)}
           >
-            {countries.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.name}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger>
+              <SelectValue placeholder="Choose a country" />
+            </SelectTrigger>
+            <SelectContent>
+              {countries.map((item) => (
+                <SelectItem key={item.id} value={item.id}>
+                  <span className="mr-2">{item.flag}</span>
+                  {item.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </Field>
 
         <Field label="Primary use case">
-          <select
+          <Select
             value={useCaseId}
-            onChange={(event) => setUseCaseId(event.target.value)}
-            className="h-10 rounded-md border bg-background px-3 text-sm"
+            onValueChange={(value) => setUseCaseId(value)}
           >
-            {useCases.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.shortName}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger>
+              <SelectValue placeholder="Choose a use case" />
+            </SelectTrigger>
+            <SelectContent>
+              {useCases.map((item) => (
+                <SelectItem key={item.id} value={item.id}>
+                  {item.shortName}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </Field>
 
         <div className="grid gap-2">
@@ -159,7 +175,9 @@ export function BuilderClient({
           <div className="grid gap-2 text-xs text-muted-foreground">
             <div className="grid grid-cols-[7rem_1fr]">
               <span>Country</span>
-              <span className="text-foreground">{country.name}</span>
+              <span className="text-foreground">
+                {country.flag} {country.name}
+              </span>
             </div>
             <div className="grid grid-cols-[7rem_1fr]">
               <span>Use case</span>

@@ -37,12 +37,19 @@ export type UseCase = {
 export type CountryProfile = {
   id: string;
   name: string;
+  flag: string;
   region: string;
   maturity: "Early" | "Building" | "Scaling";
   readiness: number;
   relevantDpgs: string[];
   priorityUseCases: string[];
   publicSystems: string[];
+  integrationChecks: {
+    name: string;
+    layer: DpgLayer;
+    kind: "national system" | "payment rail" | "private rail" | "service channel";
+    note: string;
+  }[];
   summary: string;
   strengths: string[];
   gaps: string[];
@@ -372,12 +379,39 @@ export const countries: CountryProfile[] = [
   {
     id: "rwanda",
     name: "Rwanda",
+    flag: "🇷🇼",
     region: "East Africa",
     maturity: "Scaling",
     readiness: 62,
     relevantDpgs: ["OpenSPP", "X-Road", "OpenG2P", "DHIS2"],
     priorityUseCases: ["Farmer support", "Financial inclusion", "Public services"],
     publicSystems: ["Irembo-style service delivery", "financial inclusion use cases"],
+    integrationChecks: [
+      {
+        name: "MTN MoMo",
+        layer: "Payments",
+        kind: "private rail",
+        note: "Check merchant, wallet, bulk disbursement, and public-service payment APIs.",
+      },
+      {
+        name: "Airtel Money",
+        layer: "Payments",
+        kind: "private rail",
+        note: "Check reach, reconciliation, reversals, and beneficiary support flows.",
+      },
+      {
+        name: "Irembo",
+        layer: "Service delivery",
+        kind: "service channel",
+        note: "Check where farmer or household services can reuse existing digital service workflows.",
+      },
+      {
+        name: "National ID / civil registry",
+        layer: "Identity",
+        kind: "national system",
+        note: "Check verification rules, consent, and offline exception handling.",
+      },
+    ],
     summary:
       "Strong public service digitization and high policy focus make Rwanda a good demo country for integrated DPI use cases.",
     strengths: ["digital services", "financial inclusion", "coordinated delivery"],
@@ -393,12 +427,39 @@ export const countries: CountryProfile[] = [
   {
     id: "nigeria",
     name: "Nigeria",
+    flag: "🇳🇬",
     region: "West Africa",
     maturity: "Building",
     readiness: 58,
     relevantDpgs: ["MOSIP", "OpenCRVS", "Mojaloop", "OpenFn"],
     priorityUseCases: ["Identity", "Payments", "Social protection"],
     publicSystems: ["national identity ecosystem", "payments ecosystem"],
+    integrationChecks: [
+      {
+        name: "NIN / NIMC",
+        layer: "Identity",
+        kind: "national system",
+        note: "Check identity verification coverage, API access, and consent controls.",
+      },
+      {
+        name: "BVN",
+        layer: "Identity",
+        kind: "national system",
+        note: "Check when bank-linked identity signals are appropriate for public-service delivery.",
+      },
+      {
+        name: "NIBSS / instant payment rails",
+        layer: "Payments",
+        kind: "payment rail",
+        note: "Check payout routing, account resolution, payment failure handling, and settlement.",
+      },
+      {
+        name: "State programme registries",
+        layer: "Registries",
+        kind: "national system",
+        note: "Check duplication, data-sharing permissions, and federal-state coordination.",
+      },
+    ],
     summary:
       "Large-scale identity and payments activity creates major DPI potential, with coordination and inclusion as central challenges.",
     strengths: ["identity scale", "payments ecosystem", "private innovation"],
@@ -414,12 +475,33 @@ export const countries: CountryProfile[] = [
   {
     id: "malawi",
     name: "Malawi",
+    flag: "🇲🇼",
     region: "Southern Africa",
     maturity: "Building",
     readiness: 51,
     relevantDpgs: ["OpenCRVS", "OpenG2P", "ODK", "X-Road"],
     priorityUseCases: ["Legal identity", "Offline verification", "Social protection"],
     publicSystems: ["national registration", "offline verification priorities"],
+    integrationChecks: [
+      {
+        name: "National Registration Bureau",
+        layer: "Identity",
+        kind: "national system",
+        note: "Check verification coverage, offline exception rules, and civil registration links.",
+      },
+      {
+        name: "Mobile money providers",
+        layer: "Payments",
+        kind: "private rail",
+        note: "Check rural cash-out points, beneficiary support, and payment reversals.",
+      },
+      {
+        name: "Social Cash Transfer systems",
+        layer: "Social protection",
+        kind: "national system",
+        note: "Check registry quality, targeting data, grievance workflow, and audit trail.",
+      },
+    ],
     summary:
       "Useful country for showing how inclusion and offline access shape digital ID, social protection, and service delivery.",
     strengths: ["legal identity momentum", "inclusion focus", "partner alignment"],
@@ -435,12 +517,39 @@ export const countries: CountryProfile[] = [
   {
     id: "south-africa",
     name: "South Africa",
+    flag: "🇿🇦",
     region: "Southern Africa",
     maturity: "Building",
     readiness: 64,
     relevantDpgs: ["X-Road", "OpenFn", "OpenFisca", "Open Contracting"],
     priorityUseCases: ["Data exchange", "Service delivery", "Safeguards"],
     publicSystems: ["digital roadmap", "foundational data exchange work"],
+    integrationChecks: [
+      {
+        name: "Department of Home Affairs identity systems",
+        layer: "Identity",
+        kind: "national system",
+        note: "Check identity verification rules, exception handling, and privacy controls.",
+      },
+      {
+        name: "PayShap / bank payment rails",
+        layer: "Payments",
+        kind: "payment rail",
+        note: "Check low-value payouts, account resolution, fees, and reconciliation.",
+      },
+      {
+        name: "SASSA grant systems",
+        layer: "Social protection",
+        kind: "national system",
+        note: "Check eligibility, beneficiary support, payment failure handling, and appeals.",
+      },
+      {
+        name: "Public-service portals",
+        layer: "Service delivery",
+        kind: "service channel",
+        note: "Check if existing channels can expose status, complaints, and service outcomes.",
+      },
+    ],
     summary:
       "Strong institutional capacity and digital roadmap work make data exchange, safeguards, and trust architecture the right focus.",
     strengths: ["institutional capacity", "service delivery base", "digital roadmap"],
@@ -456,12 +565,39 @@ export const countries: CountryProfile[] = [
   {
     id: "tanzania",
     name: "Tanzania",
+    flag: "🇹🇿",
     region: "East Africa",
     maturity: "Scaling",
     readiness: 60,
     relevantDpgs: ["Mojaloop", "OpenG2P", "OpenSPP", "DHIS2"],
     priorityUseCases: ["Instant payments", "Farmer support", "Health access"],
     publicSystems: ["instant payment momentum", "mobile money ecosystem"],
+    integrationChecks: [
+      {
+        name: "M-Pesa Tanzania",
+        layer: "Payments",
+        kind: "private rail",
+        note: "Check wallet disbursements, merchant acceptance, agent reach, and reconciliation.",
+      },
+      {
+        name: "Tigo Pesa / Airtel Money",
+        layer: "Payments",
+        kind: "private rail",
+        note: "Check interoperability, failure handling, and beneficiary support.",
+      },
+      {
+        name: "National ID authority systems",
+        layer: "Identity",
+        kind: "national system",
+        note: "Check verification API access and offline enrollment paths.",
+      },
+      {
+        name: "Health and agriculture programme systems",
+        layer: "Registries",
+        kind: "national system",
+        note: "Check whether existing registries can be reused before new ones are created.",
+      },
+    ],
     summary:
       "Interoperable payments momentum makes Tanzania a strong example for payments-linked public service delivery.",
     strengths: ["instant payments", "mobile money", "regional relevance"],
@@ -477,12 +613,39 @@ export const countries: CountryProfile[] = [
   {
     id: "kenya",
     name: "Kenya",
+    flag: "🇰🇪",
     region: "East Africa",
     maturity: "Scaling",
     readiness: 66,
     relevantDpgs: ["Mojaloop", "OpenSPP", "OpenFn", "ODK"],
     priorityUseCases: ["Financial inclusion", "Farmer support", "MSME services"],
     publicSystems: ["mobile money ecosystem", "digital government services"],
+    integrationChecks: [
+      {
+        name: "M-Pesa",
+        layer: "Payments",
+        kind: "private rail",
+        note: "Check wallet payouts, merchant payments, account lookup, reversal, and reconciliation APIs.",
+      },
+      {
+        name: "eCitizen",
+        layer: "Service delivery",
+        kind: "service channel",
+        note: "Check if public-service journeys can use existing account, payment, and status flows.",
+      },
+      {
+        name: "National identity systems",
+        layer: "Identity",
+        kind: "national system",
+        note: "Check verification, consent, and exception handling for people without documentation.",
+      },
+      {
+        name: "Business and tax registries",
+        layer: "Registries",
+        kind: "national system",
+        note: "Check MSME verification and cross-border trade service needs.",
+      },
+    ],
     summary:
       "Kenya is useful for showing how payment reach and private innovation can connect to public-service DPI use cases.",
     strengths: ["payments ecosystem", "digital entrepreneurship", "service demand"],
@@ -498,12 +661,33 @@ export const countries: CountryProfile[] = [
   {
     id: "ghana",
     name: "Ghana",
+    flag: "🇬🇭",
     region: "West Africa",
     maturity: "Building",
     readiness: 57,
     relevantDpgs: ["MOSIP", "Mojaloop", "OpenG2P", "Open Contracting"],
     priorityUseCases: ["Identity", "Payments", "Public procurement"],
     publicSystems: ["digital identity ecosystem", "payments interoperability priorities"],
+    integrationChecks: [
+      {
+        name: "Ghana Card",
+        layer: "Identity",
+        kind: "national system",
+        note: "Check verification coverage, consent, and agency access rules.",
+      },
+      {
+        name: "GhIPSS / mobile money interoperability",
+        layer: "Payments",
+        kind: "payment rail",
+        note: "Check account routing, fees, settlement, and bulk public-service payments.",
+      },
+      {
+        name: "Ghana.gov service channel",
+        layer: "Service delivery",
+        kind: "service channel",
+        note: "Check payment, status, and user-support integration points.",
+      },
+    ],
     summary:
       "Ghana is a strong candidate for demonstrating identity, payments, and public service integration patterns.",
     strengths: ["identity foundations", "financial services", "institutional capacity"],
@@ -519,12 +703,33 @@ export const countries: CountryProfile[] = [
   {
     id: "egypt",
     name: "Egypt",
+    flag: "🇪🇬",
     region: "North Africa",
     maturity: "Building",
     readiness: 59,
     relevantDpgs: ["OpenFn", "OpenFisca", "Open Contracting", "DHIS2"],
     priorityUseCases: ["Service delivery", "Benefits", "Health data"],
     publicSystems: ["digital government services", "large-scale public administration"],
+    integrationChecks: [
+      {
+        name: "Digital Egypt service channels",
+        layer: "Service delivery",
+        kind: "service channel",
+        note: "Check where citizen-facing services, forms, payments, and status tracking already exist.",
+      },
+      {
+        name: "Meeza / banking payment rails",
+        layer: "Payments",
+        kind: "payment rail",
+        note: "Check low-value payouts, fees, account routing, and reconciliation.",
+      },
+      {
+        name: "Takaful and Karama benefit systems",
+        layer: "Social protection",
+        kind: "national system",
+        note: "Check eligibility logic, grievance channels, and payment failure workflows.",
+      },
+    ],
     summary:
       "Egypt is useful for showing how large public administration systems can be assessed for open standards and interoperability.",
     strengths: ["scale", "public administration capacity", "service delivery base"],
@@ -540,12 +745,33 @@ export const countries: CountryProfile[] = [
   {
     id: "sierra-leone",
     name: "Sierra Leone",
+    flag: "🇸🇱",
     region: "West Africa",
     maturity: "Early",
     readiness: 43,
     relevantDpgs: ["OpenCRVS", "OpenG2P", "ODK", "OpenFn"],
     priorityUseCases: ["Civil registration", "Social protection", "Health access"],
     publicSystems: ["digital transformation priorities", "service delivery needs"],
+    integrationChecks: [
+      {
+        name: "Civil registration systems",
+        layer: "Civil registration",
+        kind: "national system",
+        note: "Check birth and identity data quality before connecting benefit or education services.",
+      },
+      {
+        name: "Mobile money providers",
+        layer: "Payments",
+        kind: "private rail",
+        note: "Check coverage, agent liquidity, offline support, and payment failure workflows.",
+      },
+      {
+        name: "Social safety net programmes",
+        layer: "Social protection",
+        kind: "national system",
+        note: "Check registry quality, targeting, grievance channels, and audit requirements.",
+      },
+    ],
     summary:
       "Sierra Leone is a useful early-stage profile for showing how AA4DPI can turn priorities into an investment-ready stack.",
     strengths: ["policy momentum", "partner interest", "high-value use cases"],
@@ -561,12 +787,33 @@ export const countries: CountryProfile[] = [
   {
     id: "morocco",
     name: "Morocco",
+    flag: "🇲🇦",
     region: "North Africa",
     maturity: "Building",
     readiness: 61,
     relevantDpgs: ["X-Road", "OpenFn", "OpenFisca", "Open Contracting"],
     priorityUseCases: ["Digital administration", "Benefits", "MSME services"],
     publicSystems: ["digital administration", "public service modernization"],
+    integrationChecks: [
+      {
+        name: "Digital administration channels",
+        layer: "Service delivery",
+        kind: "service channel",
+        note: "Check where services can reuse existing login, forms, status, and document workflows.",
+      },
+      {
+        name: "Bank and wallet payment rails",
+        layer: "Payments",
+        kind: "payment rail",
+        note: "Check public-service fees, payouts, reconciliation, and user support.",
+      },
+      {
+        name: "Social registry / benefits systems",
+        layer: "Social protection",
+        kind: "national system",
+        note: "Check eligibility logic, appeals, and data-sharing permissions.",
+      },
+    ],
     summary:
       "Morocco is useful for showing how administrative reform, digital services, and standards can be mapped into DPI layers.",
     strengths: ["administrative capacity", "digital reform", "regional leadership"],

@@ -121,6 +121,10 @@ export default async function CountryPage({
       <section className="flex items-start justify-between gap-4">
         <div>
           <div className="mb-3 flex flex-wrap items-center gap-2">
+            <Badge variant="secondary" className="gap-1">
+              <span>{country.flag}</span>
+              {country.name}
+            </Badge>
             <Badge variant="secondary">{country.region}</Badge>
             <Badge className="bg-emerald-50 text-emerald-700">
               {country.maturity}
