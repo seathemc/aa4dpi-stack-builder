@@ -1,5 +1,4 @@
 import { BuilderClient } from "@/components/builder-client";
-import { PageShell } from "@/components/page-shell";
 import { useCases } from "@/lib/data";
 
 export default async function BuilderPage({
@@ -13,12 +12,6 @@ export default async function BuilderPage({
     : "farmer-support";
 
   return (
-    <PageShell
-      eyebrow="Stack Builder"
-      title="Turn a use case into a DPI reference stack"
-      summary="The builder shows how existing DPGs, country readiness, standards, and safeguards fit together for a practical public-service journey."
-    >
-      <BuilderClient initialUseCaseId={initialUseCaseId} />
-    </PageShell>
+    <BuilderClient initialUseCaseId={initialUseCaseId} />
   );
 }

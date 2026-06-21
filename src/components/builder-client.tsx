@@ -1,24 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { ArrowRight, CheckCircle2, FileDown } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import { ArrowRight } from "lucide-react";
 
-import { ProgressBar } from "@/components/progress-bar";
-import {
-  ReadinessChecklist,
-  StackArchitecture,
-} from "@/components/storyboard-panels";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { countries, priorities, useCases } from "@/lib/data";
-import { buildStack, type StackInput } from "@/lib/stack-builder";
 
 function Field({
   label,
@@ -28,7 +16,7 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <label className="grid gap-2 text-sm font-medium">
+    <label className="grid gap-2 text-xs font-medium">
       {label}
       {children}
     </label>
@@ -42,248 +30,146 @@ export function BuilderClient({
 }) {
   const [countryId, setCountryId] = useState("rwanda");
   const [useCaseId, setUseCaseId] = useState(initialUseCaseId);
-  const [maturity, setMaturity] = useState<StackInput["maturity"]>("Building");
+  const [maturity, setMaturity] = useState("Building");
   const [selectedPriorities, setSelectedPriorities] = useState<string[]>([
     "Inclusion",
     "Payments",
-    "Data exchange",
+    "Data Exchange",
   ]);
 
-  const stack = useMemo(
-    () =>
-      buildStack({
-        countryId,
-        useCaseId,
-        maturity,
-        priorities: selectedPriorities,
-      }),
-    [countryId, useCaseId, maturity, selectedPriorities]
-  );
+  const country = countries.find((item) => item.id === countryId) ?? countries[0];
+  const useCase =
+    useCases.find((item) => item.id === useCaseId) ?? useCases[0];
 
   const togglePriority = (priority: string) => {
     setSelectedPriorities((current) =>
       current.includes(priority)
         ? current.filter((item) => item !== priority)
-        : [...current, priority]
+        : [...current, priority].slice(0, 3)
     );
   };
 
   return (
-    <div className="grid gap-6">
-      <Card className="rounded-lg border-primary/20">
-        <CardHeader>
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge>Stack Builder start</Badge>
-            <Badge variant="secondary">Phase 2.5</Badge>
+    <main className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-6 py-8">
+      <section className="space-y-2">
+        <h1 className="text-2xl font-semibold tracking-tight">
+          Start your DPI stack
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          Answer a few questions to generate a recommended stack.
+        </p>
+      </section>
+
+      <section className="grid gap-5">
+        <Field label="Country">
+          <select
+            value={countryId}
+            onChange={(event) => setCountryId(event.target.value)}
+            className="h-10 rounded-md border bg-background px-3 text-sm"
+          >
+            {countries.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+        </Field>
+
+        <Field label="Primary use case">
+          <select
+            value={useCaseId}
+            onChange={(event) => setUseCaseId(event.target.value)}
+            className="h-10 rounded-md border bg-background px-3 text-sm"
+          >
+            {useCases.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.shortName}
+              </option>
+            ))}
+          </select>
+        </Field>
+
+        <div className="grid gap-2">
+          <div className="text-xs font-medium">Maturity stage</div>
+          <div className="flex flex-wrap gap-2">
+            {["Explore", "Building", "Operating", "Scaling"].map((stage) => (
+              <button
+                key={stage}
+                type="button"
+                onClick={() => setMaturity(stage)}
+                className={`rounded-md border px-4 py-2 text-xs font-medium ${
+                  maturity === stage
+                    ? "border-primary bg-sky-50 text-primary"
+                    : "bg-background text-muted-foreground"
+                }`}
+              >
+                {stage}
+              </button>
+            ))}
           </div>
-          <CardTitle className="text-2xl">Build a reference stack</CardTitle>
-          <CardDescription className="max-w-3xl text-base leading-7">
-            Choose a country and use case. The prototype generates the systems,
-            candidate DPGs, standards, safeguards, and readiness gaps to discuss.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-4 md:grid-cols-3">
-          <Field label="Country">
-            <select
-              value={countryId}
-              onChange={(event) => setCountryId(event.target.value)}
-              className="h-10 rounded-md border bg-background px-3 text-sm"
-            >
-              {countries.map((country) => (
-                <option key={country.id} value={country.id}>
-                  {country.name}
-                </option>
-              ))}
-            </select>
-          </Field>
+        </div>
 
-          <Field label="Use case">
-            <select
-              value={useCaseId}
-              onChange={(event) => setUseCaseId(event.target.value)}
-              className="h-10 rounded-md border bg-background px-3 text-sm"
+        <div className="grid gap-2">
+          <div className="text-xs font-medium">Priority areas (select up to 3)</div>
+          <div className="flex flex-wrap gap-2">
+            {priorities.map((priority) => (
+              <button
+                key={priority}
+                type="button"
+                onClick={() => togglePriority(priority)}
+                className={`rounded-md border px-3 py-2 text-xs font-medium ${
+                  selectedPriorities.includes(priority)
+                    ? "border-primary bg-sky-50 text-primary"
+                    : "bg-background text-muted-foreground"
+                }`}
+              >
+                {priority}
+              </button>
+            ))}
+            <button
+              type="button"
+              className="rounded-md border bg-background px-3 py-2 text-xs font-medium text-muted-foreground"
             >
-              {useCases.map((useCase) => (
-                <option key={useCase.id} value={useCase.id}>
-                  {useCase.name}
-                </option>
-              ))}
-            </select>
-          </Field>
-
-          <Field label="Current maturity">
-            <select
-              value={maturity}
-              onChange={(event) =>
-                setMaturity(event.target.value as StackInput["maturity"])
-              }
-              className="h-10 rounded-md border bg-background px-3 text-sm"
-            >
-              <option>Early</option>
-              <option>Building</option>
-              <option>Scaling</option>
-            </select>
-          </Field>
-
-          <div className="md:col-span-3">
-            <div className="mb-2 text-sm font-medium">Priorities</div>
-            <div className="flex flex-wrap gap-2">
-              {priorities.map((priority) => (
-                <button
-                  key={priority}
-                  type="button"
-                  onClick={() => togglePriority(priority)}
-                  className={`rounded-full border px-3 py-1.5 text-sm ${
-                    selectedPriorities.includes(priority)
-                      ? "border-primary bg-accent text-accent-foreground"
-                      : "bg-background text-muted-foreground"
-                  }`}
-                >
-                  {priority}
-                </button>
-              ))}
-            </div>
+              Other
+            </button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
 
-      <section className="grid gap-4 lg:grid-cols-[1.35fr_0.65fr]">
-        <Card className="rounded-lg">
-          <CardHeader>
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge>{stack.country.name}</Badge>
-              <Badge variant="secondary">{stack.useCase.shortName}</Badge>
-              <Badge variant="outline">{maturity}</Badge>
+        <div className="rounded-lg border bg-sky-50/70 p-4">
+          <div className="mb-3 text-xs font-semibold">Your selections</div>
+          <div className="grid gap-2 text-xs text-muted-foreground">
+            <div className="grid grid-cols-[7rem_1fr]">
+              <span>Country</span>
+              <span className="text-foreground">{country.name}</span>
             </div>
-            <CardTitle className="text-2xl">Generated DPI stack</CardTitle>
-            <CardDescription className="max-w-3xl text-base leading-7">
-              {stack.useCase.outcome}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-5">
-            <StackArchitecture useCase={stack.useCase} />
-
-            <div className="rounded-lg border p-4">
-              <div className="mb-3 flex items-center justify-between gap-3">
-                <h3 className="font-semibold">Implementation sequence</h3>
-                <Badge variant="outline">Generated brief</Badge>
-              </div>
-              <div className="grid gap-3">
-                {stack.sequence.map((item, index) => (
-                  <div
-                    key={item.step}
-                    className="grid gap-2 rounded-md border bg-background p-3 md:grid-cols-[2rem_1fr_10rem]"
-                  >
-                    <div className="flex size-7 items-center justify-center rounded-full bg-accent text-sm font-semibold text-accent-foreground">
-                      {index + 1}
-                    </div>
-                    <div className="text-sm">{item.step}</div>
-                    <div className="text-sm text-muted-foreground">
-                      {item.owner}
-                    </div>
-                  </div>
+            <div className="grid grid-cols-[7rem_1fr]">
+              <span>Use case</span>
+              <span className="text-foreground">{useCase.shortName}</span>
+            </div>
+            <div className="grid grid-cols-[7rem_1fr]">
+              <span>Maturity</span>
+              <span className="text-foreground">{maturity}</span>
+            </div>
+            <div className="grid grid-cols-[7rem_1fr]">
+              <span>Priorities</span>
+              <div className="flex flex-wrap gap-1">
+                {selectedPriorities.map((priority) => (
+                  <Badge key={priority} variant="secondary">
+                    {priority}
+                  </Badge>
                 ))}
               </div>
             </div>
-          </CardContent>
-        </Card>
-
-        <div className="grid gap-4">
-          <Card className="rounded-lg">
-            <CardHeader>
-              <CardTitle>Country readiness</CardTitle>
-              <CardDescription>{stack.country.summary}</CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-4">
-              {stack.country.metrics.map((metric) => (
-                <ProgressBar
-                  key={metric.label}
-                  label={metric.label}
-                  value={metric.value}
-                  note={metric.note}
-                />
-              ))}
-            </CardContent>
-          </Card>
-
-          <Card className="rounded-lg">
-            <CardHeader>
-              <CardTitle>Readiness gaps to resolve</CardTitle>
-            </CardHeader>
-            <CardContent className="grid gap-3">
-              <ReadinessChecklist items={stack.gaps.slice(0, 6)} />
-            </CardContent>
-          </Card>
+          </div>
         </div>
-      </section>
 
-      <section className="grid gap-4 lg:grid-cols-2">
-        <Card className="rounded-lg">
-          <CardHeader>
-            <CardTitle>Candidate DPGs</CardTitle>
-            <CardDescription>
-              These are starting points for discussion, not automatic
-              recommendations.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-3">
-            {stack.recommendedDpgs.slice(0, 8).map((dpg) => (
-              <a
-                key={dpg.id}
-                href={dpg.github}
-                target="_blank"
-                rel="noreferrer"
-                className="grid gap-1 rounded-md border p-3 hover:bg-secondary/60"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <span className="font-medium">{dpg.name}</span>
-                  <Badge variant="outline">{dpg.layer}</Badge>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  {dpg.description}
-                </p>
-              </a>
-            ))}
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-lg border-primary/20 bg-accent/25">
-          <CardHeader>
-            <CardTitle>Standards and safeguards</CardTitle>
-            <CardDescription>
-              The stack should be evaluated against technical standards and
-              trust requirements before adoption.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-5">
-            <div className="flex flex-wrap gap-2">
-              {stack.standards.map((standard) => (
-                <Badge key={standard} variant="secondary">
-                  {standard}
-                </Badge>
-              ))}
-            </div>
-            <div className="grid gap-2">
-              {stack.useCase.safeguards.map((safeguard) => (
-                <div key={safeguard} className="flex items-center gap-2 text-sm">
-                  <CheckCircle2 className="size-4 text-primary" />
-                  {safeguard}
-                </div>
-              ))}
-            </div>
-            <Button asChild variant="outline" className="w-fit">
-              <a href="/data-exchange">
-                Open data exchange sandbox
-                <ArrowRight />
-              </a>
-            </Button>
-            <Button variant="ghost" className="w-fit" disabled>
-              <FileDown />
-              Export implementation brief
-            </Button>
-          </CardContent>
-        </Card>
+        <Button asChild className="h-10 justify-between text-xs">
+          <Link href="/builder/generated">
+            Generate my DPI stack
+            <ArrowRight className="size-3.5" />
+          </Link>
+        </Button>
       </section>
-    </div>
+    </main>
   );
 }

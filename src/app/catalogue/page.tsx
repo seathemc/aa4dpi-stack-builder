@@ -1,58 +1,111 @@
-import { PageShell } from "@/components/page-shell";
-import { CatalogueSnapshot } from "@/components/storyboard-panels";
+import { GitBranch, Search } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { dpgs } from "@/lib/data";
+
+const layerFilters = [
+  "All",
+  "Identity",
+  "Civil Registration",
+  "Payments",
+  "Data Exchange",
+  "Social Protection",
+  "Health",
+];
 
 export default function CataloguePage() {
   return (
-    <PageShell
-      eyebrow="Open DPG catalogue"
-      title="Real tools, mapped to DPI layers"
-      summary="The catalogue starts with actual open-source repositories. The point is not to recommend one tool everywhere, but to show what exists and where it may fit."
-    >
-      <CatalogueSnapshot dpgs={dpgs} />
-
-      <section className="grid gap-4 md:grid-cols-3">
-        {["Identity and registries", "Payments and exchange", "Delivery systems"].map(
-          (group) => (
-            <Card key={group} className="rounded-lg">
-              <CardHeader>
-                <Badge variant="secondary">{group}</Badge>
-                <CardTitle className="text-lg">
-                  {
-                    dpgs.filter((dpg) =>
-                      group === "Identity and registries"
-                        ? ["Identity", "Civil registration", "Registries"].includes(
-                            dpg.layer
-                          )
-                        : group === "Payments and exchange"
-                          ? ["Payments", "Data exchange"].includes(dpg.layer)
-                          : ![
-                              "Identity",
-                              "Civil registration",
-                              "Registries",
-                              "Payments",
-                              "Data exchange",
-                            ].includes(dpg.layer)
-                    ).length
-                  }{" "}
-                  tools tracked
-                </CardTitle>
-                <CardDescription>
-                  A compact view of which open-source components can support
-                  each part of a country stack.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          )
-        )}
+    <main className="mx-auto flex w-full max-w-5xl flex-col gap-5 px-6 py-8">
+      <section className="space-y-2">
+        <h1 className="text-2xl font-semibold tracking-tight">DPG Catalogue</h1>
+        <p className="text-sm text-muted-foreground">
+          Explore open Digital Public Goods by layer
+        </p>
       </section>
-    </PageShell>
+
+      <section className="flex flex-wrap items-center gap-3">
+        <div className="flex h-9 min-w-80 items-center gap-2 rounded-md border bg-background px-3 text-sm text-muted-foreground">
+          <Search className="size-4" />
+          Search DPGs...
+        </div>
+        <Button variant="outline" size="sm" className="ml-auto text-xs">
+          All layers
+        </Button>
+      </section>
+
+      <section className="flex flex-wrap gap-2">
+        {layerFilters.map((filter, index) => (
+          <Badge
+            key={filter}
+            variant={index === 0 ? "default" : "secondary"}
+            className="rounded-md px-3 py-1"
+          >
+            {filter}
+          </Badge>
+        ))}
+      </section>
+
+      <section className="overflow-hidden rounded-lg border bg-background shadow-sm">
+        <table className="w-full text-left text-xs">
+          <thead className="border-b bg-secondary/50 text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
+            <tr>
+              <th className="px-4 py-3 font-semibold">DPG</th>
+              <th className="px-4 py-3 font-semibold">Layer</th>
+              <th className="px-4 py-3 font-semibold">Description</th>
+              <th className="px-4 py-3 font-semibold">Maturity</th>
+              <th className="px-4 py-3 font-semibold">GitHub</th>
+            </tr>
+          </thead>
+          <tbody>
+            {dpgs.slice(0, 6).map((dpg) => (
+              <tr key={dpg.id} className="border-b last:border-b-0">
+                <td className="px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="flex size-7 items-center justify-center rounded-md bg-sky-50 text-[10px] font-semibold text-primary">
+                      {dpg.name.slice(0, 2)}
+                    </div>
+                    <span className="font-semibold">{dpg.name}</span>
+                  </div>
+                </td>
+                <td className="px-4 py-3 text-muted-foreground">{dpg.layer}</td>
+                <td className="max-w-sm px-4 py-3 text-muted-foreground">
+                  {dpg.description}
+                </td>
+                <td className="px-4 py-3">
+                  <Badge variant="secondary" className="bg-emerald-50 text-emerald-700">
+                    Mature
+                  </Badge>
+                </td>
+                <td className="px-4 py-3">
+                  <a href={dpg.github} target="_blank" rel="noreferrer">
+                    <GitBranch className="size-4 text-muted-foreground" />
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+      <div className="flex items-center justify-between text-xs text-muted-foreground">
+        <span>Showing 6 of {dpgs.length} DPGs</span>
+        <div className="flex gap-1">
+          {[1, 2, 3, 4, 5].map((page) => (
+            <div
+              key={page}
+              className={`flex size-7 items-center justify-center rounded-md border ${
+                page === 1 ? "bg-primary text-primary-foreground" : "bg-background"
+              }`}
+            >
+              {page}
+            </div>
+          ))}
+          <div className="flex size-7 items-center justify-center rounded-md border">
+            ...
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }

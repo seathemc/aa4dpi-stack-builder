@@ -12,15 +12,15 @@ export function PageShell({
   children: ReactNode;
 }) {
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 sm:px-6 md:px-8 md:py-12">
-      <section className="flex flex-col gap-4">
-        <div className="inline-flex w-fit rounded-full bg-secondary px-3 py-1 text-xs font-medium text-muted-foreground">
+    <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-5 py-7 sm:px-7 md:px-8 md:py-9">
+      <section className="flex flex-col gap-3">
+        <div className="inline-flex w-fit rounded-full bg-secondary px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-primary">
           {eyebrow}
         </div>
-        <h1 className="max-w-3xl text-3xl font-semibold tracking-normal text-foreground sm:text-4xl">
+        <h1 className="max-w-3xl text-2xl font-semibold tracking-normal text-foreground sm:text-3xl">
           {title}
         </h1>
-        <p className="max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
+        <p className="max-w-3xl text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
           {summary}
         </p>
       </section>

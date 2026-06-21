@@ -1,83 +1,91 @@
-import { PageShell } from "@/components/page-shell";
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { CircleOff, ShieldCheck } from "lucide-react";
 
 const rows = [
-  {
-    time: "10:04:12",
-    requester: "Social Registry",
-    purpose: "Child benefit eligibility",
-    fields: "3 fields",
-    status: "shared",
-  },
-  {
-    time: "10:05:31",
-    requester: "Farmer Registry",
-    purpose: "Input subsidy delivery",
-    fields: "identity status only",
-    status: "shared",
-  },
-  {
-    time: "10:07:18",
-    requester: "Unknown service",
-    purpose: "not supplied",
-    fields: "full record",
-    status: "blocked",
-  },
+  ["2026-06-10 10:15:22", "Scholarship eligibility", "Birth registration"],
+  ["2026-06-10 10:14:10", "Benefit eligibility", "Birth registration"],
+  ["2026-06-09 09:06:41", "Benefit eligibility", "Success"],
+  ["2026-06-20 09:05:41", "Program targeting", "Farmer profile"],
+  ["2026-06-20 05:47:03", "Immunization follow-up", "Success"],
+  ["2026-06-20 00:50:11", "Benefit eligibility", "Denied"],
+];
+
+const safeguards = [
+  ["Purpose limitation", "Data used only for the declared purpose."],
+  ["Data minimization", "Only the minimum necessary data is shared."],
+  ["User consent", "Consent captured and verifiable."],
+  ["Redress channel", "Citizens can challenge and get support."],
+  ["Offline access", "Works with intermittent connectivity."],
 ];
 
 export default function AuditPage() {
   return (
-    <PageShell
-      eyebrow="Safeguards"
-      title="Audit is part of the infrastructure"
-      summary="A data exchange layer should make every request inspectable: who asked, why they asked, what was shared, and whether the request was allowed."
-    >
-      <Card className="rounded-lg">
-        <CardHeader>
-          <CardTitle>Demo audit trail</CardTitle>
-          <CardDescription>
-            This is the governance surface a policymaker should be able to
-            understand before a system scales.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="overflow-auto">
-          <table className="w-full min-w-[720px] text-left text-sm">
-            <thead className="border-b text-muted-foreground">
-              <tr>
-                <th className="py-3 pr-4 font-medium">Time</th>
-                <th className="py-3 pr-4 font-medium">Requester</th>
-                <th className="py-3 pr-4 font-medium">Purpose</th>
-                <th className="py-3 pr-4 font-medium">Data shared</th>
-                <th className="py-3 pr-4 font-medium">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row) => (
-                <tr key={`${row.time}-${row.requester}`} className="border-b">
-                  <td className="py-3 pr-4">{row.time}</td>
-                  <td className="py-3 pr-4">{row.requester}</td>
-                  <td className="py-3 pr-4">{row.purpose}</td>
-                  <td className="py-3 pr-4">{row.fields}</td>
-                  <td className="py-3 pr-4">
-                    <Badge
-                      variant={row.status === "blocked" ? "outline" : "secondary"}
-                    >
-                      {row.status}
-                    </Badge>
-                  </td>
+    <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 py-8">
+      <section className="grid gap-5 lg:grid-cols-[1fr_17rem]">
+        <div className="space-y-5">
+          <section className="space-y-2">
+            <h1 className="text-2xl font-semibold tracking-tight">Audit log</h1>
+            <p className="text-sm text-muted-foreground">
+              All data access is logged and reviewable.
+            </p>
+          </section>
+
+          <div className="overflow-hidden rounded-lg border bg-background shadow-sm">
+            <table className="w-full text-left text-xs">
+              <thead className="border-b bg-secondary/50 text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
+                <tr>
+                  <th className="px-4 py-3 font-semibold">Time (UTC)</th>
+                  <th className="px-4 py-3 font-semibold">Requester</th>
+                  <th className="px-4 py-3 font-semibold">Data shared</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </CardContent>
-      </Card>
-    </PageShell>
+              </thead>
+              <tbody>
+                {rows.map(([time, requester, data]) => (
+                  <tr key={`${time}-${requester}`} className="border-b last:border-b-0">
+                    <td className="px-4 py-3 text-muted-foreground">{time}</td>
+                    <td className="px-4 py-3">{requester}</td>
+                    <td
+                      className={`px-4 py-3 ${
+                        data === "Denied"
+                          ? "text-red-600"
+                          : data === "Success"
+                            ? "text-emerald-700"
+                            : "text-muted-foreground"
+                      }`}
+                    >
+                      {data}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <a href="/api/sandbox/verify-registration" className="text-xs font-medium text-primary">
+            View full audit log →
+          </a>
+        </div>
+
+        <aside className="rounded-lg border bg-background p-4 shadow-sm">
+          <h2 className="mb-4 text-sm font-semibold">Safeguards</h2>
+          <div className="grid gap-3">
+            {safeguards.map(([title, body], index) => (
+              <div key={title} className="flex gap-3 rounded-md border bg-secondary/35 p-3">
+                {index === 5 ? (
+                  <CircleOff className="mt-0.5 size-4 text-red-500" />
+                ) : (
+                  <ShieldCheck className="mt-0.5 size-4 text-emerald-600" />
+                )}
+                <div>
+                  <div className="text-xs font-semibold">{title}</div>
+                  <p className="mt-1 text-[11px] leading-4 text-muted-foreground">
+                    {body}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </aside>
+      </section>
+    </main>
   );
 }

@@ -1,124 +1,90 @@
 import Link from "next/link";
-import { ArrowRight, DatabaseZap, GitBranch, ShieldCheck } from "lucide-react";
+import { ArrowRight, BarChart3, ShieldCheck, UsersRound } from "lucide-react";
 
-import { PageShell } from "@/components/page-shell";
-import { WorkflowStrip } from "@/components/storyboard-panels";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
-const steps = [
-  {
-    title: "Open DPG catalogue",
-    body: "Real repositories grouped by identity, payments, data exchange, registries, health, and delivery.",
-  },
-  {
-    title: "Stack Builder",
-    body: "Select a country and use case, then generate the DPI layers, standards, and gaps.",
-  },
-  {
-    title: "Data Exchange Sandbox",
-    body: "Run a narrow verified exchange and inspect the API contract, response, and audit record.",
-  },
-];
+function CubeVisual() {
+  return (
+    <div className="relative h-28 w-36">
+      <div className="absolute bottom-4 left-7 grid grid-cols-2 gap-1">
+        {["bg-sky-200", "bg-sky-500", "bg-blue-700", "bg-sky-300"].map(
+          (color, index) => (
+            <div
+              key={`${color}-${index}`}
+              className={`h-10 w-10 rotate-45 rounded-sm border border-white/80 ${color} shadow-sm`}
+            />
+          )
+        )}
+      </div>
+      <div className="absolute right-2 top-4 h-12 w-12 rotate-45 rounded-sm border bg-white/70 shadow-sm" />
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <PageShell
-      eyebrow="Open prototype"
-      title="Build safer DPI with open tools"
-      summary="AA4DPI Stack Builder is a public working prototype for turning Digital Public Goods, standards, safeguards, and country context into practical DPI reference stacks for Africa."
-    >
-      <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-        <Card className="rounded-lg border-primary/20">
-          <CardHeader>
-            <div className="mb-2 inline-flex w-fit rounded-full bg-secondary px-3 py-1 text-xs font-medium text-muted-foreground">
-              AA4DPI docs home
-            </div>
-            <CardTitle className="text-2xl">What this helps answer</CardTitle>
-            <CardDescription className="text-base leading-7">
-              If a country wants to improve farmer support, social protection,
-              health access, education credentials, or MSME trade, what systems
-              need to connect, what DPGs already exist, what standards matter,
-              and what safeguards should be designed from the start?
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-wrap gap-3">
-            <Button asChild>
-              <Link href="/builder">
-                Open the Stack Builder
-                <ArrowRight />
-              </Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link href="/catalogue">Browse DPG catalogue</Link>
-            </Button>
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-lg bg-secondary/35">
-          <CardHeader>
-            <CardTitle className="text-xl">Demo route</CardTitle>
-            <CardDescription className="text-sm leading-6">
-              The story is intentionally simple: explain the ecosystem, assemble
-              a stack, then prove one narrow data exchange in code.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-2 text-sm">
-              <div className="rounded-md border bg-background px-3 py-2">
-                1. Browse tools and standards
-              </div>
-              <div className="rounded-md border bg-background px-3 py-2">
-                2. Generate a country/use-case stack
-              </div>
-              <div className="rounded-md border bg-background px-3 py-2">
-                3. Run a data exchange sandbox request
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+    <main className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-6 py-10">
+      <section className="max-w-2xl space-y-4">
+        <div className="inline-flex rounded-full bg-sky-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-sky-700">
+          Welcome
+        </div>
+        <h1 className="text-3xl font-semibold tracking-tight text-foreground">
+          Build safer DPI with open tools
+        </h1>
+        <p className="max-w-xl text-sm leading-6 text-muted-foreground">
+          AA4DPI curates, connects, and helps implement open Digital Public
+          Infrastructure across Africa.
+        </p>
       </section>
 
-      <WorkflowStrip items={steps} />
-
-      <section className="grid gap-4 md:grid-cols-3">
-        <Card className="rounded-lg">
-          <CardHeader>
-            <GitBranch className="size-5 text-primary" />
-            <CardTitle>Phase 2.5</CardTitle>
-            <CardDescription>
-              A working Stack Builder that maps countries and use cases to DPGs,
-              standards, safeguards, and implementation steps.
-            </CardDescription>
-          </CardHeader>
-        </Card>
-        <Card className="rounded-lg">
-          <CardHeader>
-            <DatabaseZap className="size-5 text-primary" />
-            <CardTitle>Phase 3</CardTitle>
-            <CardDescription>
-              A data exchange sandbox that demonstrates API contracts, verified
-              responses, consent checks, and audit logs.
-            </CardDescription>
-          </CardHeader>
-        </Card>
-        <Card className="rounded-lg">
-          <CardHeader>
-            <ShieldCheck className="size-5 text-primary" />
-            <CardTitle>Why it matters</CardTitle>
-            <CardDescription>
-              Safeguards, inclusion, and trust are shown as design constraints,
-              not as policy language added after technical choices are made.
-            </CardDescription>
-          </CardHeader>
-        </Card>
+      <section className="grid overflow-hidden rounded-lg border bg-background shadow-sm md:grid-cols-3">
+        {[
+          {
+            icon: ShieldCheck,
+            title: "Open by design",
+            body: "Open source, open standards, open governance.",
+          },
+          {
+            icon: UsersRound,
+            title: "Built for inclusion",
+            body: "Interoperable systems that put people first.",
+          },
+          {
+            icon: BarChart3,
+            title: "Proven impact",
+            body: "Read implementations that improve lives at scale.",
+          },
+        ].map((item) => (
+          <div key={item.title} className="border-b p-5 last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0">
+            <item.icon className="mb-6 size-5 text-primary" />
+            <h2 className="text-sm font-semibold">{item.title}</h2>
+            <p className="mt-2 text-xs leading-5 text-muted-foreground">
+              {item.body}
+            </p>
+          </div>
+        ))}
       </section>
-    </PageShell>
+
+      <section className="grid items-center gap-5 rounded-lg border bg-sky-50/60 p-5 shadow-sm md:grid-cols-[1fr_auto]">
+        <div className="space-y-3">
+          <h2 className="text-xl font-semibold">Design and deploy your DPI stack</h2>
+          <p className="max-w-lg text-sm leading-6 text-muted-foreground">
+            Use the Stack Builder to assemble the right open tools for your
+            country priority and maturity stage.
+          </p>
+          <Button asChild className="h-9 text-xs">
+            <Link href="/builder">
+              Open the Stack Builder
+              <ArrowRight className="size-3.5" />
+            </Link>
+          </Button>
+        </div>
+        <CubeVisual />
+      </section>
+
+      <p className="text-xs text-muted-foreground">
+        Trusted by governments, UN agencies, and partners across Africa.
+      </p>
+    </main>
   );
 }
