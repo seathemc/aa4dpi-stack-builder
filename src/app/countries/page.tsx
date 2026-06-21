@@ -4,14 +4,9 @@ import { ArrowRight, Clock3, MapPinned, PlugZap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cohortCountries, upcomingCountries } from "@/lib/data";
+import { evidenceLevel, evidenceTone } from "@/lib/evidence";
 
 const regions = ["Cohort 1", "East Africa", "West Africa", "Southern Africa"];
-
-function readinessTone(value: number) {
-  if (value >= 62) return "bg-emerald-50 text-emerald-700";
-  if (value >= 52) return "bg-amber-50 text-amber-700";
-  return "bg-slate-100 text-slate-700";
-}
 
 export default function CountriesPage() {
   return (
@@ -46,7 +41,7 @@ export default function CountriesPage() {
               <th className="px-4 py-3 font-semibold">Country</th>
               <th className="px-4 py-3 font-semibold">Region</th>
               <th className="px-4 py-3 font-semibold">Stage</th>
-              <th className="px-4 py-3 font-semibold">Readiness</th>
+              <th className="px-4 py-3 font-semibold">Readiness signal</th>
               <th className="px-4 py-3 font-semibold">Relevant DPGs to evaluate</th>
               <th className="px-4 py-3 font-semibold">Priority use cases</th>
               <th className="px-4 py-3 font-semibold" />
@@ -74,8 +69,10 @@ export default function CountriesPage() {
                   <Badge variant="secondary">{country.maturity}</Badge>
                 </td>
                 <td className="px-4 py-3">
-                  <Badge className={readinessTone(country.readiness)}>
-                    {country.readiness}%
+                  <Badge
+                    className={evidenceTone(evidenceLevel(country.readiness))}
+                  >
+                    {evidenceLevel(country.readiness)}
                   </Badge>
                 </td>
                 <td className="max-w-xs px-4 py-3 text-muted-foreground">
@@ -124,9 +121,9 @@ export default function CountriesPage() {
           <MapPinned className="mb-3 size-4 text-primary" />
           <div className="text-sm font-semibold">Country pages are dashboards</div>
           <p className="mt-2 text-xs leading-5 text-muted-foreground">
-            Each Cohort 1 page mixes development priorities, DPI readiness, and
-            open-source components that could support the first implementation
-            sprint.
+            Each Cohort 1 page mixes development priorities, DPI evidence
+            signals, and open-source components that could support the first
+            implementation sprint.
           </p>
         </div>
         <div className="rounded-lg border bg-background p-4 shadow-sm md:col-span-2">

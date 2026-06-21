@@ -14,6 +14,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { evidenceLevel, evidenceTone } from "@/lib/evidence";
 import { buildStack, type StackInput } from "@/lib/stack-builder";
 
 function maturityForBuilder(value?: string): StackInput["maturity"] {
@@ -74,6 +75,7 @@ export default async function GeneratedStackPage({
     item.name.toLowerCase().includes("m-pesa")
   );
   const paymentUseCase = stack.useCase.layers.includes("Payments");
+  const stackSignal = evidenceLevel(stack.fitScore);
 
   return (
     <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-8">
@@ -155,19 +157,16 @@ export default async function GeneratedStackPage({
             </div>
 
             <aside className="rounded-lg border bg-background p-4 shadow-sm">
-              <div className="mb-4 text-xs font-semibold">Fit score</div>
-              <div className="mb-5 grid place-items-center">
-                <div className="grid size-24 place-items-center rounded-full border-[10px] border-secondary bg-background text-center">
-                  <div>
-                    <div className="text-2xl font-semibold text-primary">
-                      {stack.fitScore}
-                    </div>
-                    <div className="text-[10px] text-muted-foreground">
-                      of 100
-                    </div>
-                  </div>
-                </div>
+              <div className="mb-4 text-xs font-semibold">
+                Recommendation signal
               </div>
+              <Badge className={`mb-5 rounded-md ${evidenceTone(stackSignal)}`}>
+                {stackSignal}
+              </Badge>
+              <p className="mb-5 text-xs leading-5 text-muted-foreground">
+                Draft signal based on selected use case, country evidence, and
+                open-source fit. It should guide validation, not replace it.
+              </p>
               <div className="grid gap-3 text-xs">
                 {stack.country.metrics.slice(0, 4).map((metric) => (
                   <div key={metric.label} className="grid gap-1">
@@ -175,13 +174,13 @@ export default async function GeneratedStackPage({
                       <span className="text-muted-foreground">
                         {metric.label}
                       </span>
-                      <span className="font-semibold">{metric.value}%</span>
-                    </div>
-                    <div className="h-1.5 overflow-hidden rounded-full bg-secondary">
-                      <div
-                        className="h-full rounded-full bg-primary"
-                        style={{ width: `${metric.value}%` }}
-                      />
+                      <Badge
+                        className={`rounded-md ${evidenceTone(
+                          evidenceLevel(metric.value)
+                        )}`}
+                      >
+                        {evidenceLevel(metric.value)}
+                      </Badge>
                     </div>
                   </div>
                 ))}

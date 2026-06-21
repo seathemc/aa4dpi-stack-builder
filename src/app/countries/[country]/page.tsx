@@ -6,40 +6,37 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cohortCountries, cohortCountryIds, countries, dpgs } from "@/lib/data";
+import { evidenceLevel, evidenceTone } from "@/lib/evidence";
 
 export function generateStaticParams() {
   return cohortCountries.map((country) => ({ country: country.id }));
 }
 
-function metricValue(country: (typeof countries)[number], keyword: string) {
-  return (
-    country.metrics.find((metric) =>
-      metric.label.toLowerCase().includes(keyword)
-    )?.value ?? country.readiness
+function getMetric(country: (typeof countries)[number], keyword: string) {
+  return country.metrics.find((metric) =>
+    metric.label.toLowerCase().includes(keyword)
   );
 }
 
-function MetricCard({
+function SignalCard({
   label,
-  value,
   note,
+  value,
 }: {
   label: string;
-  value: number;
   note: string;
+  value: number;
 }) {
+  const level = evidenceLevel(value);
+
   return (
     <div className="rounded-lg border bg-background p-4 shadow-sm">
       <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
         {label}
       </div>
-      <div className="mt-2 text-3xl font-semibold text-primary">{value}%</div>
-      <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-secondary">
-        <div
-          className="h-full rounded-full bg-primary"
-          style={{ width: `${value}%` }}
-        />
-      </div>
+      <Badge className={`mt-3 rounded-md ${evidenceTone(level)}`}>
+        {level}
+      </Badge>
       <div className="mt-3 text-xs leading-5 text-muted-foreground">{note}</div>
     </div>
   );
@@ -72,58 +69,6 @@ function DataCard({
       <p className="mt-2 text-xs leading-5 text-muted-foreground">{note}</p>
       <div className="mt-3 text-[10px] text-muted-foreground">
         Source: {source}
-      </div>
-    </div>
-  );
-}
-
-function ReadinessChart({ values }: { values: number[] }) {
-  const points = values
-    .map((value, index) => {
-      const x = (index / Math.max(values.length - 1, 1)) * 420;
-      const y = 112 - value;
-      return `${x},${y}`;
-    })
-    .join(" ");
-
-  return (
-    <div className="rounded-lg border bg-background p-4 shadow-sm">
-      <div className="mb-4 text-xs font-semibold">DPI readiness profile</div>
-      <div className="relative h-48">
-        <div className="absolute inset-0 grid grid-rows-4">
-          {[0, 1, 2, 3].map((line) => (
-            <div key={line} className="border-t border-dashed" />
-          ))}
-        </div>
-        <svg
-          viewBox="0 0 420 120"
-          className="relative h-full w-full overflow-visible text-primary"
-        >
-          <polyline
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="3"
-            points={points}
-          />
-          {values.map((value, index) => {
-            const x = (index / Math.max(values.length - 1, 1)) * 420;
-            const y = 112 - value;
-
-            return (
-              <circle
-                key={`${value}-${index}`}
-                cx={x}
-                cy={y}
-                fill="white"
-                r="4"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
-            );
-          })}
-        </svg>
       </div>
     </div>
   );
@@ -184,7 +129,9 @@ export default async function CountryPage({
     };
   });
 
-  const chartValues = country.metrics.map((metric) => metric.value);
+  const identityMetric = getMetric(country, "identity");
+  const paymentMetric = getMetric(country, "payment");
+  const safeguardsMetric = getMetric(country, "safeguards");
 
   return (
     <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-8">
@@ -201,7 +148,7 @@ export default async function CountryPage({
             </Badge>
           </div>
           <h1 className="text-2xl font-semibold tracking-tight">
-            {country.name} DPI readiness
+            {country.name} DPI readiness signals
           </h1>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
             {country.summary}
@@ -230,26 +177,32 @@ export default async function CountryPage({
 
         <TabsContent value="readiness" className="space-y-5">
           <section className="grid gap-4 md:grid-cols-4">
-            <MetricCard
-              label="Overall readiness"
-              note="Prototype composite score from the five visible DPI dimensions below"
+            <SignalCard
+              label="Overall signal"
+              note="Draft synthesis of the visible evidence in the country materials"
               value={country.readiness}
             />
-            <MetricCard
-              label="Identity readiness"
-              note="Ability to verify people or entities for service delivery"
-              value={metricValue(country, "identity")}
-            />
-            <MetricCard
-              label="Payment reach"
-              note="How usable payment rails may be for public services"
-              value={metricValue(country, "payment")}
-            />
-            <MetricCard
-              label="Safeguards maturity"
-              note="Privacy, redress, auditability, and trust signals"
-              value={metricValue(country, "safeguards")}
-            />
+            {identityMetric ? (
+              <SignalCard
+                label="Identity readiness"
+                note={identityMetric.note}
+                value={identityMetric.value}
+              />
+            ) : null}
+            {paymentMetric ? (
+              <SignalCard
+                label="Payment reach"
+                note={paymentMetric.note}
+                value={paymentMetric.value}
+              />
+            ) : null}
+            {safeguardsMetric ? (
+              <SignalCard
+                label="Safeguards maturity"
+                note={safeguardsMetric.note}
+                value={safeguardsMetric.value}
+              />
+            ) : null}
           </section>
 
           {country.implementationFocus?.length ? (
@@ -268,46 +221,85 @@ export default async function CountryPage({
             </section>
           ) : null}
 
-          <section className="grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
+          <section className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="rounded-lg border bg-background p-4 shadow-sm">
               <div className="mb-4 text-xs font-semibold">
-                Building block snapshot
+                Building block signals
               </div>
-              <div className="grid gap-4 text-xs">
+              <div className="grid gap-3">
                 {country.metrics.map((metric) => (
                   <div
                     key={metric.label}
-                    className="grid grid-cols-[10rem_1fr_3rem] items-center gap-3"
+                    className="rounded-md border bg-secondary/25 p-3"
                   >
-                    <span>{metric.label}</span>
-                    <div className="h-1.5 overflow-hidden rounded-full bg-secondary">
-                      <div
-                        className="h-full rounded-full bg-primary"
-                        style={{ width: `${metric.value}%` }}
-                      />
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-xs font-semibold">
+                        {metric.label}
+                      </span>
+                      <Badge
+                        className={`rounded-md ${evidenceTone(
+                          evidenceLevel(metric.value)
+                        )}`}
+                      >
+                        {evidenceLevel(metric.value)}
+                      </Badge>
                     </div>
-                    <span className="text-muted-foreground">
-                      {metric.value}%
-                    </span>
+                    <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                      {metric.note}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
-            <ReadinessChart values={chartValues} />
+            <div className="rounded-lg border bg-background p-4 shadow-sm">
+              <div className="mb-4 text-xs font-semibold">
+                What each signal means
+              </div>
+              <div className="grid gap-3">
+                {[
+                  {
+                    label: "Strong signal",
+                    body: "The materials point to a live system, active implementation path, or clear institutional owner.",
+                    value: 70,
+                  },
+                  {
+                    label: "Emerging signal",
+                    body: "There is a credible foundation, but coverage, operating model, or interoperability still needs to be checked.",
+                    value: 58,
+                  },
+                  {
+                    label: "Needs validation",
+                    body: "The next step is to verify evidence before making a public claim about readiness.",
+                    value: 45,
+                  },
+                ].map((item) => (
+                  <div key={item.label} className="rounded-md border p-3">
+                    <Badge
+                      className={`rounded-md ${evidenceTone(
+                        evidenceLevel(item.value)
+                      )}`}
+                    >
+                      {item.label}
+                    </Badge>
+                    <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                      {item.body}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </section>
 
           <section className="rounded-lg border bg-background p-4 shadow-sm">
             <div className="text-sm font-semibold">
-              Where the readiness score comes from
+              How to read these signals
             </div>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
-              The readiness score is a prototype AA4DPI assessment, not an
-              official external index. It is the rounded average of five
-              visible dimensions: identity readiness, payment reach, registry
-              quality, API/data-exchange readiness, and safeguards maturity.
-              The dimension scores are curated from the Cohort 1 programme
-              materials and should be replaced with a validated methodology as
-              the programme matures.
+              These are draft evidence labels, not official AA4DPI scores. They
+              are inferred from the Cohort 1 materials, named public systems,
+              and implementation signals in the documents. They should be read
+              as a guide for what to validate next, not as a ranking of
+              countries.
             </p>
           </section>
         </TabsContent>

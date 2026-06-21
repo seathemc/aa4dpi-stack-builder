@@ -1,6 +1,5 @@
 import { ArrowRight, CheckCircle2, Database, GitBranch, Shield } from "lucide-react";
 
-import { ProgressBar } from "@/components/progress-bar";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -10,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import type { CountryProfile, Dpg, UseCase } from "@/lib/data";
+import { evidenceLevel, evidenceTone } from "@/lib/evidence";
 
 export function WorkflowStrip({
   items,
@@ -197,17 +197,29 @@ export function CountryOutputPanel({ country }: { country: CountryProfile }) {
           <Badge>{country.region}</Badge>
           <Badge variant="secondary">{country.maturity}</Badge>
         </div>
-        <CardTitle>{country.name} readiness output</CardTitle>
+        <CardTitle>{country.name} readiness signals</CardTitle>
         <CardDescription>{country.summary}</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         {country.metrics.map((metric) => (
-          <ProgressBar
+          <div
             key={metric.label}
-            label={metric.label}
-            value={metric.value}
-            note={metric.note}
-          />
+            className="rounded-md border bg-secondary/25 p-3"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span className="text-xs font-semibold">{metric.label}</span>
+              <Badge
+                className={`rounded-md ${evidenceTone(
+                  evidenceLevel(metric.value)
+                )}`}
+              >
+                {evidenceLevel(metric.value)}
+              </Badge>
+            </div>
+            <p className="mt-2 text-xs leading-5 text-muted-foreground">
+              {metric.note}
+            </p>
+          </div>
         ))}
       </CardContent>
     </Card>
