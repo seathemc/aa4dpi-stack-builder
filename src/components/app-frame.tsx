@@ -20,6 +20,13 @@ const labels: Record<string, string> = {
   audit: "Audit & Safeguards",
   standards: "Interoperability",
   countries: "Country Readiness",
+  "why-now": "Why Now",
+  "five-cs": "The 5Cs",
+  "how-aa4dpi-helps": "How AA4DPI Works",
+  "what-this-builds": "What Is DPI",
+  "use-cases": "Use Cases",
+  principles: "Principles",
+  "security-privacy": "Security & Privacy",
 };
 
 function BreadcrumbLabel() {
@@ -37,7 +44,7 @@ function BreadcrumbLabel() {
 
   return (
     <div className="flex min-w-0 items-center gap-2 text-xs text-muted-foreground">
-      <span className="hidden shrink-0 sm:inline">DPG Stack Builder</span>
+      <span className="hidden shrink-0 sm:inline">AA4DPI</span>
       {parts.length ? (
         <>
           <span className="hidden sm:inline">›</span>

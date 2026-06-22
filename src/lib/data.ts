@@ -100,6 +100,29 @@ export type Standard = {
   why: string;
 };
 
+export type AfricanDpg = {
+  id: string;
+  name: string;
+  type:
+    | "Open DPG"
+    | "Open-source tool"
+    | "National system"
+    | "National platform"
+    | "Payment rail"
+    | "Standard";
+  country: string;
+  countryId?: string;
+  countryFlag?: string;
+  layer: DpgLayer | "Climate / registries" | "Financial integrity";
+  useCaseFit: string;
+  codeHref?: string;
+  evidenceHref: string;
+  status: "Public code" | "Mapped" | "Needs link" | "Gov-owned" | "Coming soon";
+  owners: string;
+  standards: string[];
+  note: string;
+};
+
 export const dpgs: Dpg[] = [
   {
     id: "mosip",
@@ -243,6 +266,190 @@ export const dpgs: Dpg[] = [
     fit: ["procurement transparency", "supplier participation", "public spending"],
     maturity: "Established",
     standards: ["OCDS"],
+  },
+];
+
+export const africanDpgs: AfricanDpg[] = [
+  {
+    id: "undp-carbon-registry",
+    name: "UNDP Carbon Registry",
+    type: "Open DPG",
+    country: "Pan-African",
+    layer: "Climate / registries",
+    useCaseFit: "Carbon markets, land, forest MRV",
+    codeHref: "https://github.com/undp/undp-carbon-registry",
+    evidenceHref: "https://github.com/undp/undp-carbon-registry",
+    status: "Public code",
+    owners: "UNDP",
+    standards: ["registry workflows", "audit logs", "MRV data"],
+    note: "Useful for climate and natural-resource governance use cases where registry integrity matters.",
+  },
+  {
+    id: "tazama",
+    name: "Tazama",
+    type: "Open-source tool",
+    country: "Pan-African",
+    layer: "Financial integrity",
+    useCaseFit: "Payment monitoring, fraud, AML/CFT",
+    codeHref: "https://github.com/tazama-lf",
+    evidenceHref: "https://github.com/tazama-lf",
+    status: "Public code",
+    owners: "Tazama / Linux Foundation",
+    standards: ["transaction monitoring", "event streaming", "risk scoring"],
+    note: "Relevant when inclusive payment rails need transaction monitoring and integrity controls.",
+  },
+  {
+    id: "ushahidi",
+    name: "Ushahidi",
+    type: "Open-source tool",
+    country: "Kenya / Pan-African",
+    countryFlag: "🇰🇪",
+    layer: "Service delivery",
+    useCaseFit: "Civic reporting, crisis response, community feedback",
+    codeHref: "https://github.com/ushahidi",
+    evidenceHref: "https://github.com/ushahidi",
+    status: "Public code",
+    owners: "Ushahidi",
+    standards: ["open data", "public participation", "case workflows"],
+    note: "Useful as a public feedback and incident-reporting layer, not a foundational rail.",
+  },
+  {
+    id: "smart-zambia-gsb",
+    name: "Smart Zambia Government Service Bus",
+    type: "National system",
+    country: "Zambia",
+    countryId: "zambia",
+    countryFlag: "🇿🇲",
+    layer: "Data exchange",
+    useCaseFit: "Land, forest, health, service bus",
+    evidenceHref: "/countries/zambia",
+    status: "Needs link",
+    owners: "Smart Zambia Institute",
+    standards: ["service registry", "API governance", "audit logging"],
+    note: "Country-material signal for a government service bus pattern. Public code link still needs verification.",
+  },
+  {
+    id: "zilas",
+    name: "ZILAS",
+    type: "National system",
+    country: "Zambia",
+    countryId: "zambia",
+    countryFlag: "🇿🇲",
+    layer: "Registries",
+    useCaseFit: "Land records, climate resilience, agriculture",
+    evidenceHref: "/countries/zambia",
+    status: "Gov-owned",
+    owners: "Zambia land administration stakeholders",
+    standards: ["land records", "geospatial data", "registry APIs"],
+    note: "Land administration anchor for Zambia use cases; not currently treated as open reusable code.",
+  },
+  {
+    id: "timber-traceability-zambia",
+    name: "Timber Traceability System",
+    type: "National system",
+    country: "Zambia",
+    countryId: "zambia",
+    countryFlag: "🇿🇲",
+    layer: "Registries",
+    useCaseFit: "Forestry, permits, provenance, revenue",
+    evidenceHref: "/countries/zambia",
+    status: "Needs link",
+    owners: "Forestry and natural-resource agencies",
+    standards: ["traceability", "permit records", "audit logs"],
+    note: "Important for land, climate, and natural-resource governance stacks; public evidence link needs validation.",
+  },
+  {
+    id: "mesob",
+    name: "MESOB",
+    type: "National platform",
+    country: "Ethiopia",
+    countryId: "ethiopia",
+    countryFlag: "🇪🇹",
+    layer: "Service delivery",
+    useCaseFit: "One-stop services, assisted access, wallet roadmap",
+    evidenceHref: "/countries/ethiopia",
+    status: "Gov-owned",
+    owners: "PMO / Civil Service Commission / Ministry of Finance",
+    standards: ["service orchestration", "API gateway", "assisted access"],
+    note: "Core Ethiopia country platform signal from AA4DPI materials; public code is not the point of adoption.",
+  },
+  {
+    id: "fayda",
+    name: "Fayda Digital ID",
+    type: "National system",
+    country: "Ethiopia",
+    countryId: "ethiopia",
+    countryFlag: "🇪🇹",
+    layer: "Identity",
+    useCaseFit: "Identity verification, service authentication",
+    codeHref: "https://github.com/mosip",
+    evidenceHref: "/countries/ethiopia",
+    status: "Mapped",
+    owners: "Ethiopia national ID stakeholders",
+    standards: ["OpenID Connect", "identity verification", "exception handling"],
+    note: "Mapped to the open MOSIP ecosystem while remaining a national implementation to verify.",
+  },
+  {
+    id: "ethiopia-apisix",
+    name: "APISIX integration gateway",
+    type: "Open-source tool",
+    country: "Ethiopia",
+    countryId: "ethiopia",
+    countryFlag: "🇪🇹",
+    layer: "Data exchange",
+    useCaseFit: "API routing, authorization, audit logging",
+    codeHref: "https://github.com/apache/apisix",
+    evidenceHref: "/countries/ethiopia",
+    status: "Public code",
+    owners: "Ministry technology teams / Apache APISIX",
+    standards: ["OpenAPI", "API policies", "access logging"],
+    note: "Open-source gateway pattern named in Ethiopia materials for connecting ministry systems.",
+  },
+  {
+    id: "sierra-leone-gsb-xroad",
+    name: "Government Service Bus / X-Road",
+    type: "Open-source tool",
+    country: "Sierra Leone",
+    countryId: "sierra-leone",
+    countryFlag: "🇸🇱",
+    layer: "Data exchange",
+    useCaseFit: "CRVS, eGP, IFMIS, T24 exchange",
+    codeHref: "https://github.com/nordic-institute/X-Road",
+    evidenceHref: "/countries/sierra-leone",
+    status: "Mapped",
+    owners: "MoCTI / DSTI / Ministry of Finance",
+    standards: ["signed messages", "service registry", "audit logging"],
+    note: "Clearest AA4DPI data-exchange flow: national GSB mapped to X-Road-style exchange.",
+  },
+  {
+    id: "sierra-leone-egp",
+    name: "eGP / NPPA",
+    type: "National system",
+    country: "Sierra Leone",
+    countryId: "sierra-leone",
+    countryFlag: "🇸🇱",
+    layer: "Operations",
+    useCaseFit: "Procurement-to-payment tracking",
+    evidenceHref: "/countries/sierra-leone",
+    status: "Gov-owned",
+    owners: "NPPA / procurement stakeholders",
+    standards: ["OCDS", "supplier records", "procurement audit"],
+    note: "Part of the procurement-to-payment flow with CRVS, IFMIS, and T24.",
+  },
+  {
+    id: "sierra-leone-ifmis",
+    name: "IFMIS",
+    type: "National system",
+    country: "Sierra Leone",
+    countryId: "sierra-leone",
+    countryFlag: "🇸🇱",
+    layer: "Operations",
+    useCaseFit: "Treasury approval, budget execution, payment instruction",
+    evidenceHref: "/countries/sierra-leone",
+    status: "Gov-owned",
+    owners: "Ministry of Finance",
+    standards: ["public financial management", "audit logs", "payment status"],
+    note: "Fiscal backbone for supplier payment visibility and public finance workflows.",
   },
 ];
 
