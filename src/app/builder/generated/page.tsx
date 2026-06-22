@@ -109,6 +109,18 @@ export default async function GeneratedStackPage({
               Change inputs
             </Link>
           </Button>
+          {stack.country.codeRepository ? (
+            <Button asChild variant="outline" size="sm" className="w-full text-xs sm:w-auto">
+              <a
+                href={stack.country.codeRepository.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <GitBranch className="size-3.5" />
+                Open country repo
+              </a>
+            </Button>
+          ) : null}
           <Button size="sm" className="w-full text-xs sm:w-auto">
             <Download className="size-3.5" />
             Download stack brief
@@ -397,6 +409,22 @@ export default async function GeneratedStackPage({
 
         <TabsContent value="kit">
           <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {stack.country.codeRepository ? (
+              <a
+                href={stack.country.codeRepository.href}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-lg border bg-primary/5 p-4 shadow-sm transition hover:bg-primary/10"
+              >
+                <GitBranch className="mb-4 size-5 text-primary" />
+                <div className="text-sm font-semibold">
+                  Country reference repo
+                </div>
+                <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                  {stack.country.codeRepository.description}
+                </p>
+              </a>
+            ) : null}
             {starterArtifacts.map((artifact) => (
               <Link
                 key={artifact.title}

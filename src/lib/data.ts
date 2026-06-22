@@ -39,6 +39,11 @@ export type CountryProfile = {
   name: string;
   flag: string;
   region: string;
+  codeRepository?: {
+    name: string;
+    href: string;
+    description: string;
+  };
   maturity: "Early" | "Building" | "Scaling";
   readiness: number;
   relevantDpgs: string[];
@@ -109,6 +114,7 @@ export type AfricanDpg = {
     | "National system"
     | "National platform"
     | "Payment rail"
+    | "Reference kit"
     | "Standard";
   country: string;
   countryId?: string;
@@ -270,6 +276,54 @@ export const dpgs: Dpg[] = [
 ];
 
 export const africanDpgs: AfricanDpg[] = [
+  {
+    id: "aa4dpi-sierra-leone-kit",
+    name: "AA4DPI Sierra Leone Reference Kit",
+    type: "Reference kit",
+    country: "Sierra Leone",
+    countryId: "sierra-leone",
+    countryFlag: "🇸🇱",
+    layer: "Data exchange",
+    useCaseFit: "Procurement-to-payment, farmer support, service-bus exchange",
+    codeHref: "https://github.com/seathemc/aa4dpi-sierra-leone",
+    evidenceHref: "/countries/sierra-leone",
+    status: "Public code",
+    owners: "AA4DPI prototype",
+    standards: ["X-Road pattern", "OCDS", "OpenAPI", "audit logging"],
+    note: "Public reference repo with structured country data, DPG stack options, exchange-flow examples, a runnable CLI, and tests.",
+  },
+  {
+    id: "aa4dpi-ethiopia-kit",
+    name: "AA4DPI Ethiopia Reference Kit",
+    type: "Reference kit",
+    country: "Ethiopia",
+    countryId: "ethiopia",
+    countryFlag: "🇪🇹",
+    layer: "Service delivery",
+    useCaseFit: "MESOB one-stop services, Fayda identity, API gateway, social protection",
+    codeHref: "https://github.com/seathemc/aa4dpi-ethiopia",
+    evidenceHref: "/countries/ethiopia",
+    status: "Public code",
+    owners: "AA4DPI prototype",
+    standards: ["OpenID Connect", "OpenAPI", "API gateway policies", "audit logging"],
+    note: "Public reference repo with structured country data, service-flow examples, DPG stack options, a runnable CLI, and tests.",
+  },
+  {
+    id: "aa4dpi-zambia-kit",
+    name: "AA4DPI Zambia Reference Kit",
+    type: "Reference kit",
+    country: "Zambia",
+    countryId: "zambia",
+    countryFlag: "🇿🇲",
+    layer: "Climate / registries",
+    useCaseFit: "Land, forest, climate records, health access, farmer support",
+    codeHref: "https://github.com/seathemc/aa4dpi-zambia",
+    evidenceHref: "/countries/zambia",
+    status: "Public code",
+    owners: "AA4DPI prototype",
+    standards: ["OpenAPI", "geospatial data", "FHIR", "audit logging"],
+    note: "Public reference repo with structured country data, land and health exchange flows, DPG stack options, a runnable CLI, and tests.",
+  },
   {
     id: "undp-carbon-registry",
     name: "UNDP Carbon Registry",
@@ -1034,6 +1088,12 @@ export const countries: CountryProfile[] = [
     name: "Zambia",
     flag: "🇿🇲",
     region: "Southern Africa",
+    codeRepository: {
+      name: "AA4DPI Zambia Reference Kit",
+      href: "https://github.com/seathemc/aa4dpi-zambia",
+      description:
+        "Public repo with Zambia country data, land/forest/health exchange flows, DPG stack options, a runnable CLI, tests, and CI.",
+    },
     maturity: "Building",
     readiness: 57,
     relevantDpgs: ["MOSIP", "DHIS2", "OpenMRS", "OpenFn", "ODK"],
@@ -1203,6 +1263,12 @@ export const countries: CountryProfile[] = [
     name: "Ethiopia",
     flag: "🇪🇹",
     region: "East Africa",
+    codeRepository: {
+      name: "AA4DPI Ethiopia Reference Kit",
+      href: "https://github.com/seathemc/aa4dpi-ethiopia",
+      description:
+        "Public repo with Ethiopia country data, MESOB/Fayda/API exchange flows, DPG stack options, a runnable CLI, tests, and CI.",
+    },
     maturity: "Scaling",
     readiness: 68,
     relevantDpgs: ["MOSIP", "Apache APISIX", "OpenG2P", "OpenSPP", "OpenFn"],
@@ -1367,6 +1433,12 @@ export const countries: CountryProfile[] = [
     name: "Sierra Leone",
     flag: "🇸🇱",
     region: "West Africa",
+    codeRepository: {
+      name: "AA4DPI Sierra Leone Reference Kit",
+      href: "https://github.com/seathemc/aa4dpi-sierra-leone",
+      description:
+        "Public repo with Sierra Leone country data, procurement/farmer exchange flows, DPG stack options, a runnable CLI, tests, and CI.",
+    },
     maturity: "Building",
     readiness: 53,
     relevantDpgs: ["X-Road", "Open Contracting", "OpenFn", "OpenSPP", "ODK"],

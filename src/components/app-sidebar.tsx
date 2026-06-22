@@ -40,6 +40,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { RequestFormDialog } from "@/components/request-form-dialog";
 import { cohortCountries, upcomingCountries } from "@/lib/data";
 
 type NavItem = {
@@ -59,6 +60,7 @@ const navGroups: NavGroup[] = [
   {
     title: "Start",
     items: [
+      { title: "Request support", url: "/request-support", icon: Handshake },
       { title: "Read me first", url: "/", icon: Home },
       { title: "Why now", url: "/why-now", icon: Clock3 },
       { title: "What is DPI?", url: "/what-this-builds", icon: CircleHelp },
@@ -137,13 +139,14 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        <Button
-          asChild
-          size="sm"
-          className="mt-2 h-8 w-full text-xs group-data-[collapsible=icon]:hidden"
-        >
-          <Link href="/how-aa4dpi-helps">Request support</Link>
-        </Button>
+        <RequestFormDialog defaultType="country">
+          <Button
+            size="sm"
+            className="mt-2 h-8 w-full text-xs group-data-[collapsible=icon]:hidden"
+          >
+            Request support
+          </Button>
+        </RequestFormDialog>
       </SidebarHeader>
 
       <SidebarContent className="gap-0 px-2 py-2">
