@@ -18,6 +18,8 @@ standards, safeguards, and investment gaps a country needs to address."
 - A use-case-driven DPI Stack Builder
 - Seed country readiness profiles
 - A runnable data-exchange reference example under `examples/`
+- Machine-readable Open DPG, use-case, and Cohort 1 country registries
+- Generated starter stack kits for Sierra Leone, Ethiopia, and Zambia
 - A data exchange sandbox with a working test API route
 - Plain-language safeguards and implementation guidance
 
@@ -48,6 +50,23 @@ npm run dev
 ```
 
 Then open `http://localhost:3000`.
+
+## Generate stack kits
+
+The repo also includes a small generator that turns the data registry into
+reviewable country/use-case starter kits.
+
+```bash
+npm run generate:kits
+```
+
+Generated artifacts are written to `generated/stack-kits/`. Each kit includes:
+
+- the country and use case
+- open DPGs to evaluate
+- country systems to connect
+- standards to check
+- open questions for validation
 
 ## Data exchange reference
 

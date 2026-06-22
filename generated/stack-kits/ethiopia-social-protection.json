@@ -1,0 +1,98 @@
+{
+  "id": "ethiopia-social-protection",
+  "country": {
+    "id": "ethiopia",
+    "name": "Ethiopia",
+    "flag": "🇪🇹",
+    "cohort": 1,
+    "region": "East Africa"
+  },
+  "useCase": {
+    "id": "social-protection",
+    "name": "Social protection and cash transfers",
+    "problem": "Benefits can miss eligible households when identity, social registries, eligibility rules, and payment systems do not work together.",
+    "outcome": "A household can be identified, assessed, enrolled, paid, and given a way to challenge errors.",
+    "layers": [
+      "Social protection",
+      "Identity",
+      "Payments",
+      "Data exchange",
+      "Safeguards"
+    ],
+    "systems": [
+      "Social registry",
+      "Eligibility engine",
+      "Payment switch",
+      "Case management",
+      "Complaint and appeal channel"
+    ]
+  },
+  "summary": "Ethiopia: A household can be identified, assessed, enrolled, paid, and given a way to challenge errors.",
+  "recommendedDpgs": [
+    {
+      "id": "openg2p",
+      "name": "OpenG2P",
+      "layer": "Social protection",
+      "repository": "https://github.com/openg2p",
+      "reason": "OpenG2P maps to social protection needs for social protection and cash transfers."
+    },
+    {
+      "id": "mojaloop",
+      "name": "Mojaloop",
+      "layer": "Payments",
+      "repository": "https://github.com/mojaloop",
+      "reason": "Mojaloop maps to payments needs for social protection and cash transfers."
+    },
+    {
+      "id": "openfisca",
+      "name": "OpenFisca",
+      "layer": "Operations",
+      "repository": "https://github.com/openfisca/openfisca-core",
+      "reason": "OpenFisca maps to operations needs for social protection and cash transfers."
+    },
+    {
+      "id": "apisix",
+      "name": "Apache APISIX",
+      "layer": "Data exchange",
+      "repository": "https://github.com/apache/apisix",
+      "reason": "Apache APISIX maps to data exchange needs for social protection and cash transfers."
+    },
+    {
+      "id": "mosip",
+      "name": "MOSIP",
+      "layer": "Identity",
+      "repository": "https://github.com/mosip",
+      "reason": "MOSIP maps to identity needs for social protection and cash transfers."
+    }
+  ],
+  "countrySystems": [
+    {
+      "name": "MESOB Pay / wallet roadmap",
+      "layer": "Payments",
+      "status": "roadmap",
+      "note": "Future sovereign payment gateway or wallet for public service flows."
+    }
+  ],
+  "standardsToCheck": [
+    "OpenID Connect",
+    "OpenAPI",
+    "API gateway policies",
+    "access logging",
+    "wallet regulation",
+    "registry APIs",
+    "payment integration",
+    "eligibility rules",
+    "ISO 20022 alignment",
+    "interoperable payment APIs",
+    "rules-as-code",
+    "policy modeling",
+    "biometric standards",
+    "API integration"
+  ],
+  "openQuestions": [
+    "Which services should be first through MESOB?",
+    "What data can ministries expose through the gateway?",
+    "How will assisted access and exception handling work?"
+  ],
+  "generatedAt": "registry-v1"
+}

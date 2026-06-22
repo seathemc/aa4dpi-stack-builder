@@ -1,0 +1,102 @@
+{
+  "id": "sierra-leone-farmer-support",
+  "country": {
+    "id": "sierra-leone",
+    "name": "Sierra Leone",
+    "flag": "🇸🇱",
+    "cohort": 1,
+    "region": "West Africa"
+  },
+  "useCase": {
+    "id": "farmer-support",
+    "name": "Agriculture and farmer support",
+    "problem": "Farmers are often enrolled in disconnected programmes, making subsidies, insurance, extension, and payments slow to verify.",
+    "outcome": "A farmer can be registered once, verified across programmes, paid through trusted rails, and supported through a clear grievance path.",
+    "layers": [
+      "Registries",
+      "Identity",
+      "Payments",
+      "Data exchange",
+      "Service delivery",
+      "Safeguards"
+    ],
+    "systems": [
+      "Farmer registry",
+      "Identity verification",
+      "Eligibility rules",
+      "Payment rail",
+      "Grievance workflow",
+      "Audit log"
+    ]
+  },
+  "summary": "Sierra Leone: A farmer can be registered once, verified across programmes, paid through trusted rails, and supported through a clear grievance path.",
+  "recommendedDpgs": [
+    {
+      "id": "openspp",
+      "name": "OpenSPP",
+      "layer": "Registries",
+      "repository": "https://github.com/OpenSPP",
+      "reason": "OpenSPP maps to registries needs for agriculture and farmer support."
+    },
+    {
+      "id": "xroad",
+      "name": "X-Road",
+      "layer": "Data exchange",
+      "repository": "https://github.com/nordic-institute/X-Road",
+      "reason": "X-Road maps to data exchange needs for agriculture and farmer support."
+    },
+    {
+      "id": "openg2p",
+      "name": "OpenG2P",
+      "layer": "Social protection",
+      "repository": "https://github.com/openg2p",
+      "reason": "OpenG2P maps to social protection needs for agriculture and farmer support."
+    },
+    {
+      "id": "apisix",
+      "name": "Apache APISIX",
+      "layer": "Data exchange",
+      "repository": "https://github.com/apache/apisix",
+      "reason": "Apache APISIX maps to data exchange needs for agriculture and farmer support."
+    },
+    {
+      "id": "mojaloop",
+      "name": "Mojaloop",
+      "layer": "Payments",
+      "repository": "https://github.com/mojaloop",
+      "reason": "Mojaloop maps to payments needs for agriculture and farmer support."
+    }
+  ],
+  "countrySystems": [
+    {
+      "name": "Feed Salone farmer registry",
+      "layer": "Registries",
+      "status": "mapped",
+      "note": "Farmer profiles, farm and plot data, extension records, subsidy targeting, and grievance workflows."
+    }
+  ],
+  "standardsToCheck": [
+    "X-Road service registry",
+    "OCDS",
+    "OpenAPI",
+    "audit logging",
+    "data-sharing agreements",
+    "Odoo modules",
+    "registry workflows",
+    "API integration",
+    "signed messages",
+    "service registry",
+    "registry APIs",
+    "payment integration",
+    "eligibility rules",
+    "API gateway policies",
+    "access logging",
+    "ISO 20022 alignment",
+    "interoperable payment APIs"
+  ],
+  "openQuestions": [
+    "Who signs cross-agency data-sharing agreements?",
+    "How will farmers correct or appeal registry errors?"
+  ],
+  "generatedAt": "registry-v1"
+}

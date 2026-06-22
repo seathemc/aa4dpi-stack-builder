@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aa4dpi.dev/schemas/cohort-country.schema.json",
+  "title": "AA4DPI Cohort Country",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "flag",
+    "cohort",
+    "region",
+    "summary",
+    "priorityUseCases",
+    "leadAgencies",
+    "systems",
+    "standardsToCheck",
+    "openQuestions"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "flag": {
+      "type": "string"
+    },
+    "cohort": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "region": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "priorityUseCases": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$"
+      },
+      "minItems": 1
+    },
+    "leadAgencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "role"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "systems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "layer", "status", "note"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "layer": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["mapped", "roadmap", "needs-validation"]
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "standardsToCheck": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "openQuestions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
