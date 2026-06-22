@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "generate:kits": "node scripts/generate-stack-kits.mjs"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.14",

@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aa4dpi.dev/schemas/stack-kit.schema.json",
+  "title": "AA4DPI Generated Stack Kit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "country",
+    "useCase",
+    "summary",
+    "recommendedDpgs",
+    "countrySystems",
+    "standardsToCheck",
+    "openQuestions",
+    "generatedAt"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "country": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "flag", "cohort", "region"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "flag": {
+          "type": "string"
+        },
+        "cohort": {
+          "type": "integer"
+        },
+        "region": {
+          "type": "string"
+        }
+      }
+    },
+    "useCase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "problem", "outcome", "layers", "systems"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "problem": {
+          "type": "string"
+        },
+        "outcome": {
+          "type": "string"
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "systems": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "string"
+    },
+    "recommendedDpgs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "layer", "repository", "reason"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "layer": {
+            "type": "string"
+          },
+          "repository": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "countrySystems": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "standardsToCheck": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "openQuestions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "generatedAt": {
+      "type": "string"
+    }
+  }
+}

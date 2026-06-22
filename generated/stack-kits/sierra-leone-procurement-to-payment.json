@@ -1,0 +1,115 @@
+{
+  "id": "sierra-leone-procurement-to-payment",
+  "country": {
+    "id": "sierra-leone",
+    "name": "Sierra Leone",
+    "flag": "🇸🇱",
+    "cohort": 1,
+    "region": "West Africa"
+  },
+  "useCase": {
+    "id": "procurement-to-payment",
+    "name": "Transparent procurement-to-payment",
+    "problem": "Small suppliers can win contracts and still wait months for payment because procurement, treasury, identity, and banking systems do not share status.",
+    "outcome": "A supplier can be verified once, see contract and payment status, receive settlement through a trusted rail, and challenge delays or errors.",
+    "layers": [
+      "Registries",
+      "Civil registration",
+      "Payments",
+      "Data exchange",
+      "Operations",
+      "Safeguards"
+    ],
+    "systems": [
+      "Supplier registry",
+      "Procurement system",
+      "Treasury or IFMIS",
+      "Bank settlement rail",
+      "Public status and audit log"
+    ]
+  },
+  "summary": "Sierra Leone: A supplier can be verified once, see contract and payment status, receive settlement through a trusted rail, and challenge delays or errors.",
+  "recommendedDpgs": [
+    {
+      "id": "ocds",
+      "name": "Open Contracting",
+      "layer": "Operations",
+      "repository": "https://github.com/open-contracting",
+      "reason": "Open Contracting maps to operations needs for transparent procurement-to-payment."
+    },
+    {
+      "id": "mojaloop",
+      "name": "Mojaloop",
+      "layer": "Payments",
+      "repository": "https://github.com/mojaloop",
+      "reason": "Mojaloop maps to payments needs for transparent procurement-to-payment."
+    },
+    {
+      "id": "xroad",
+      "name": "X-Road",
+      "layer": "Data exchange",
+      "repository": "https://github.com/nordic-institute/X-Road",
+      "reason": "X-Road maps to data exchange needs for transparent procurement-to-payment."
+    },
+    {
+      "id": "apisix",
+      "name": "Apache APISIX",
+      "layer": "Data exchange",
+      "repository": "https://github.com/apache/apisix",
+      "reason": "Apache APISIX maps to data exchange needs for transparent procurement-to-payment."
+    },
+    {
+      "id": "opencrvs",
+      "name": "OpenCRVS",
+      "layer": "Civil registration",
+      "repository": "https://github.com/opencrvs",
+      "reason": "OpenCRVS maps to civil registration needs for transparent procurement-to-payment."
+    }
+  ],
+  "countrySystems": [
+    {
+      "name": "eGP / NPPA",
+      "layer": "Operations",
+      "status": "mapped",
+      "note": "Electronic procurement, supplier, award, and contract records."
+    },
+    {
+      "name": "IFMIS",
+      "layer": "Operations",
+      "status": "mapped",
+      "note": "Treasury approval, budget execution, and payment instruction."
+    },
+    {
+      "name": "Temenos T24 / Bank settlement",
+      "layer": "Payments",
+      "status": "mapped",
+      "note": "Settlement confirmation and payment status for supplier payments."
+    },
+    {
+      "name": "Government Service Bus / X-Road 7.7.1 environments",
+      "layer": "Data exchange",
+      "status": "mapped",
+      "note": "Secure data exchange layer connecting approved agencies through service contracts."
+    }
+  ],
+  "standardsToCheck": [
+    "X-Road service registry",
+    "OCDS",
+    "OpenAPI",
+    "audit logging",
+    "data-sharing agreements",
+    "ISO 20022 alignment",
+    "interoperable payment APIs",
+    "signed messages",
+    "service registry",
+    "API gateway policies",
+    "access logging",
+    "civil registration workflows",
+    "API integration"
+  ],
+  "openQuestions": [
+    "Who signs cross-agency data-sharing agreements?",
+    "What supplier payment status can be made visible?"
+  ],
+  "generatedAt": "registry-v1"
+}

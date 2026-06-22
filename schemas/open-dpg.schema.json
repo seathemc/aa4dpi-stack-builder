@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aa4dpi.dev/schemas/open-dpg.schema.json",
+  "title": "AA4DPI Open DPG Registry Item",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "type",
+    "layer",
+    "repository",
+    "summary",
+    "useCaseFit",
+    "standards",
+    "maturity",
+    "implementationNotes"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "type": {
+      "type": "string",
+      "enum": ["Open DPG", "Open-source tool", "Open standard and tooling"]
+    },
+    "layer": {
+      "type": "string",
+      "enum": [
+        "Identity",
+        "Civil registration",
+        "Payments",
+        "Data exchange",
+        "Registries",
+        "Social protection",
+        "Health",
+        "Education",
+        "Service delivery",
+        "Safeguards",
+        "Operations"
+      ]
+    },
+    "repository": {
+      "type": "string",
+      "format": "uri"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "useCaseFit": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "standards": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "maturity": {
+      "type": "string",
+      "enum": ["Established", "Growing", "Reference", "Specialized"]
+    },
+    "implementationNotes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
