@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Clock3, MapPinned } from "lucide-react";
+import { ArrowRight, Clock3, ExternalLink, GitBranch, MapPinned } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -103,12 +103,26 @@ export default function CountriesPage() {
               <p className="mt-3 text-xs leading-5 text-muted-foreground">
                 {country.priorityUseCases.join(", ")}
               </p>
-              <Button asChild variant="outline" size="sm" className="mt-3 w-full text-xs">
-                <Link href={`/countries/${country.id}`}>
-                  Open country dashboard
-                  <ArrowRight className="size-3.5" />
-                </Link>
-              </Button>
+              <div className="mt-3 grid gap-2">
+                <Button asChild variant="outline" size="sm" className="w-full text-xs">
+                  <Link href={`/countries/${country.id}`}>
+                    Open country dashboard
+                    <ArrowRight className="size-3.5" />
+                  </Link>
+                </Button>
+                {country.codeRepository ? (
+                  <Button asChild size="sm" className="w-full text-xs">
+                    <a
+                      href={country.codeRepository.href}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <GitBranch className="size-3.5" />
+                      Open code repo
+                    </a>
+                  </Button>
+                ) : null}
+              </div>
             </article>
           ))}
         </section>
@@ -123,6 +137,7 @@ export default function CountriesPage() {
                 <th className="px-4 py-3 font-semibold">Readiness signal</th>
                 <th className="px-4 py-3 font-semibold">Relevant DPGs to evaluate</th>
                 <th className="px-4 py-3 font-semibold">Priority use cases</th>
+                <th className="px-4 py-3 font-semibold">Code</th>
                 <th className="px-4 py-3 font-semibold" />
               </tr>
             </thead>
@@ -159,6 +174,21 @@ export default function CountriesPage() {
                   </td>
                   <td className="max-w-xs px-4 py-3 text-muted-foreground">
                     {country.priorityUseCases.join(", ")}
+                  </td>
+                  <td className="px-4 py-3">
+                    {country.codeRepository ? (
+                      <a
+                        href={country.codeRepository.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 font-medium text-primary"
+                      >
+                        Repo
+                        <ExternalLink className="size-3.5" />
+                      </a>
+                    ) : (
+                      <span className="text-muted-foreground">-</span>
+                    )}
                   </td>
                   <td className="px-4 py-3 text-right">
                     <Button asChild variant="ghost" size="sm" className="h-8 text-xs">

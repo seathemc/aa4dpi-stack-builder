@@ -27,6 +27,7 @@ const labels: Record<string, string> = {
   "what-this-builds": "What Is DPI",
   "use-cases": "Use Cases",
   principles: "Principles",
+  "request-support": "Request Support",
   "security-privacy": "Security & Privacy",
 };
 

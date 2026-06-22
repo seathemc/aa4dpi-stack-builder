@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, Download, Layers3 } from "lucide-react";
+import { ArrowRight, Download, ExternalLink, GitBranch, Layers3 } from "lucide-react";
 
 import { AgencyFlowDiagram } from "@/components/agency-flow-diagram";
 import { Badge } from "@/components/ui/badge";
@@ -224,6 +224,18 @@ export default async function CountryPage({
           <Button asChild variant="outline" size="sm" className="w-full text-xs sm:w-auto">
             <Link href="/countries">Compare countries</Link>
           </Button>
+          {country.codeRepository ? (
+            <Button asChild variant="outline" size="sm" className="w-full text-xs sm:w-auto">
+              <a
+                href={country.codeRepository.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <GitBranch className="size-3.5" />
+                Open code repo
+              </a>
+            </Button>
+          ) : null}
           <Button asChild size="sm" className="w-full text-xs sm:w-auto">
             <Link href={`/builder?country=${country.id}`}>
               Build stack
@@ -284,6 +296,32 @@ export default async function CountryPage({
                   <p className="mt-2 text-sm leading-6">{item.value}</p>
                 </div>
               ))}
+            </section>
+          ) : null}
+
+          {country.codeRepository ? (
+            <section className="rounded-lg border bg-background p-4 shadow-sm">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="max-w-3xl">
+                  <div className="flex items-center gap-2 text-sm font-semibold">
+                    <GitBranch className="size-4 text-primary" />
+                    Cohort 1 code repository
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {country.codeRepository.description}
+                  </p>
+                </div>
+                <Button asChild size="sm" className="w-full text-xs sm:w-auto">
+                  <a
+                    href={country.codeRepository.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Open GitHub
+                    <ExternalLink className="size-3.5" />
+                  </a>
+                </Button>
+              </div>
             </section>
           ) : null}
 
@@ -478,6 +516,25 @@ export default async function CountryPage({
               <div className="mb-3 text-xs font-semibold">
                 Relevant open DPGs to evaluate
               </div>
+              {country.codeRepository ? (
+                <a
+                  href={country.codeRepository.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mb-3 flex items-start gap-3 rounded-md border bg-primary/5 p-3 text-xs transition hover:bg-primary/10"
+                >
+                  <GitBranch className="mt-0.5 size-4 shrink-0 text-primary" />
+                  <span>
+                    <span className="block font-semibold text-foreground">
+                      {country.codeRepository.name}
+                    </span>
+                    <span className="mt-1 block leading-5 text-muted-foreground">
+                      Public reference kit for this country
+                    </span>
+                  </span>
+                  <ExternalLink className="ml-auto size-3.5 shrink-0 text-primary" />
+                </a>
+              ) : null}
               <div className="grid gap-3">
                 {relevantDpgs.map((dpg) => (
                   <div key={dpg.name} className="rounded-md border p-3">
