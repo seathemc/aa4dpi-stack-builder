@@ -17,6 +17,7 @@ standards, safeguards, and investment gaps a country needs to address."
 - An open DPG catalogue with real GitHub repositories
 - A use-case-driven DPI Stack Builder
 - Seed country readiness profiles
+- A runnable data-exchange reference example under `examples/`
 - A data exchange sandbox with a working test API route
 - Plain-language safeguards and implementation guidance
 
@@ -47,6 +48,17 @@ npm run dev
 ```
 
 Then open `http://localhost:3000`.
+
+## Data exchange reference
+
+```bash
+npm run test:exchange
+node examples/data-exchange-reference/demo.mjs
+```
+
+The reference example shows how a simple exchange service can check requester
+agency, purpose, allowed roles, required fields, response minimization, and
+audit logs for Cohort 1-style data flows.
 
 ## Status
 

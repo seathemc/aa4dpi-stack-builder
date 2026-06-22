@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:exchange": "node --test examples/data-exchange-reference/test/*.test.mjs"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.14",
