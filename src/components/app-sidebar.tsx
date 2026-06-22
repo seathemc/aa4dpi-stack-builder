@@ -1,8 +1,25 @@
 "use client";
 
+import * as React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, UserRound } from "lucide-react";
+import { usePathname, useSearchParams } from "next/navigation";
+import {
+  BookOpen,
+  Boxes,
+  CircleHelp,
+  Clock3,
+  FileCheck2,
+  Flag,
+  Handshake,
+  Home,
+  Layers3,
+  Lightbulb,
+  MapPinned,
+  Scale,
+  ShieldCheck,
+  Table2,
+  UserRound,
+} from "lucide-react";
 
 import {
   Accordion,
@@ -22,6 +39,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { cohortCountries, upcomingCountries } from "@/lib/data";
 
 type NavItem = {
@@ -29,6 +47,7 @@ type NavItem = {
   url?: string;
   disabled?: boolean;
   badge?: string;
+  icon?: React.ElementType;
 };
 
 type NavGroup = {
@@ -40,72 +59,75 @@ const navGroups: NavGroup[] = [
   {
     title: "Start",
     items: [
-      { title: "Read me first", url: "/" },
-      { title: "Why now", url: "/why-now" },
-      { title: "What is DPI?", url: "/what-this-builds" },
-      { title: "The 5Cs", url: "/five-cs" },
-      { title: "How AA4DPI works", url: "/how-aa4dpi-helps" },
-      { title: "Use cases", url: "/use-cases" },
-      { title: "Principles", url: "/principles" },
+      { title: "Read me first", url: "/", icon: Home },
+      { title: "Why now", url: "/why-now", icon: Clock3 },
+      { title: "What is DPI?", url: "/what-this-builds", icon: CircleHelp },
+      { title: "The 5Cs", url: "/five-cs", icon: Layers3 },
+      { title: "How AA4DPI works", url: "/how-aa4dpi-helps", icon: Handshake },
+      { title: "Use cases", url: "/use-cases", icon: Lightbulb },
+      { title: "Principles", url: "/principles", icon: Scale },
     ],
   },
   {
     title: "Countries",
     items: [
-      { title: "Overview", url: "/countries" },
+      { title: "Overview", url: "/countries", icon: MapPinned },
       ...cohortCountries.map((country) => ({
         title: `${country.flag} ${country.name}`,
         url: `/countries/${country.id}`,
+        badge: "C1",
+        icon: Flag,
       })),
       ...upcomingCountries.map((country) => ({
         title: `${country.flag} ${country.name}`,
         disabled: true,
-        badge: "Soon",
+        badge: "C2",
+        icon: Flag,
       })),
     ],
   },
   {
     title: "Build + Open DPGs",
     items: [
-      { title: "Open DPGs", url: "/catalogue?tab=open" },
-      { title: "African DPGs", url: "/catalogue?tab=african" },
-      { title: "Stack Builder", url: "/builder" },
-      { title: "Data sandbox", url: "/data-exchange" },
-      { title: "API playground", url: "/data-exchange/api" },
-      { title: "Audit and safeguards", url: "/data-exchange/audit" },
-      { title: "Standards", url: "/standards" },
-      { title: "Security and privacy", url: "/security-privacy" },
+      { title: "Open DPGs", url: "/catalogue?tab=open", icon: Boxes },
+      { title: "African DPGs", url: "/catalogue?tab=african", icon: Table2 },
+      { title: "Stack Builder", url: "/builder", icon: BookOpen },
+      { title: "Standards", url: "/standards", icon: FileCheck2 },
+      { title: "Security and privacy", url: "/security-privacy", icon: ShieldCheck },
     ],
   },
 ];
 
 export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const isActive = (url: string) => {
     if (url === "/") return pathname === "/";
+    if (url === "/countries") return pathname === "/countries";
     if (url === "/builder") {
       return pathname === "/builder" || pathname.startsWith("/builder/");
     }
     const cleanUrl = url.split("?")[0];
     const queryTab = url.includes("?tab=") ? url.split("?tab=")[1] : null;
     if (queryTab) {
-      return pathname === cleanUrl && queryTab === "open";
+      const currentTab = searchParams.get("tab") ?? "open";
+      return pathname === cleanUrl && currentTab === queryTab;
     }
     return pathname === cleanUrl || pathname.startsWith(`${cleanUrl}/`);
   };
 
   return (
-    <Sidebar {...props}>
+    <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="border-b px-3 py-3">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild className="gap-2">
+            <SidebarMenuButton size="lg" asChild tooltip="AA4DPI" className="gap-2">
               <Link href="/">
                 <div className="flex aspect-square size-7 items-center justify-center rounded-md bg-primary text-[10px] font-semibold text-white">
                   AA
                 </div>
-                <div className="flex flex-col gap-0.5 leading-none">
+                <div className="flex flex-col gap-0.5 leading-none group-data-[collapsible=icon]:hidden">
                   <span className="text-sm font-semibold">AA4DPI</span>
                   <span className="text-[10px] text-muted-foreground">
                     Digital Public Infrastructure
@@ -115,12 +137,13 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        <Link
-          href="/how-aa4dpi-helps"
-          className="mt-2 inline-flex h-8 items-center justify-center rounded-md bg-primary px-3 text-xs font-semibold text-white shadow-sm hover:bg-primary/95"
+        <Button
+          asChild
+          size="sm"
+          className="mt-2 h-8 w-full text-xs group-data-[collapsible=icon]:hidden"
         >
-          Request support
-        </Link>
+          <Link href="/how-aa4dpi-helps">Request support</Link>
+        </Button>
       </SidebarHeader>
 
       <SidebarContent className="gap-0 px-2 py-2">
@@ -131,42 +154,58 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
         >
           {navGroups.map((group) => (
             <AccordionItem key={group.title} value={group.title} className="border-0">
-              <AccordionTrigger className="px-2 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground hover:bg-sidebar-accent">
+              <AccordionTrigger className="px-2 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground hover:bg-sidebar-accent group-data-[collapsible=icon]:hidden">
                 {group.title}
               </AccordionTrigger>
-              <AccordionContent className="pb-2">
+              <AccordionContent className="pb-2 group-data-[collapsible=icon]:pb-0">
                 <SidebarGroupContent>
                   <SidebarMenu>
-                    {group.items.map((item) => (
-                      <SidebarMenuItem key={item.title}>
-                        {item.disabled ? (
-                          <SidebarMenuButton
-                            disabled
-                            className="h-7 rounded-md text-xs opacity-70"
-                          >
-                            <span className="truncate">{item.title}</span>
-                            {item.badge ? (
-                              <Badge
-                                variant="secondary"
-                                className="ml-auto h-4 rounded px-1 text-[9px]"
-                              >
-                                {item.badge}
-                              </Badge>
-                            ) : null}
-                          </SidebarMenuButton>
-                        ) : (
-                          <SidebarMenuButton
-                            asChild
-                            isActive={item.url ? isActive(item.url) : false}
-                            className="h-7 rounded-md text-xs"
-                          >
-                            <Link href={item.url ?? "/"}>
-                              <span>{item.title}</span>
-                            </Link>
-                          </SidebarMenuButton>
-                        )}
-                      </SidebarMenuItem>
-                    ))}
+                    {group.items.map((item) => {
+                      const Icon = item.icon ?? BookOpen;
+
+                      return (
+                        <SidebarMenuItem key={item.title}>
+                          {item.disabled ? (
+                            <SidebarMenuButton
+                              disabled
+                              tooltip={`${item.title} - coming soon`}
+                              className="h-7 rounded-md text-xs opacity-70"
+                            >
+                              <Icon className="size-3.5" />
+                              <span className="truncate">{item.title}</span>
+                              {item.badge ? (
+                                <Badge
+                                  variant="secondary"
+                                  className="ml-auto h-4 rounded px-1 text-[9px] group-data-[collapsible=icon]:hidden"
+                                >
+                                  {item.badge}
+                                </Badge>
+                              ) : null}
+                            </SidebarMenuButton>
+                          ) : (
+                            <SidebarMenuButton
+                              asChild
+                              tooltip={item.title}
+                              isActive={item.url ? isActive(item.url) : false}
+                              className="h-7 rounded-md text-xs"
+                            >
+                              <Link href={item.url ?? "/"}>
+                                <Icon className="size-3.5" />
+                                <span>{item.title}</span>
+                                {item.badge ? (
+                                  <Badge
+                                    variant="secondary"
+                                    className="ml-auto h-4 rounded px-1 text-[9px] group-data-[collapsible=icon]:hidden"
+                                  >
+                                    {item.badge}
+                                  </Badge>
+                                ) : null}
+                              </Link>
+                            </SidebarMenuButton>
+                          )}
+                        </SidebarMenuItem>
+                      );
+                    })}
                   </SidebarMenu>
                 </SidebarGroupContent>
               </AccordionContent>
@@ -176,16 +215,16 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
 
       <SidebarFooter className="border-t p-3">
-        <Link
-          href="/builder"
-          className="inline-flex h-9 items-center justify-center gap-2 rounded-md border bg-background px-3 text-xs font-medium shadow-sm hover:bg-secondary"
-        >
-          <UserRound className="size-3.5" />
-          Open Stack Builder
-        </Link>
-        <div className="sr-only">
-          <Menu />
-        </div>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild tooltip="Open Stack Builder">
+              <Link href="/builder">
+                <UserRound className="size-3.5" />
+                <span>Open Stack Builder</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

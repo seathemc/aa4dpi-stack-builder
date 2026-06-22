@@ -7,7 +7,11 @@ export function evidenceLevel(value: number): EvidenceLevel {
 }
 
 export function evidenceTone(level: EvidenceLevel) {
-  if (level === "Strong signal") return "bg-emerald-50 text-emerald-700";
-  if (level === "Emerging signal") return "bg-sky-50 text-sky-700";
-  return "bg-amber-50 text-amber-800";
+  if (level === "Strong signal") {
+    return "border-emerald-200 bg-emerald-50 text-emerald-800";
+  }
+  if (level === "Emerging signal") {
+    return "border-sky-200 bg-sky-50 text-sky-800";
+  }
+  return "border-amber-200 bg-amber-50 text-amber-900";
 }
