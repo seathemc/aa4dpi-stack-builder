@@ -1,0 +1,106 @@
+{
+  "id": "zambia-climate-land",
+  "country": {
+    "id": "zambia",
+    "name": "Zambia",
+    "flag": "🇿🇲",
+    "cohort": 1,
+    "region": "Southern Africa"
+  },
+  "useCase": {
+    "id": "climate-land",
+    "name": "Land, forest, and climate records",
+    "problem": "Land, forest, community, and climate records are often separated, making it hard to verify tenure, permits, provenance, or climate-finance eligibility.",
+    "outcome": "Land and forest records can support planning, traceability, climate finance, and community trust without creating another silo.",
+    "layers": [
+      "Registries",
+      "Data exchange",
+      "Payments",
+      "Safeguards"
+    ],
+    "systems": [
+      "Land registry",
+      "Forest traceability system",
+      "Community group records",
+      "Permit workflow",
+      "Payment or revenue system"
+    ]
+  },
+  "summary": "Zambia: Land and forest records can support planning, traceability, climate finance, and community trust without creating another silo.",
+  "recommendedDpgs": [
+    {
+      "id": "apisix",
+      "name": "Apache APISIX",
+      "layer": "Data exchange",
+      "repository": "https://github.com/apache/apisix",
+      "reason": "Apache APISIX maps to data exchange needs for land, forest, and climate records."
+    },
+    {
+      "id": "mojaloop",
+      "name": "Mojaloop",
+      "layer": "Payments",
+      "repository": "https://github.com/mojaloop",
+      "reason": "Mojaloop maps to payments needs for land, forest, and climate records."
+    },
+    {
+      "id": "openspp",
+      "name": "OpenSPP",
+      "layer": "Registries",
+      "repository": "https://github.com/OpenSPP",
+      "reason": "OpenSPP maps to registries needs for land, forest, and climate records."
+    },
+    {
+      "id": "xroad",
+      "name": "X-Road",
+      "layer": "Data exchange",
+      "repository": "https://github.com/nordic-institute/X-Road",
+      "reason": "X-Road maps to data exchange needs for land, forest, and climate records."
+    }
+  ],
+  "countrySystems": [
+    {
+      "name": "Timber Traceability System",
+      "layer": "Registries",
+      "status": "mapped",
+      "note": "Permit, provenance, revenue, and forest-product traceability records."
+    },
+    {
+      "name": "ZILAS land administration",
+      "layer": "Registries",
+      "status": "mapped",
+      "note": "Land administration records, title data, and customary land workflows."
+    },
+    {
+      "name": "Community Forest Management Group records",
+      "layer": "Registries",
+      "status": "mapped",
+      "note": "Community forest stewardship, eligibility, and reporting records."
+    },
+    {
+      "name": "Smart Zambia Government Service Bus",
+      "layer": "Data exchange",
+      "status": "mapped",
+      "note": "Service bus pattern for land, health, finance, identity, and other agency exchange."
+    }
+  ],
+  "standardsToCheck": [
+    "OpenAPI",
+    "service registry",
+    "FHIR",
+    "geospatial data",
+    "audit logging",
+    "API gateway policies",
+    "access logging",
+    "ISO 20022 alignment",
+    "interoperable payment APIs",
+    "Odoo modules",
+    "registry workflows",
+    "API integration",
+    "signed messages"
+  ],
+  "openQuestions": [
+    "How will customary land records be represented?",
+    "What forest provenance data can be shared safely?"
+  ],
+  "generatedAt": "registry-v1"
+}

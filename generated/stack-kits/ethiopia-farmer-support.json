@@ -1,0 +1,100 @@
+{
+  "id": "ethiopia-farmer-support",
+  "country": {
+    "id": "ethiopia",
+    "name": "Ethiopia",
+    "flag": "🇪🇹",
+    "cohort": 1,
+    "region": "East Africa"
+  },
+  "useCase": {
+    "id": "farmer-support",
+    "name": "Agriculture and farmer support",
+    "problem": "Farmers are often enrolled in disconnected programmes, making subsidies, insurance, extension, and payments slow to verify.",
+    "outcome": "A farmer can be registered once, verified across programmes, paid through trusted rails, and supported through a clear grievance path.",
+    "layers": [
+      "Registries",
+      "Identity",
+      "Payments",
+      "Data exchange",
+      "Service delivery",
+      "Safeguards"
+    ],
+    "systems": [
+      "Farmer registry",
+      "Identity verification",
+      "Eligibility rules",
+      "Payment rail",
+      "Grievance workflow",
+      "Audit log"
+    ]
+  },
+  "summary": "Ethiopia: A farmer can be registered once, verified across programmes, paid through trusted rails, and supported through a clear grievance path.",
+  "recommendedDpgs": [
+    {
+      "id": "openspp",
+      "name": "OpenSPP",
+      "layer": "Registries",
+      "repository": "https://github.com/OpenSPP",
+      "reason": "OpenSPP maps to registries needs for agriculture and farmer support."
+    },
+    {
+      "id": "xroad",
+      "name": "X-Road",
+      "layer": "Data exchange",
+      "repository": "https://github.com/nordic-institute/X-Road",
+      "reason": "X-Road maps to data exchange needs for agriculture and farmer support."
+    },
+    {
+      "id": "apisix",
+      "name": "Apache APISIX",
+      "layer": "Data exchange",
+      "repository": "https://github.com/apache/apisix",
+      "reason": "Apache APISIX maps to data exchange needs for agriculture and farmer support."
+    },
+    {
+      "id": "mojaloop",
+      "name": "Mojaloop",
+      "layer": "Payments",
+      "repository": "https://github.com/mojaloop",
+      "reason": "Mojaloop maps to payments needs for agriculture and farmer support."
+    },
+    {
+      "id": "mosip",
+      "name": "MOSIP",
+      "layer": "Identity",
+      "repository": "https://github.com/mosip",
+      "reason": "MOSIP maps to identity needs for agriculture and farmer support."
+    }
+  ],
+  "countrySystems": [
+    {
+      "name": "OpenAgriNet",
+      "layer": "Registries",
+      "status": "mapped",
+      "note": "Agriculture records and service integration opportunity."
+    }
+  ],
+  "standardsToCheck": [
+    "OpenID Connect",
+    "OpenAPI",
+    "API gateway policies",
+    "access logging",
+    "wallet regulation",
+    "Odoo modules",
+    "registry workflows",
+    "API integration",
+    "signed messages",
+    "service registry",
+    "audit logging",
+    "ISO 20022 alignment",
+    "interoperable payment APIs",
+    "biometric standards"
+  ],
+  "openQuestions": [
+    "Which services should be first through MESOB?",
+    "What data can ministries expose through the gateway?",
+    "How will assisted access and exception handling work?"
+  ],
+  "generatedAt": "registry-v1"
+}

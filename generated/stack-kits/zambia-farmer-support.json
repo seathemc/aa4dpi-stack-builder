@@ -1,0 +1,118 @@
+{
+  "id": "zambia-farmer-support",
+  "country": {
+    "id": "zambia",
+    "name": "Zambia",
+    "flag": "🇿🇲",
+    "cohort": 1,
+    "region": "Southern Africa"
+  },
+  "useCase": {
+    "id": "farmer-support",
+    "name": "Agriculture and farmer support",
+    "problem": "Farmers are often enrolled in disconnected programmes, making subsidies, insurance, extension, and payments slow to verify.",
+    "outcome": "A farmer can be registered once, verified across programmes, paid through trusted rails, and supported through a clear grievance path.",
+    "layers": [
+      "Registries",
+      "Identity",
+      "Payments",
+      "Data exchange",
+      "Service delivery",
+      "Safeguards"
+    ],
+    "systems": [
+      "Farmer registry",
+      "Identity verification",
+      "Eligibility rules",
+      "Payment rail",
+      "Grievance workflow",
+      "Audit log"
+    ]
+  },
+  "summary": "Zambia: A farmer can be registered once, verified across programmes, paid through trusted rails, and supported through a clear grievance path.",
+  "recommendedDpgs": [
+    {
+      "id": "openspp",
+      "name": "OpenSPP",
+      "layer": "Registries",
+      "repository": "https://github.com/OpenSPP",
+      "reason": "OpenSPP maps to registries needs for agriculture and farmer support."
+    },
+    {
+      "id": "xroad",
+      "name": "X-Road",
+      "layer": "Data exchange",
+      "repository": "https://github.com/nordic-institute/X-Road",
+      "reason": "X-Road maps to data exchange needs for agriculture and farmer support."
+    },
+    {
+      "id": "apisix",
+      "name": "Apache APISIX",
+      "layer": "Data exchange",
+      "repository": "https://github.com/apache/apisix",
+      "reason": "Apache APISIX maps to data exchange needs for agriculture and farmer support."
+    },
+    {
+      "id": "mojaloop",
+      "name": "Mojaloop",
+      "layer": "Payments",
+      "repository": "https://github.com/mojaloop",
+      "reason": "Mojaloop maps to payments needs for agriculture and farmer support."
+    },
+    {
+      "id": "mosip",
+      "name": "MOSIP",
+      "layer": "Identity",
+      "repository": "https://github.com/mosip",
+      "reason": "MOSIP maps to identity needs for agriculture and farmer support."
+    }
+  ],
+  "countrySystems": [
+    {
+      "name": "Community Forest Management Group records",
+      "layer": "Registries",
+      "status": "mapped",
+      "note": "Community forest stewardship, eligibility, and reporting records."
+    },
+    {
+      "name": "Smart Zambia Government Service Bus",
+      "layer": "Data exchange",
+      "status": "mapped",
+      "note": "Service bus pattern for land, health, finance, identity, and other agency exchange."
+    },
+    {
+      "name": "Timber Traceability System",
+      "layer": "Registries",
+      "status": "mapped",
+      "note": "Permit, provenance, revenue, and forest-product traceability records."
+    },
+    {
+      "name": "ZILAS land administration",
+      "layer": "Registries",
+      "status": "mapped",
+      "note": "Land administration records, title data, and customary land workflows."
+    }
+  ],
+  "standardsToCheck": [
+    "OpenAPI",
+    "service registry",
+    "FHIR",
+    "geospatial data",
+    "audit logging",
+    "Odoo modules",
+    "registry workflows",
+    "API integration",
+    "signed messages",
+    "API gateway policies",
+    "access logging",
+    "ISO 20022 alignment",
+    "interoperable payment APIs",
+    "OpenID Connect",
+    "biometric standards"
+  ],
+  "openQuestions": [
+    "How will customary land records be represented?",
+    "What forest provenance data can be shared safely?"
+  ],
+  "generatedAt": "registry-v1"
+}

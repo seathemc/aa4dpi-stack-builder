@@ -1,14 +1,30 @@
-# Data
+# Data Registry
 
-The prototype currently stores seed data in `src/lib/data.ts` so the frontend can
-import it directly with TypeScript types.
+This folder contains the first machine-readable AA4DPI registry.
 
-The intended public data model has four object families:
+The frontend still imports seed data from `src/lib/data.ts`, but these JSON files
+are the start of the public registry that can be validated, reviewed, reused, and
+migrated into other repositories later.
 
-- DPGs and open-source tools
-- use-case reference stacks
-- country readiness profiles
-- standards and safeguards
+## Files
 
-As the repo matures, these can move into JSON files validated by the schemas in
-`schemas/`.
+- `open-dpgs.json`: open Digital Public Goods, open-source tools, standards, and
+  repository links to evaluate by DPI layer
+- `use-cases.json`: reusable DPI use cases and the systems/layers behind them
+- `cohort-countries.json`: Cohort 1 country systems, agencies, standards, and
+  open questions from the AA4DPI materials
+
+## Generate artifacts
+
+Run:
+
+```bash
+npm run generate:kits
+```
+
+The generator writes country/use-case starter kits to `generated/stack-kits/`.
+
+## Validation direction
+
+The registry shape is described in `schemas/`. A future PR can wire full JSON
+Schema validation into CI once the content model stabilizes.

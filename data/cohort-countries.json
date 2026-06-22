@@ -1,0 +1,203 @@
+[
+  {
+    "id": "sierra-leone",
+    "name": "Sierra Leone",
+    "flag": "🇸🇱",
+    "cohort": 1,
+    "region": "West Africa",
+    "summary": "Sierra Leone is the strongest data-exchange demo: the opportunity is to connect public finance, procurement, civil registration, and banking systems into visible service outcomes.",
+    "priorityUseCases": ["procurement-to-payment", "farmer-support"],
+    "leadAgencies": [
+      {
+        "name": "MoCTI / DSTI",
+        "role": "Digital transformation lead, interoperability governance, and technical safeguards."
+      },
+      {
+        "name": "Ministry of Finance",
+        "role": "Fiscal backbone, recurrent-cost model, IFMIS, and sustainability anchor."
+      },
+      {
+        "name": "NPPA",
+        "role": "Procurement data, supplier records, contract awards, and eGP operating model."
+      },
+      {
+        "name": "Bank of Sierra Leone",
+        "role": "Banking settlement and payment status through T24 or related rails."
+      }
+    ],
+    "systems": [
+      {
+        "name": "Government Service Bus / X-Road 7.7.1 environments",
+        "layer": "Data exchange",
+        "status": "mapped",
+        "note": "Secure data exchange layer connecting approved agencies through service contracts."
+      },
+      {
+        "name": "CRVS / NCRA",
+        "layer": "Civil registration",
+        "status": "mapped",
+        "note": "Use minimal identity validation tokens rather than copying raw identity data."
+      },
+      {
+        "name": "eGP / NPPA",
+        "layer": "Operations",
+        "status": "mapped",
+        "note": "Electronic procurement, supplier, award, and contract records."
+      },
+      {
+        "name": "IFMIS",
+        "layer": "Operations",
+        "status": "mapped",
+        "note": "Treasury approval, budget execution, and payment instruction."
+      },
+      {
+        "name": "Temenos T24 / Bank settlement",
+        "layer": "Payments",
+        "status": "mapped",
+        "note": "Settlement confirmation and payment status for supplier payments."
+      },
+      {
+        "name": "Feed Salone farmer registry",
+        "layer": "Registries",
+        "status": "mapped",
+        "note": "Farmer profiles, farm and plot data, extension records, subsidy targeting, and grievance workflows."
+      }
+    ],
+    "standardsToCheck": ["X-Road service registry", "OCDS", "OpenAPI", "audit logging", "data-sharing agreements"],
+    "openQuestions": ["Who signs cross-agency data-sharing agreements?", "What supplier payment status can be made visible?", "How will farmers correct or appeal registry errors?"]
+  },
+  {
+    "id": "ethiopia",
+    "name": "Ethiopia",
+    "flag": "🇪🇹",
+    "cohort": 1,
+    "region": "East Africa",
+    "summary": "Ethiopia is the clearest example of DPI as a live government service platform: MESOB combines service delivery, Fayda identity, API exchange, branch networks, and a future sovereign payment layer.",
+    "priorityUseCases": ["one-stop-services", "social-protection", "farmer-support"],
+    "leadAgencies": [
+      {
+        "name": "PMO / Ministry of Finance",
+        "role": "Political mandate, fiscal accountability, and programme sign-off."
+      },
+      {
+        "name": "Civil Service Commission",
+        "role": "Service-delivery modernization and ministry process alignment."
+      },
+      {
+        "name": "National ID stakeholders",
+        "role": "Fayda authentication, identity verification, and inclusion safeguards."
+      },
+      {
+        "name": "National Bank of Ethiopia",
+        "role": "Oversight for MESOB Pay, wallet roadmap, and payment regulation."
+      }
+    ],
+    "systems": [
+      {
+        "name": "MESOB one-stop service platform",
+        "layer": "Service delivery",
+        "status": "mapped",
+        "note": "Citizen-facing service gateway and service orchestration layer."
+      },
+      {
+        "name": "Fayda Digital ID",
+        "layer": "Identity",
+        "status": "mapped",
+        "note": "Authentication and remote identity verification for service users."
+      },
+      {
+        "name": "APISIX integration gateway",
+        "layer": "Data exchange",
+        "status": "mapped",
+        "note": "API routing, authorization, audit logging, and ministry data access."
+      },
+      {
+        "name": "MESOB Pay / wallet roadmap",
+        "layer": "Payments",
+        "status": "roadmap",
+        "note": "Future sovereign payment gateway or wallet for public service flows."
+      },
+      {
+        "name": "Community Service Centers",
+        "layer": "Service delivery",
+        "status": "mapped",
+        "note": "Assisted access points for people who cannot use digital channels alone."
+      },
+      {
+        "name": "OpenAgriNet",
+        "layer": "Registries",
+        "status": "mapped",
+        "note": "Agriculture records and service integration opportunity."
+      }
+    ],
+    "standardsToCheck": ["OpenID Connect", "OpenAPI", "API gateway policies", "access logging", "wallet regulation"],
+    "openQuestions": ["Which services should be first through MESOB?", "What data can ministries expose through the gateway?", "How will assisted access and exception handling work?"]
+  },
+  {
+    "id": "zambia",
+    "name": "Zambia",
+    "flag": "🇿🇲",
+    "cohort": 1,
+    "region": "Southern Africa",
+    "summary": "Zambia is the Cohort 1 example for land, climate, and natural-resource governance: the opportunity is to connect ZILAS, forest traceability, community forest records, and public-service rails.",
+    "priorityUseCases": ["climate-land", "health-access", "farmer-support"],
+    "leadAgencies": [
+      {
+        "name": "Smart Zambia Institute",
+        "role": "Central digital convener and Government Service Bus steward."
+      },
+      {
+        "name": "Land administration stakeholders",
+        "role": "ZILAS, title data, customary land workflows, and land-service design."
+      },
+      {
+        "name": "Forestry and natural-resource agencies",
+        "role": "Timber traceability, forest permits, community forest records, and provenance."
+      },
+      {
+        "name": "Ministry of Health ecosystem",
+        "role": "Smart Care Pro, DHIS2, eLMIS, patient records, and medicine accountability."
+      }
+    ],
+    "systems": [
+      {
+        "name": "Smart Zambia Government Service Bus",
+        "layer": "Data exchange",
+        "status": "mapped",
+        "note": "Service bus pattern for land, health, finance, identity, and other agency exchange."
+      },
+      {
+        "name": "ZILAS land administration",
+        "layer": "Registries",
+        "status": "mapped",
+        "note": "Land administration records, title data, and customary land workflows."
+      },
+      {
+        "name": "Timber Traceability System",
+        "layer": "Registries",
+        "status": "mapped",
+        "note": "Permit, provenance, revenue, and forest-product traceability records."
+      },
+      {
+        "name": "Community Forest Management Group records",
+        "layer": "Registries",
+        "status": "mapped",
+        "note": "Community forest stewardship, eligibility, and reporting records."
+      },
+      {
+        "name": "Smart Care Pro / DHIS2 / eLMIS",
+        "layer": "Health",
+        "status": "mapped",
+        "note": "Patient, facility, medicine, and health-reporting systems."
+      },
+      {
+        "name": "MTN, Airtel, Zamtel and bank rails",
+        "layer": "Payments",
+        "status": "mapped",
+        "note": "Payment and reconciliation rails for public-service flows."
+      }
+    ],
+    "standardsToCheck": ["OpenAPI", "service registry", "FHIR", "geospatial data", "audit logging"],
+    "openQuestions": ["How will customary land records be represented?", "What forest provenance data can be shared safely?", "How will identity, health, and payment data be separated?"]
+  }
+]

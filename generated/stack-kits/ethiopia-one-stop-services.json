@@ -1,0 +1,127 @@
+{
+  "id": "ethiopia-one-stop-services",
+  "country": {
+    "id": "ethiopia",
+    "name": "Ethiopia",
+    "flag": "🇪🇹",
+    "cohort": 1,
+    "region": "East Africa"
+  },
+  "useCase": {
+    "id": "one-stop-services",
+    "name": "One-stop digital public services",
+    "problem": "People are forced to move between disconnected portals, offices, and payment channels to complete a single public service.",
+    "outcome": "A person can start one service journey, verify identity once, submit only required data, pay or receive funds, and track status.",
+    "layers": [
+      "Service delivery",
+      "Identity",
+      "Data exchange",
+      "Payments",
+      "Safeguards"
+    ],
+    "systems": [
+      "Service portal",
+      "Identity verification",
+      "API gateway",
+      "Payment channel",
+      "Case status and redress"
+    ]
+  },
+  "summary": "Ethiopia: A person can start one service journey, verify identity once, submit only required data, pay or receive funds, and track status.",
+  "recommendedDpgs": [
+    {
+      "id": "apisix",
+      "name": "Apache APISIX",
+      "layer": "Data exchange",
+      "repository": "https://github.com/apache/apisix",
+      "reason": "Apache APISIX maps to data exchange needs for one-stop digital public services."
+    },
+    {
+      "id": "xroad",
+      "name": "X-Road",
+      "layer": "Data exchange",
+      "repository": "https://github.com/nordic-institute/X-Road",
+      "reason": "X-Road maps to data exchange needs for one-stop digital public services."
+    },
+    {
+      "id": "odk",
+      "name": "ODK",
+      "layer": "Service delivery",
+      "repository": "https://github.com/getodk",
+      "reason": "ODK maps to service delivery needs for one-stop digital public services."
+    },
+    {
+      "id": "mojaloop",
+      "name": "Mojaloop",
+      "layer": "Payments",
+      "repository": "https://github.com/mojaloop",
+      "reason": "Mojaloop maps to payments needs for one-stop digital public services."
+    },
+    {
+      "id": "mosip",
+      "name": "MOSIP",
+      "layer": "Identity",
+      "repository": "https://github.com/mosip",
+      "reason": "MOSIP maps to identity needs for one-stop digital public services."
+    }
+  ],
+  "countrySystems": [
+    {
+      "name": "MESOB one-stop service platform",
+      "layer": "Service delivery",
+      "status": "mapped",
+      "note": "Citizen-facing service gateway and service orchestration layer."
+    },
+    {
+      "name": "MESOB Pay / wallet roadmap",
+      "layer": "Payments",
+      "status": "roadmap",
+      "note": "Future sovereign payment gateway or wallet for public service flows."
+    },
+    {
+      "name": "APISIX integration gateway",
+      "layer": "Data exchange",
+      "status": "mapped",
+      "note": "API routing, authorization, audit logging, and ministry data access."
+    },
+    {
+      "name": "Community Service Centers",
+      "layer": "Service delivery",
+      "status": "mapped",
+      "note": "Assisted access points for people who cannot use digital channels alone."
+    },
+    {
+      "name": "Fayda Digital ID",
+      "layer": "Identity",
+      "status": "mapped",
+      "note": "Authentication and remote identity verification for service users."
+    },
+    {
+      "name": "OpenAgriNet",
+      "layer": "Registries",
+      "status": "mapped",
+      "note": "Agriculture records and service integration opportunity."
+    }
+  ],
+  "standardsToCheck": [
+    "OpenID Connect",
+    "OpenAPI",
+    "API gateway policies",
+    "access logging",
+    "wallet regulation",
+    "signed messages",
+    "service registry",
+    "audit logging",
+    "XForms",
+    "offline data collection",
+    "ISO 20022 alignment",
+    "interoperable payment APIs",
+    "biometric standards",
+    "API integration"
+  ],
+  "openQuestions": [
+    "Which services should be first through MESOB?",
+    "What data can ministries expose through the gateway?"
+  ],
+  "generatedAt": "registry-v1"
+}

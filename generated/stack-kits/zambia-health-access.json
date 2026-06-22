@@ -1,0 +1,104 @@
+{
+  "id": "zambia-health-access",
+  "country": {
+    "id": "zambia",
+    "name": "Zambia",
+    "flag": "🇿🇲",
+    "cohort": 1,
+    "region": "Southern Africa"
+  },
+  "useCase": {
+    "id": "health-access",
+    "name": "Health access and medicine accountability",
+    "problem": "Patients, facilities, supply chains, insurance schemes, and reporting systems often hold partial records that do not connect safely.",
+    "outcome": "A patient or facility can be identified, services and medicines can be tracked, and public health data can be produced with privacy protected.",
+    "layers": [
+      "Health",
+      "Identity",
+      "Payments",
+      "Data exchange",
+      "Safeguards"
+    ],
+    "systems": [
+      "Patient record",
+      "Facility registry",
+      "Claims workflow",
+      "Health data exchange",
+      "Public health reporting"
+    ]
+  },
+  "summary": "Zambia: A patient or facility can be identified, services and medicines can be tracked, and public health data can be produced with privacy protected.",
+  "recommendedDpgs": [
+    {
+      "id": "dhis2",
+      "name": "DHIS2",
+      "layer": "Health",
+      "repository": "https://github.com/dhis2",
+      "reason": "DHIS2 maps to health needs for health access and medicine accountability."
+    },
+    {
+      "id": "openmrs",
+      "name": "OpenMRS",
+      "layer": "Health",
+      "repository": "https://github.com/openmrs",
+      "reason": "OpenMRS maps to health needs for health access and medicine accountability."
+    },
+    {
+      "id": "apisix",
+      "name": "Apache APISIX",
+      "layer": "Data exchange",
+      "repository": "https://github.com/apache/apisix",
+      "reason": "Apache APISIX maps to data exchange needs for health access and medicine accountability."
+    },
+    {
+      "id": "mojaloop",
+      "name": "Mojaloop",
+      "layer": "Payments",
+      "repository": "https://github.com/mojaloop",
+      "reason": "Mojaloop maps to payments needs for health access and medicine accountability."
+    },
+    {
+      "id": "mosip",
+      "name": "MOSIP",
+      "layer": "Identity",
+      "repository": "https://github.com/mosip",
+      "reason": "MOSIP maps to identity needs for health access and medicine accountability."
+    }
+  ],
+  "countrySystems": [
+    {
+      "name": "Smart Care Pro / DHIS2 / eLMIS",
+      "layer": "Health",
+      "status": "mapped",
+      "note": "Patient, facility, medicine, and health-reporting systems."
+    },
+    {
+      "name": "Smart Zambia Government Service Bus",
+      "layer": "Data exchange",
+      "status": "mapped",
+      "note": "Service bus pattern for land, health, finance, identity, and other agency exchange."
+    }
+  ],
+  "standardsToCheck": [
+    "OpenAPI",
+    "service registry",
+    "FHIR",
+    "geospatial data",
+    "audit logging",
+    "FHIR integrations",
+    "aggregate reporting",
+    "data dictionaries",
+    "OpenHIE patterns",
+    "API gateway policies",
+    "access logging",
+    "ISO 20022 alignment",
+    "interoperable payment APIs",
+    "OpenID Connect",
+    "biometric standards",
+    "API integration"
+  ],
+  "openQuestions": [
+    "How will identity, health, and payment data be separated?"
+  ],
+  "generatedAt": "registry-v1"
+}
